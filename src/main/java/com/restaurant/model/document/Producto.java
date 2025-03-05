@@ -4,13 +4,12 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @Document("producto")
 @Builder
 @NoArgsConstructor
 @ToString
+@Data
 public class Producto {
 
     @Id
@@ -19,18 +18,10 @@ public class Producto {
     @NonNull
     String nombreProducto;
 
-    @NonNull
     double pesoProducto;
 
     @NonNull
     String[] proveedores;
 
-    @NonNull
     int cantidad;
-
-
-
-
-
-
 }

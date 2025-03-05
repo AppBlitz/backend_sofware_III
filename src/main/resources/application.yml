@@ -1,9 +1,10 @@
 # spring.application.name=restaurant
+# spring.data.mongodb.uri=mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+# spring.data.mongodb.database=elalero
 spring:
   application:
     name: restaurant
-
-Spring:
   data:
     mongodb:
-      uri:mongodb+srv://jahn:jahn.elalero@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      uri: mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      database: elalero
