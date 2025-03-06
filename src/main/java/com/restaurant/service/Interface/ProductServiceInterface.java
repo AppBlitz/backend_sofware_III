@@ -26,5 +26,5 @@ public interface ProductServiceInterface {
    * @param supplier
    * @return
    */
-  public Product updateProductListsSUpplier(String nameProduct, String supplier);
+  public Product updateProductListsSUpplier(String nameProduct, String supplier, int amount);
 }

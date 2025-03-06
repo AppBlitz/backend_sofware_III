@@ -1,12 +1,15 @@
 package com.restaurant.validators.product;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductoRepository;
 
+@Component
 public class ProductValidators {
 
   @Autowired
@@ -44,11 +47,9 @@ public class ProductValidators {
    * @param nameSupplier name supplier
    * @return true if found name supplier or false if no found name supplier
    */
-  private boolean validarExistsSUpplier(String[] suppliers, String nameSupplier) {
-    int i = 0;
-    while (i < suppliers.length) {
-      if (suppliers[i].equals(nameSupplier)) {
-        i = suppliers.length;
+  private boolean validarExistsSUpplier(ArrayList<String> suppliers, String nameSupplier) {
+    for (String supplier : suppliers) {
+      if (supplier.equals(nameSupplier)) {
         return true;
       }
     }
