@@ -9,8 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @ToString
-@Data
-public class Producto {
+@Getter
+@Setter
+public class Product {
 
     @Id
     String id;

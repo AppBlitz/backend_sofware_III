@@ -1,11 +1,14 @@
 package com.restaurant.repository;
 
-import com.restaurant.model.document.Producto;
+import java.util.Optional;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProductoRepository extends MongoRepository<Producto, String> {
+import com.restaurant.model.document.Product;
 
+@Repository
+public interface ProductoRepository extends MongoRepository<Product, String> {
+
+  Optional<Product> findByNombreProducto(String nombreProducto);
 }
