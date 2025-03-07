@@ -6,5 +6,5 @@ spring:
     name: restaurant
   data:
     mongodb:
-      uri: mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database: elalero
+      uri:mongodb+srv://jahn:jahn.elalero@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    Database: elalero
