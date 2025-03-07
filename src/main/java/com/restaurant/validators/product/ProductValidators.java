@@ -44,8 +44,8 @@ public class ProductValidators {
 
   /**
    * @param suppliers    arrays of supplier as have product
-   * @param nameSupplier name supplier
-   * @return true if found name supplier or false if no found name supplier
+   * @param nameSupplier nameSupplier supplier
+   * @return true if found nameSupplier supplier or false if no found nameSupplier supplier
    */
   private boolean validarExistsSUpplier(ArrayList<String> suppliers, String nameSupplier) {
     for (String supplier : suppliers) {

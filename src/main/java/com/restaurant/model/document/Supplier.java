@@ -7,30 +7,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.List;
 
-@AllArgsConstructor
-@Document("supplier")
-@Builder
-@NoArgsConstructor
-@ToString
-@Getter
-@Setter
+@Data // Generates getters, setters, equals, hashCode, and toString methods
+@AllArgsConstructor // Generates a constructor with all fields
+@NoArgsConstructor // Generates a no-args constructor
+@EqualsAndHashCode // Generates equals and hashCode methods based on all fields
+@Builder // Allows for a builder pattern to create instances of this class
+@Document("supplier") //Generate Collection with nameSupplier "supplier"
+
 public class Supplier {
 
-    @Id
-    String id;
+    @Id //Marks this field as the unique identifier in the document
+    String id; //unique identifier of supplier
 
-    @NonNull
-    private String name;
+    @NonNull //marks that the field cannot be empty
+    private String nameSupplier; // supplier´s name
 
-    @NonNull
-    private String location;
+    @NonNull //marks that the field cannot be empty
+    private String location; //supplier´s location
 
-    @NonNull
-    private LocalDate orderDate;
+    @NonNull //marks that the field cannot be empty
+    private LocalDate orderDate; //
 
-    @NonNull
-    private List<Product> offeredProducts;
+    @NonNull //marks that the field cannot be empty
+    private List<String> offeredProducts; //list of products offered by the supplier
 
-    @NonNull
-    private StateEnum stateAtivity;
+    @NonNull //marks that the field cannot be empty
+    private StateEnum stateActivity; //status to indicate whether the provider is active or not
 }

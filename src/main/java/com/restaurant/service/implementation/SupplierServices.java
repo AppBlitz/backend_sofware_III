@@ -1,7 +1,7 @@
 package com.restaurant.service.implementation;
 
-import com.restaurant.dto.supplier.supplierDtoAdd;
-import com.restaurant.dto.supplier.supplierDtoEdit;
+import com.restaurant.dto.supplier.SupplierDtoAdd;
+import com.restaurant.dto.supplier.SupplierDtoEdit;
 import com.restaurant.enums.StateEnum;
 import com.restaurant.exceptions.supplier.*;
 import com.restaurant.model.document.Supplier;
@@ -10,6 +10,7 @@ import com.restaurant.service.Interface.ISupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,14 +26,19 @@ public class SupplierServices implements ISupplierServices {
     }
 
     @Override
-    public Supplier addSupplier(supplierDtoAdd supplierdtoadd) throws ExceptionAddedSupplier {
+    public List<Supplier> getSuppliers() {
+        return supplierRepository.findAll();
+    }
+
+    @Override
+    public Supplier addSupplier(SupplierDtoAdd supplierdtoadd) throws ExceptionAddedSupplier {
         Supplier supplier = supplierDtoToSupplier(supplierdtoadd);
         return supplierRepository.save(supplier);
 
     }
 
     @Override
-    public Supplier editSupplier(supplierDtoEdit supplierdtoedit) throws ExceptionEditSupplier {
+    public Supplier editSupplier(SupplierDtoEdit supplierdtoedit) throws ExceptionEditSupplier {
         Optional<Supplier> supplier= supplierRepository.findById(supplierdtoedit.id());
         Supplier supplier1 = supplierDtoToSupplier(supplier.get(),supplierdtoedit);
         return supplierRepository.save(supplier1);
@@ -42,28 +48,28 @@ public class SupplierServices implements ISupplierServices {
     public Supplier deleteSupplier(String id) {
         Optional<Supplier> supplier= supplierRepository.findById(id);
         Supplier supplier1 = supplier.get();
-        supplier1.setStateAtivity(StateEnum.IDLE);
+        supplier1.setStateActivity(StateEnum.IDLE);
         supplierRepository.save(supplier1);
         return supplier1;
     }
 
-    public Supplier supplierDtoToSupplier(supplierDtoAdd supplierdtoadd){
+    public Supplier supplierDtoToSupplier(SupplierDtoAdd supplierdtoadd){
         Supplier supplier= Supplier.builder().
-                name(supplierdtoadd.name()).
+                nameSupplier(supplierdtoadd.nameSupplier()).
                 location(supplierdtoadd.location()).
                 offeredProducts(supplierdtoadd.offeredProducts()).
                 orderDate(supplierdtoadd.orderDate()).
-                stateAtivity(supplierdtoadd.stateAtivity()).build();
+                stateActivity(supplierdtoadd.stateActivity()).build();
 
         return supplier;
     }
 
-    public Supplier supplierDtoToSupplier(Supplier supplier, supplierDtoEdit supplierdtoedit){
-        supplier.setName(supplierdtoedit.name());
+    public Supplier supplierDtoToSupplier(Supplier supplier, SupplierDtoEdit supplierdtoedit){
+        supplier.setNameSupplier(supplierdtoedit.nameSupplier());
         supplier.setLocation(supplierdtoedit.location());
         supplier.setOfferedProducts(supplierdtoedit.offeredProducts());
         supplier.setOrderDate(supplierdtoedit.orderDate());
-        supplier.setStateAtivity(supplierdtoedit.stateAtivity());
+        supplier.setStateActivity(supplierdtoedit.stateActivity());
 
         return supplier;
     }
