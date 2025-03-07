@@ -1,5 +1,6 @@
 package com.restaurant.model.document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.data.annotation.Id;
@@ -14,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @AllArgsConstructor
-@Document("producto")
+@Document("product")
 @Builder
 @NoArgsConstructor
 @ToString
@@ -26,12 +27,16 @@ public class Product {
     String id;
 
     @NonNull
-    String nombreProducto;
-
-    double pesoProducto;
+    String nameProduct;
 
     @NonNull
-    ArrayList<String> proveedores;
+    ArrayList<String> suppliers;
 
-    int cantidad;
+    @NonNull
+    LocalDate dateExpiration;
+    @NonNull
+    LocalDate dateRegister;
+
+    double weightProduct;
+    int amount;
 }

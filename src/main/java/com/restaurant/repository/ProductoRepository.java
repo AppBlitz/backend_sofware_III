@@ -1,6 +1,6 @@
 package com.restaurant.repository;
 
-import java.util.List;
+import java.util.*;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,5 +16,7 @@ public interface ProductoRepository extends MongoRepository<Product, String> {
 
   @Query("{ 'cantidad' : { $lt: ?0 } }")
   List<Product> findLowStockProducts(int stockThreshold);
+
+  Optional<Product> findByNameProduct(String nombreProducto);
 
 }
