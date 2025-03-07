@@ -19,12 +19,12 @@ public interface ProductServiceInterface {
    * @return
    * @throws ExceptionUpdateProduct
    */
-  public Product updateProductAmount(String nameProduct, int amount) throws ExceptionUpdateProduct;
+  public Product updateProductAmount(ProductDtoAdd productDtoAdd) throws ExceptionUpdateProduct;
 
   /**
    * @param nameProduct
    * @param supplier
    * @return
    */
-  public Product updateProductListsSUpplier(String nameProduct, String supplier, int amount);
+  public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 }
