@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 @AllArgsConstructor
-@Document("menu")
+@Document(collection ="menu")
 @Builder
 @NoArgsConstructor
 @ToString

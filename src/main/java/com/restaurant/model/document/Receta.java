@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 @AllArgsConstructor
-@Document("receta")
+@Document(collection ="receta")
 @Builder
 @NoArgsConstructor
 @ToString
