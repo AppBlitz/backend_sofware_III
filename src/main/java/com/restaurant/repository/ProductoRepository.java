@@ -21,6 +21,4 @@ public interface ProductoRepository extends MongoRepository<Product, String> {
   @Query("{ 'cantidad' : { $lt: ?0 } }")
   List<Product> findLowStockProducts(int stockThreshold);
 
-
-
 }
