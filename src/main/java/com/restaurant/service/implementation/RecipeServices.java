@@ -1,7 +1,7 @@
 package com.restaurant.service.implementation;
 
 import com.restaurant.model.document.Recipe;
-import com.restaurant.repository.RecetaRepository;
+import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.Interface.IRecipeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,71 +10,71 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementación del servicio de gestión de recetas.
- * Proporciona métodos para realizar operaciones CRUD en recetas.
+ * Implementation of the recipe management service.
+ * Provides methods to perform CRUD operations on recipes.
  */
 @Service
 public class RecipeServices implements IRecipeServices {
 
     @Autowired
-    private RecetaRepository recetaRepository;
+    private RecipeRepository recipeRepository;
 
     /**
-     * Crea una nueva recipe.
+     * Creates a new recipe.
      *
-     * @param recipe La recipe a crear.
-     * @return La recipe creada.
+     * @param recipe The recipe to create.
+     * @return The created recipe.
      */
     @Override
-    public Recipe crearReceta(Recipe recipe) {
-        return recetaRepository.save(recipe);
+    public Recipe createRecipe(Recipe recipe) {
+        return recipeRepository.save(recipe);
     }
 
     /**
-     * Obtiene una receta por su ID.
+     * Gets a recipe by its ID.
      *
-     * @param id El ID de la receta a obtener.
-     * @return La receta correspondiente al ID, o null si no se encuentra.
+     * @param id The ID of the recipe to get.
+     * @return The recipe corresponding to the ID, or null if not found.
      */
     @Override
-    public Recipe obtenerRecetaPorId(Integer id) {
-        Optional<Recipe> receta = recetaRepository.findById(id);
-        return receta.orElse(null);
+    public Recipe getRecipeById(Integer id) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        return recipe.orElse(null);
     }
 
     /**
-     * Obtiene todas las recetas.
+     * Gets all recipes.
      *
-     * @return Una lista de todas las recetas.
+     * @return A list of all recipes.
      */
     @Override
-    public List<Recipe> obtenerTodasLasRecetas() {
-        return recetaRepository.findAll();
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.findAll();
     }
 
     /**
-     * Actualiza una recipe existente.
+     * Updates an existing recipe.
      *
-     * @param id El ID de la recipe a actualizar.
-     * @param recipe La recipe actualizada.
-     * @return La recipe actualizada, o null si no se encuentra la recipe con el ID proporcionado.
+     * @param id The ID of the recipe to update.
+     * @param recipe The updated recipe.
+     * @return The updated recipe, or null if the recipe with the provided ID is not found.
      */
     @Override
-    public Recipe actualizarReceta(Integer id, Recipe recipe) {
-        if (recetaRepository.existsById(id)) {
+    public Recipe updateRecipe(Integer id, Recipe recipe) {
+        if (recipeRepository.existsById(id)) {
             recipe.setId(id);
-            return recetaRepository.save(recipe);
+            return recipeRepository.save(recipe);
         }
         return null;
     }
 
     /**
-     * Elimina una receta por su ID.
+     * Deletes a recipe by its ID.
      *
-     * @param id El ID de la receta a eliminar.
+     * @param id The ID of the recipe to delete.
      */
     @Override
-    public void eliminarReceta(Integer id) {
-        recetaRepository.deleteById(id);
+    public void deleteRecipe(Integer id) {
+        recipeRepository.deleteById(id);
     }
 }

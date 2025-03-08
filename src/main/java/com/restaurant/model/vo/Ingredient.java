@@ -1,5 +1,6 @@
-package com.restaurant.model.document;
+package com.restaurant.model.vo;
 
+import com.restaurant.model.document.Product;
 import lombok.*;
 
 @AllArgsConstructor

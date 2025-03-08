@@ -1,9 +1,9 @@
 package com.restaurant.service.Interface;
 
 import com.restaurant.dto.product.ProductDtoAdd;
-import com.restaurant.exceptions.product.ErrorConsultandoProducto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
+import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
 
 import java.util.Optional;
@@ -17,8 +17,6 @@ public interface ProductServiceInterface {
   public Product addProduct(ProductDtoAdd ProductDtoAdd) throws ExceptioAddedProduct;
 
   /**
-   * @param nameProduct
-   * @param amount
    * @return
    * @throws ExceptionUpdateProduct
    */
@@ -33,12 +31,13 @@ public interface ProductServiceInterface {
 
   /**
    * @return
-   * @throws ErrorConsultandoProducto
+   * @throws ProductFetchException
    */
-  public Optional<Product> ConsultarProductosDisponibles() throws ErrorConsultandoProducto;
+  public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException;
 
 
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 
-  public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 }
+
+
