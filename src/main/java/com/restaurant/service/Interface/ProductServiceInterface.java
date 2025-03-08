@@ -37,5 +37,8 @@ public interface ProductServiceInterface {
    */
   public Optional<Product> ConsultarProductosDisponibles() throws ErrorConsultandoProducto;
 
+
+  public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
+
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 }
