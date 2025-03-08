@@ -2,18 +2,21 @@
 # spring.data.mongodb.uri=mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 # spring.data.mongodb.database=elalero
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: equiporoblox520@gmail.com
+    password: vzjq tyle doef ihzv
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+      mail.smtp.writetimeout: 5000
   application:
     name: restaurant
   data:
     mongodb:
-      uri: mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database: elalero
-  mail:
-    port: 587
-    host: smtp.gmail.com
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+      uri:mongodb+srv://Jahn:jahn.elalero@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+    Database: elalero
