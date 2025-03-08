@@ -3,10 +3,9 @@ package com.restaurant.service.implementation;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.restaurant.exceptions.product.ErrorConsultandoProducto;
+import com.restaurant.exceptions.product.ProductFetchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.model.document.Product;
@@ -61,6 +60,11 @@ public class ProductService implements ProductServiceInterface {
   }
 
   @Override
+  public Product updateProductListsSUpplier(String nameProduct, String supplier, int amount) {
+    return null;
+  }
+
+  @Override
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd) {
     Optional<Product> product = productRepository.findByNameProduct(productDtoAdd.nameProduct());
     Product aux = product.get();
@@ -74,7 +78,7 @@ public class ProductService implements ProductServiceInterface {
   }
 
   @Override
-  public Optional<Product> ConsultarProductosDisponibles() throws ErrorConsultandoProducto {
+  public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException {
     return productRepository.findByCantidadBefore(0);
   }
 

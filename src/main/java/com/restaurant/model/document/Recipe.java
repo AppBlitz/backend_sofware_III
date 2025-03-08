@@ -1,6 +1,7 @@
 package com.restaurant.model.document;
 
 import com.restaurant.Enum.RecipeStatus;
+import com.restaurant.model.vo.Ingredient;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
