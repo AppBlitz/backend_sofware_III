@@ -22,7 +22,7 @@ public interface ProductServiceInterface {
    * @return
    * @throws ExceptionUpdateProduct
    */
-  public Product updateProductAmount(String nameProduct, int amount) throws ExceptionUpdateProduct;
+  public Product updateProductAmount(ProductDtoAdd productDtoAdd) throws ExceptionUpdateProduct;
 
   /**
    * @param nameProduct
@@ -36,5 +36,8 @@ public interface ProductServiceInterface {
    * @throws ErrorConsultandoProducto
    */
   public Optional<Product> ConsultarProductosDisponibles() throws ErrorConsultandoProducto;
+
+
+  public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 
 }

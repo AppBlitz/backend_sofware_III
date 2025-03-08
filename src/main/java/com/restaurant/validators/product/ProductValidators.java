@@ -8,46 +8,36 @@ import org.springframework.stereotype.Component;
 
 import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductoRepository;
+import com.restaurant.validators.Interface.ProductInterfaceValidators;
 
 @Component
-public class ProductValidators {
+public class ProductValidators implements ProductInterfaceValidators {
 
   @Autowired
   ProductoRepository productoRepository;
 
-  /**
-   * @param nameProduct
-   * @return true if product exist or false if profuct no exist
-   */
+  @Override
   public boolean verificationProduct(String nameProduct) {
-    Optional<Product> product = productoRepository.findByNombreProducto(nameProduct);
+    Optional<Product> product = productoRepository.findByNameProduct(nameProduct);
     if (product.isEmpty()) {
       return false;
     }
     return true;
   }
 
-  /**
-   * @param nameProduct
-   * @param nameSupplier
-   * @return true if supplier is found or false is not supplier found
-   */
+  @Override
   public boolean validatorSupplier(String nameProduct, String nameSupplier) {
-    Optional<Product> product = productoRepository.findByNombreProducto(nameProduct);
+    Optional<Product> product = productoRepository.findByNameProduct(nameProduct);
     if (product.isEmpty()) {
       return false;
     } else {
-      return validarExistsSUpplier(product.get().getProveedores(), nameSupplier);
+      return validarExistsSupplier(product.get().getSuppliers(), nameSupplier);
     }
 
   }
 
-  /**
-   * @param suppliers    arrays of supplier as have product
-   * @param nameSupplier name supplier
-   * @return true if found name supplier or false if no found name supplier
-   */
-  private boolean validarExistsSUpplier(ArrayList<String> suppliers, String nameSupplier) {
+  @Override
+  public boolean validarExistsSupplier(ArrayList<String> suppliers, String nameSupplier) {
     for (String supplier : suppliers) {
       if (supplier.equals(nameSupplier)) {
         return true;
@@ -55,5 +45,4 @@ public class ProductValidators {
     }
     return false;
   }
-
 }
