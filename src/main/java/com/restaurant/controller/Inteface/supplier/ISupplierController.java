@@ -14,7 +14,7 @@ public interface ISupplierController {
      * Method called by the frontend request
      * to add a supplier to the database
      * @param supplierdtoadd
-     * @return
+     * @return A response indicating if the request was successfully or if an error occurred.
      * @throws Exception
      */
     public ResponseEntity<Supplier> addSupplier(@Valid SupplierDtoAdd supplierdtoadd) throws Exception;
@@ -23,7 +23,7 @@ public interface ISupplierController {
      * Method called by the frontend request
      * to modify the data of an existing supplier
      * @param supplierdtoedit
-     * @return
+     * @return A response indicating if the request was successfully or if an error occurred.
      * @throws Exception
      */
     public ResponseEntity<Supplier> editSupplier(@Valid SupplierDtoEdit supplierdtoedit) throws Exception;
@@ -32,7 +32,7 @@ public interface ISupplierController {
      * Method called by the frontend request
      * to load the existing supplier required
      * @param id
-     * @return
+     * @return A response indicating if the request was successfully or if an error occurred.
      * @throws Exception
      */
     public ResponseEntity<Supplier> getSupplier(@PathVariable String id) throws Exception;
@@ -40,7 +40,7 @@ public interface ISupplierController {
     /**
      * Method called by the frontend request
      * to load all existing supplier
-     * @return
+     * @return A response indicating if the request was successfully or if an error occurred.
      * @throws Exception
      */
     public ResponseEntity<List<Supplier>> getSuppliers() throws Exception;
@@ -49,7 +49,7 @@ public interface ISupplierController {
      * Method called by the frontend request
      * to change the activity status of a supplier to inactive
      * @param id
-     * @return
+     * @return A response indicating if the request was successfully or if an error occurred.
      * @throws Exception
      */
     public ResponseEntity<Supplier> deleteSupplier(@PathVariable String id) throws Exception;

@@ -3,6 +3,11 @@ package com.restaurant.service.Interface;
 import com.restaurant.model.vo.OrderRecommendation;
 
 public interface IOrderRecommendationService {
-
-    public OrderRecommendation generateRecommendation(int stockThreshold);
+    /**
+     * Generates an order recommendation based on the given stock threshold.
+     *
+     * @param stockThreshold The minimum stock level required to trigger a recommendation.
+     * @return An OrderRecommendation object containing the recommended order details.
+     */
+    OrderRecommendation generateRecommendation(int stockThreshold);
 }
