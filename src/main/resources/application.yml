@@ -8,3 +8,12 @@ spring:
     mongodb:
       uri: mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       database: elalero
+  mail:
+    port: 587
+    host: smtp.gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
