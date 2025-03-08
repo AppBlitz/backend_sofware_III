@@ -10,28 +10,38 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.restaurant.dto.product.ProductExpiration;
 import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductoRepository;
+import com.restaurant.service.implementation.EmailService;
+import com.restaurant.util.PdfGenerator;
 
 public class ReviewProduct extends Thread {
 
   @Autowired
   ProductoRepository productoRepository;
 
+  @Autowired(required = true)
+  EmailService emailService;
+
+  @Autowired(required = true)
+  PdfGenerator pdfGenerator;
+
   @Scheduled(cron = "0 8 * * DE LUNES A DOMINGO")
-  public void sendMessage(ProductExpiration productExpiration) {
+  public void sendMessage() {
     // Send email
   }
 
-  public void sendMessageDateExpirationProduct() {
-
+  public void sendMessageDateExpirationProduct(ArrayList<ProductExpiration> productExpirations) throws Exception {
+    emailService.sendOrderRecommendationEmail("", pdfGenerator.expirationProducts(productExpirations));
   }
 
-  public void foundProduct(ArrayList<Product> products) {
+  public void foundProduct(ArrayList<Product> products) throws Exception {
+    ArrayList<ProductExpiration> productsExpiration = new ArrayList<>();
     LocalDate how = LocalDate.now();
     for (Product producto : products) {
       if (calcularDate(how, producto.getDateExpiration())) {
-
+        productsExpiration.add(createStructureProductExpiration(producto));
       }
     }
+    sendMessageDateExpirationProduct(productsExpiration);
   }
 
   public boolean calcularDate(LocalDate how, LocalDate product) {
@@ -42,4 +52,9 @@ public class ReviewProduct extends Thread {
     return false;
   }
 
+  public ProductExpiration createStructureProductExpiration(Product product) {
+    ProductExpiration productExpiration = new ProductExpiration(product.getNameProduct(), product.getDateExpiration());
+    return productExpiration;
+
+  }
 }
