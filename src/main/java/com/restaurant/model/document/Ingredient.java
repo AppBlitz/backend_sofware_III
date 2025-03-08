@@ -1,18 +1,20 @@
 package com.restaurant.model.document;
+
 import lombok.*;
+
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 @ToString
 @Getter
 @Setter
-public class Ingrediente {
+public class Ingredient {
     @NonNull
-    Product producto;
+    Product product;
     @NonNull
-    Integer cant;
+    Integer quantity;
     @NonNull
-    String unidadesMedida;
+    String unitOfMeasure;
     @NonNull
-    String notasAdicionales;
+    String additionalNotes;
 }

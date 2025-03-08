@@ -11,4 +11,6 @@ import com.restaurant.model.document.Product;
 public interface ProductoRepository extends MongoRepository<Product, String> {
 
   Optional<Product> findByNombreProducto(String nombreProducto);
+  Optional<Product> findByCantidadBefore(int cantidadBefore);
+
 }

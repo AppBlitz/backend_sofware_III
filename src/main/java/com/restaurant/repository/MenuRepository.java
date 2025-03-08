@@ -8,7 +8,18 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalTime;
 import java.util.Optional;
 
+/**
+ * Repository interface for Menu documents.
+ * Provides methods for CRUD operations and custom queries.
+ */
 @Repository
-public interface MenuRepository extends MongoRepository<Menu, Integer>{
-    Optional<Menu> findByFecha(@NonNull LocalTime fecha);
+public interface MenuRepository extends MongoRepository<Menu, Integer> {
+
+    /**
+     * Finds a menu by its date.
+     *
+     * @param date The date of the menu to find.
+     * @return An Optional containing the found menu, or empty if no menu is found.
+     */
+    Optional<Menu> findByDate(@NonNull LocalTime date);
 }

@@ -1,6 +1,6 @@
 package com.restaurant.model.document;
 
-import com.restaurant.Enum.EstadoReceta;
+import com.restaurant.Enum.RecipeStatus;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,29 +9,29 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 @AllArgsConstructor
-@Document(collection ="receta")
+@Document(collection ="recipe")
 @Builder
 @NoArgsConstructor
 @ToString
 @Getter
 @Setter
-public class Receta {
+public class Recipe {
     @Id
     Integer id;
     @NonNull
-    String nombre;
+    String name;
     @NonNull
-    ArrayList<Ingrediente> ingredientes;
+    ArrayList<Ingredient> ingredients;
     @NonNull
-    ArrayList<String> instrucciones;
+    ArrayList<String> instructions;
     @NonNull
-    LocalTime tiempoPreparacion;
+    LocalTime preparationTime;
     @NonNull
-    Integer porciones;
+    Integer servings;
     @NonNull
-    String comentario;
+    String comment;
     @NonNull
-    LocalTime FechaCreacion;
+    LocalTime creationDate;
     @NonNull
-    EstadoReceta estadoReceta;
+    RecipeStatus recipeStatus;
 }

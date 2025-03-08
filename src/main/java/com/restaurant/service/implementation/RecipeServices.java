@@ -1,8 +1,8 @@
 package com.restaurant.service.implementation;
 
-import com.restaurant.model.document.Receta;
+import com.restaurant.model.document.Recipe;
 import com.restaurant.repository.RecetaRepository;
-import com.restaurant.service.Interface.IRecetaServices;
+import com.restaurant.service.Interface.IRecipeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +14,20 @@ import java.util.Optional;
  * Proporciona métodos para realizar operaciones CRUD en recetas.
  */
 @Service
-public class RecetaServices implements IRecetaServices {
+public class RecipeServices implements IRecipeServices {
 
     @Autowired
     private RecetaRepository recetaRepository;
 
     /**
-     * Crea una nueva receta.
+     * Crea una nueva recipe.
      *
-     * @param receta La receta a crear.
-     * @return La receta creada.
+     * @param recipe La recipe a crear.
+     * @return La recipe creada.
      */
     @Override
-    public Receta crearReceta(Receta receta) {
-        return recetaRepository.save(receta);
+    public Recipe crearReceta(Recipe recipe) {
+        return recetaRepository.save(recipe);
     }
 
     /**
@@ -37,8 +37,8 @@ public class RecetaServices implements IRecetaServices {
      * @return La receta correspondiente al ID, o null si no se encuentra.
      */
     @Override
-    public Receta obtenerRecetaPorId(Integer id) {
-        Optional<Receta> receta = recetaRepository.findById(id);
+    public Recipe obtenerRecetaPorId(Integer id) {
+        Optional<Recipe> receta = recetaRepository.findById(id);
         return receta.orElse(null);
     }
 
@@ -48,22 +48,22 @@ public class RecetaServices implements IRecetaServices {
      * @return Una lista de todas las recetas.
      */
     @Override
-    public List<Receta> obtenerTodasLasRecetas() {
+    public List<Recipe> obtenerTodasLasRecetas() {
         return recetaRepository.findAll();
     }
 
     /**
-     * Actualiza una receta existente.
+     * Actualiza una recipe existente.
      *
-     * @param id El ID de la receta a actualizar.
-     * @param receta La receta actualizada.
-     * @return La receta actualizada, o null si no se encuentra la receta con el ID proporcionado.
+     * @param id El ID de la recipe a actualizar.
+     * @param recipe La recipe actualizada.
+     * @return La recipe actualizada, o null si no se encuentra la recipe con el ID proporcionado.
      */
     @Override
-    public Receta actualizarReceta(Integer id, Receta receta) {
+    public Recipe actualizarReceta(Integer id, Recipe recipe) {
         if (recetaRepository.existsById(id)) {
-            receta.setId(id);
-            return recetaRepository.save(receta);
+            recipe.setId(id);
+            return recetaRepository.save(recipe);
         }
         return null;
     }

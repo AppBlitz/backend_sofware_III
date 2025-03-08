@@ -1,5 +1,5 @@
 package com.restaurant.Enum;
 
-public enum EstadoReceta {
+public enum RecipeStatus {
     ACTIVO, INACTIVO
 }
