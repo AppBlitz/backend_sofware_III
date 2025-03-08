@@ -18,4 +18,6 @@ public interface ProductoRepository extends MongoRepository<Product, String> {
 
   Optional<Product> findByNameProduct(String nombreProducto);
 
+  @Query("{ 'cantidad' : { $lt: ?0 } }")
+  List<Product> findLowStockProducts(int stockThreshold);
 }
