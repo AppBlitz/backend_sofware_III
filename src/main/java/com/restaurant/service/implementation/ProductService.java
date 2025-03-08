@@ -27,48 +27,49 @@ public class ProductService implements ProductServiceInterface {
   public Product addProduct(ProductDtoAdd ProductDtoAdd) throws ExceptioAddedProduct {
     if (productValidators.verificationProduct(ProductDtoAdd.nameProduct())) {
       if (productValidators.validatorSupplier(ProductDtoAdd.nameProduct(), ProductDtoAdd.supplier())) {
-        return updateProductAmount(ProductDtoAdd.nameProduct(), ProductDtoAdd.amount());
+        return updateProductAmount(ProductDtoAdd);
       } else {
-        return updateProductListsSUpplier(ProductDtoAdd.nameProduct(), ProductDtoAdd.supplier(),
-            ProductDtoAdd.amount());
+        return updateProductListsSUpplier(ProductDtoAdd);
       }
     } else {
 
       ArrayList<String> listSupplier = new ArrayList<>();
       listSupplier.add(ProductDtoAdd.supplier());
       Product product = Product.builder()
-          .nombreProducto(ProductDtoAdd
-              .nameProduct())
-          .proveedores(listSupplier)
-          .cantidad(ProductDtoAdd.amount())
-          .pesoProducto(ProductDtoAdd.weightProductm())
+          .nameProduct(ProductDtoAdd.nameProduct())
+          .suppliers(listSupplier)
+          .amount(ProductDtoAdd.amount())
+          .dateExpiration(ProductDtoAdd.dateExpiration())
+          .dateRegister(ProductDtoAdd.dateAdd())
+          .weightProduct(ProductDtoAdd.weightProduct())
           .build();
       return productRepository.save(product);
     }
   }
 
   @Override
-  public Product updateProductAmount(String nameProduct, int amount) {
-    Optional<Product> product = productRepository.findByNombreProducto(nameProduct);
+  public Product updateProductAmount(ProductDtoAdd productDtoAdd) {
+    Optional<Product> product = productRepository.findByNameProduct(productDtoAdd.nameProduct());
     Product aux = product.get();
     Product updateProduct = product.get();
-    updateProduct.setPesoProducto(aux.getPesoProducto());
-    updateProduct.setCantidad(aux.getCantidad() + amount);
-    updateProduct.setProveedores(aux.getProveedores());
+    updateProduct.setWeightProduct(aux.getWeightProduct());
+    updateProduct.setAmount(aux.getAmount() + productDtoAdd.amount());
+    updateProduct.setSuppliers(aux.getSuppliers());
+    updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
     return productRepository.save(updateProduct);
 
   }
 
   @Override
-  public Product updateProductListsSUpplier(String nameProduct, String supplier, int amount) {
-    Optional<Product> product = productRepository.findByNombreProducto(nameProduct);
+  public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd) {
+    Optional<Product> product = productRepository.findByNameProduct(productDtoAdd.nameProduct());
     Product aux = product.get();
-    ArrayList<String> suppliers = aux.getProveedores();
-    suppliers.add(supplier);
+    ArrayList<String> suppliers = aux.getSuppliers();
+    suppliers.add(productDtoAdd.supplier());
     Product updateProduct = product.get();
-    updateProduct.setPesoProducto(aux.getPesoProducto());
-    updateProduct.setCantidad(aux.getCantidad() + amount);
-    updateProduct.setProveedores(suppliers);
+    updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
+    updateProduct.setAmount(aux.getAmount() + productDtoAdd.amount());
+    updateProduct.setSuppliers(suppliers);
     return productRepository.save(updateProduct);
   }
 

@@ -17,14 +17,14 @@ import jakarta.validation.Valid;
 @RequestMapping("product")
 public class ProductController implements ProductControllerInterface {
 
-  @Autowired(required=true)
+  @Autowired(required = true)
   public ProductService productService;
 
   @Override
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public ResponseEntity<Product> addProduct(@Valid ProductDtoAdd productDtoAdd) throws Exception {
     Product product = productService.addProduct(productDtoAdd);
-    return ResponseEntity.status((200)).body(product);
+    return ResponseEntity.status(200).body(product);
   }
 
 }
