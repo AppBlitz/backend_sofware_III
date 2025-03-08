@@ -3,6 +3,7 @@ package com.restaurant.service.implementation;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.restaurant.exceptions.product.ErrorConsultandoProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,11 @@ public class ProductService implements ProductServiceInterface {
     updateProduct.setAmount(aux.getAmount() + productDtoAdd.amount());
     updateProduct.setSuppliers(suppliers);
     return productRepository.save(updateProduct);
+  }
+
+  @Override
+  public Optional<Product> ConsultarProductosDisponibles() throws ErrorConsultandoProducto {
+    return productRepository.findByCantidadBefore(0);
   }
 
 }
