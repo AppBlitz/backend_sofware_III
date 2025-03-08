@@ -79,7 +79,7 @@ public class ProductService implements ProductServiceInterface {
 
   @Override
   public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException {
-    return productRepository.findByCantidadBefore(0);
+    return productRepository.findByAmountBefore(0);
   }
 
 }

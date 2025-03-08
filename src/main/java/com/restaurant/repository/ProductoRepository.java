@@ -12,7 +12,7 @@ import com.restaurant.model.document.Product;
 @Repository
 public interface ProductoRepository extends MongoRepository<Product, String> {
 
-  Optional<Product> findByCantidadBefore(int cantidadBefore);
+  Optional<Product> findByAmountBefore(int cantidadBefore);
   // @Query("{ 'cantidad' : { $lt: ?0 } }")
   // List<Product> findLowStockProducts(int stockThreshold);
 
