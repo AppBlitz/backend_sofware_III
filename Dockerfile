@@ -10,3 +10,4 @@ EXPOSE 8080
 COPY --from=build /build/libs/how-much-pay-api-0.0.1.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
