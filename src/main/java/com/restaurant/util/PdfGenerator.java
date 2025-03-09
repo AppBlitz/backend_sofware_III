@@ -1,19 +1,19 @@
 package com.restaurant.util;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
-import com.restaurant.model.vo.OrderRecommendation;
-import com.restaurant.model.vo.ProductRecommendation;
-
-import com.itextpdf.kernel.pdf.*;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Cell;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
-import java.time.LocalDate;
-import java.util.List;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.restaurant.dto.product.ProductExpiration;
+import com.restaurant.model.vo.OrderRecommendation;
+import com.restaurant.model.vo.ProductRecommendation;
 
 @Service
 public class PdfGenerator {
@@ -33,7 +33,7 @@ public class PdfGenerator {
         document.add(new Paragraph("\nRecommended Products:").setBold().setFontSize(14)); // Add a subtitle
 
         // Create a table with recommended products
-        float[] columnWidths = {200f, 100f, 100f, 200f}; // Column sizes
+        float[] columnWidths = { 200f, 100f, 100f, 200f }; // Column sizes
         Table table = new Table(columnWidths); // Create the table
         table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setBold())); // Create the first column
         table.addHeaderCell(new Cell().add(new Paragraph("Current Stock").setBold())); // Create the second column
@@ -43,8 +43,12 @@ public class PdfGenerator {
         // Add recommended products
         for (ProductRecommendation product : recommendation.getProducts()) { // Iterate through recommended products
             table.addCell(new Cell().add(new Paragraph(product.getProductName()))); // Add the product name
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the current stock of the product
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add the recommended quantity
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the current
+                                                                                                     // stock of the
+                                                                                                     // product
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add the
+                                                                                                            // recommended
+                                                                                                            // quantity
             // Load the product's suppliers
             String suppliers = "";
             for (String s : product.getSuppliersName()) {
@@ -59,6 +63,39 @@ public class PdfGenerator {
         // Return the generated PDF as a byte array
         return outputStream.toByteArray();
     }
+
+    public static byte[] expirationProducts(ArrayList<ProductExpiration> products) throws Exception {
+        // Instancias necesarias para crear el PDF
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(outputStream);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        // Encabezado del PDF
+        document.add(new Paragraph("Products Expiration") // Título del PDF
+                .setBold() // Colocar en negrita
+                .setFontSize(16)); // Tamaño de la fuente 16
+
+        document.add(new Paragraph("\nList of Products:").setBold().setFontSize(14)); // Subtítulo
+
+        // Crear una tabla con los productos
+        float[] columnWidths = { 200f, 200f }; // Tamaños de las columnas: Nombre, Fecha de expiración
+        Table table = new Table(columnWidths); // Crear la tabla
+        table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setBold())); // Encabezado columna 1
+        table.addHeaderCell(new Cell().add(new Paragraph("Expiration Date").setBold())); // Encabezado columna 2
+
+        // Agregar los productos a la tabla
+        for (ProductExpiration product : products) { // Iterar a través de la lista de productos
+            //
+            table.addCell(new Cell().add(new Paragraph(product.nameProduct()))); // Nombre del producto
+            table.addCell(new Cell().add(new Paragraph(product.dateEXpiration().toString()))); // Fecha de expiración
+        }
+
+        document.add(table); // Agregar la tabla al PDF
+        document.close(); // Cerrar el documento para finalizar el contenido
+
+        // Retornar el PDF generado como un arreglo de bytes
+        return outputStream.toByteArray();
+    }
+
 }
-
-
