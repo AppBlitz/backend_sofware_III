@@ -2,7 +2,7 @@ package com.restaurant.repository;
 
 import java.util.Optional;
 
-import com.restaurant.Enum.RecipeStatus;
+import com.restaurant.model.Enum.RecipeStatus;
 import com.restaurant.model.document.Recipe;
 import lombok.NonNull;
 import org.springframework.data.mongodb.repository.MongoRepository;

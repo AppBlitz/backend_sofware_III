@@ -37,7 +37,7 @@ public class ProductService implements ProductServiceInterface {
       Product product = Product.builder()
           .nameProduct(ProductDtoAdd.nameProduct())
           .suppliers(listSupplier)
-          .amount(ProductDtoAdd.amount())
+          .stock(ProductDtoAdd.amount())
           .dateExpiration(ProductDtoAdd.dateExpiration())
           .dateRegister(ProductDtoAdd.dateAdd())
           .weightProduct(ProductDtoAdd.weightProduct())
@@ -52,7 +52,7 @@ public class ProductService implements ProductServiceInterface {
     Product aux = product.get();
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(aux.getWeightProduct());
-    updateProduct.setAmount(aux.getAmount() + productDtoAdd.amount());
+    updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(aux.getSuppliers());
     updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
     return productRepository.save(updateProduct);
@@ -72,14 +72,14 @@ public class ProductService implements ProductServiceInterface {
     suppliers.add(productDtoAdd.supplier());
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
-    updateProduct.setAmount(aux.getAmount() + productDtoAdd.amount());
+    updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(suppliers);
     return productRepository.save(updateProduct);
   }
 
   @Override
   public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException {
-    return productRepository.findByCantidadBefore(0);
+    return productRepository.findByStockGreaterThan(0);
   }
 
 }

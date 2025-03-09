@@ -1,7 +1,5 @@
 package com.restaurant.service.implementation;
 
-import com.restaurant.enums.StateEnum;
-import com.restaurant.exceptions.supplier.*;
 import com.restaurant.model.document.Supplier;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
@@ -34,8 +32,8 @@ public class OrderRecommendationService implements IOrderRecommendationService {
         for (Product product : lowStockProducts) {
                ProductRecommendation recommendation = new ProductRecommendation();
                 recommendation.setProductName(product.getNameProduct());
-                recommendation.setCurrentStock(product.getAmount());
-                recommendation.setRecommendedQuantity(product.getAmount()*2); // Cantidad recomendada arbitraria
+                recommendation.setCurrentStock(product.getStock());
+                recommendation.setRecommendedQuantity(product.getStock()*2); // Cantidad recomendada arbitraria
             for (String idSupplier : product.getSuppliers()) {
                 Optional<Supplier> supplier=supplierRepository.findById(idSupplier);
                 recommendation.getSuppliersName().add(supplier.get().getNameSupplier());

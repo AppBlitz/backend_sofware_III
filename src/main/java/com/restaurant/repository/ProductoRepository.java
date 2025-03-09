@@ -11,14 +11,9 @@ import com.restaurant.model.document.Product;
 
 @Repository
 public interface ProductoRepository extends MongoRepository<Product, String> {
-
-  Optional<Product> findByCantidadBefore(int cantidadBefore);
-  // @Query("{ 'cantidad' : { $lt: ?0 } }")
-  // List<Product> findLowStockProducts(int stockThreshold);
-
-  Optional<Product> findByNameProduct(String nombreProducto);
-
-  @Query("{ 'cantidad' : { $lt: ?0 } }")
+  Optional<Product> findByStockGreaterThan(int quantity);
+  Optional<Product> findByNameProduct(String productName);
+  @Query("{ 'quantity' : { $lt: ?0 } }")
   List<Product> findLowStockProducts(int stockThreshold);
 
 }
