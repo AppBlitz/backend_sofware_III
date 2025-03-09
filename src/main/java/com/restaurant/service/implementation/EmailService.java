@@ -33,7 +33,8 @@ public class EmailService implements IEmailService {
                 .to(toEmail)
                 .withSubject("Recomendacion de pedido Generada automaticamente")
                 .withPlainText("")
-                .withAttachment("OrderRecommendation.pdf", new ByteArrayDataSource(pdfContent, "application/pdf"), "image/png")  // Adjuntar el QR
+                .withAttachment("OrderRecommendation.pdf", new ByteArrayDataSource(pdfContent, "application/pdf"),
+                        "image/png") // Adjuntar el QR
                 .buildEmail();
 
         try (Mailer mailer = MailerBuilder
@@ -42,11 +43,8 @@ public class EmailService implements IEmailService {
                 .withDebugLogging(false)
                 .buildMailer()) {
 
-
             mailer.sendMail(email);
         }
     }
 
 }
-
-
