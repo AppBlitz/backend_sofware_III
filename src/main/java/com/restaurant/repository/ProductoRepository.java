@@ -13,10 +13,12 @@ import com.restaurant.model.document.Product;
 public interface ProductoRepository extends MongoRepository<Product, String> {
 
   Optional<Product> findByStockGreaterThan(int quantity);
+
   Optional<Product> findByNameProduct(String productName);
+
   @Query("{ 'quantity' : { $lt: ?0 } }")
-
-
   List<Product> findLowStockProducts(int stockThreshold);
+
+  boolean existsByNameProduct(String nameProduct);
 
 }

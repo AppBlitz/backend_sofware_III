@@ -35,9 +35,8 @@ public interface ProductServiceInterface {
    */
   public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException;
 
-
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 
+  public Product createProduct(ProductDtoAdd productDtoAdd);
+
 }
-
-
