@@ -48,7 +48,8 @@ public class ProductService implements ProductServiceInterface {
     updateProduct.setWeightProduct(aux.getWeightProduct());
     updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(aux.getSuppliers());
-    updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
+    updateProduct.setPriceProduct(productDtoAdd.priceProduct());
+    updateProduct.setWeightProduct(productDtoAdd.weightProduct());
     return productRepository.save(updateProduct);
 
   }
@@ -65,9 +66,11 @@ public class ProductService implements ProductServiceInterface {
     ArrayList<String> suppliers = aux.getSuppliers();
     suppliers.add(productValidators.searchSupplierName(productDtoAdd.supplier()).getId());
     Product updateProduct = product.get();
-    updateProduct.setWeightProduct(aux.getWeightProduct() + productDtoAdd.weightProduct());
+    updateProduct.setWeightProduct(productDtoAdd.weightProduct());
     updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(suppliers);
+    updateProduct.setPriceProduct(productDtoAdd.priceProduct());
+
     return productRepository.save(updateProduct);
   }
 
@@ -87,6 +90,7 @@ public class ProductService implements ProductServiceInterface {
         .dateExpiration(productDtoAdd.dateExpiration())
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
+        .priceProduct(productDtoAdd.priceProduct())
         .build();
     return productRepository.save(product);
   }

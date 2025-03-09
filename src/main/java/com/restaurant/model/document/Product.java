@@ -38,5 +38,6 @@ public class Product {
     LocalDate dateRegister;
 
     double weightProduct;
+    double priceProduct;
     int stock;
 }
