@@ -34,7 +34,7 @@ public class SupplierController implements ISupplierController {
     }
 
     @Override
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public ResponseEntity<Supplier> getSupplier(@PathVariable String id) throws Exception {
         Supplier supplier = supplierService.getSupplier(id);
         return ResponseEntity.status(200).body(supplier);
@@ -47,7 +47,7 @@ public class SupplierController implements ISupplierController {
     }
 
     @Override
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Supplier> deleteSupplier(@PathVariable String id) throws Exception {
         Supplier supplier = supplierService.deleteSupplier(id);
         return ResponseEntity.status((200)).body(supplier);

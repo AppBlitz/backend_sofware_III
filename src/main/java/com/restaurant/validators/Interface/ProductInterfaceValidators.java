@@ -2,6 +2,8 @@ package com.restaurant.validators.Interface;
 
 import java.util.ArrayList;
 
+import com.restaurant.model.document.Supplier;
+
 public interface ProductInterfaceValidators {
 
   /**
@@ -23,5 +25,17 @@ public interface ProductInterfaceValidators {
    * @return true if found name supplier or false if no found name supplier
    */
   public boolean validarExistsSupplier(ArrayList<String> suppliers, String nameSupplier);
+
+  /**
+   * @param nameSupplier
+   * @return
+   */
+  public boolean identificationSupplierForName(String nameSupplier);
+
+  /**
+   * @param nameSupplier
+   * @return
+   */
+  public Supplier searchSupplierName(String nameSupplier);
 
 }

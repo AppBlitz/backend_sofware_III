@@ -36,9 +36,8 @@ public interface ProductServiceInterface {
    */
   public List<Product> getAvailableProducts() throws ProductFetchException;
 
-
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 
+  public Product createProduct(ProductDtoAdd productDtoAdd);
+
 }
-
-
