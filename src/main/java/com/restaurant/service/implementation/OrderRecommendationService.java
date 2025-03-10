@@ -33,7 +33,7 @@ public class OrderRecommendationService implements IOrderRecommendationService {
             ProductRecommendation recommendation = new ProductRecommendation();
             recommendation.setProductName(product.getNameProduct());
             recommendation.setCurrentStock(product.getStock());
-            recommendation.setRecommendedQuantity(product.getStock() * 2); // Cantidad recomendada arbitraria
+            recommendation.setRecommendedQuantity(product.getStock() * 3); // Cantidad recomendada arbitraria
 
             for (String idSupplier : product.getSuppliers()) {
                 Optional<Supplier> supplier = supplierRepository.findById(idSupplier);
