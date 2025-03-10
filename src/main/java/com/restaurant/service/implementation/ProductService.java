@@ -107,6 +107,10 @@ public class ProductService implements ProductServiceInterface {
     return productValidators.listAllProducts();
   }
 
+  public List<Product> getListProducts(){
+    return productRepository.findAll();
+  }
+
   public Product getProduct(String id) throws Exception{
     Optional<Product> producto=productRepository.findById(id);
     return producto.get();

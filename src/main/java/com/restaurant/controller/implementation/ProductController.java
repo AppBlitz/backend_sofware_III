@@ -51,4 +51,10 @@ public class ProductController implements ProductControllerInterface {
     return ResponseEntity.status(200).body(products);
 }
 
+  @RequestMapping(value = "/allProducts", method = RequestMethod.GET)
+  public ResponseEntity<List<Product>> getListProducts() {
+    List<Product> p=productService.getListProducts();
+    return ResponseEntity.status(200).body(p);
+  }
+
 }
