@@ -1,13 +1,14 @@
 package com.restaurant.service.Interface;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface ProductServiceInterface {
   /**
@@ -36,8 +37,20 @@ public interface ProductServiceInterface {
    */
   public List<Product> getAvailableProducts() throws ProductFetchException;
 
+  /**
+   * @param productDtoAdd
+   * @return
+   */
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);
 
+  /**
+   * @param productDtoAdd
+   * @return
+   */
   public Product createProduct(ProductDtoAdd productDtoAdd);
 
+  /**
+   * @return
+   */
+  public ArrayList<ListProducts> getAllProducts();
 }
