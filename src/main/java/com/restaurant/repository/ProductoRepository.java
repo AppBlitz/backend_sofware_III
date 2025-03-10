@@ -12,7 +12,7 @@ import com.restaurant.model.document.Product;
 @Repository
 public interface ProductoRepository extends MongoRepository<Product, String> {
 
-  Optional<Product> findByStockGreaterThan(int quantity);
+  List<Product> findByStockGreaterThan(int stock);
   Optional<Product> findByNameProduct(String productName);
   @Query("{ 'quantity' : { $lt: ?0 } }")
 

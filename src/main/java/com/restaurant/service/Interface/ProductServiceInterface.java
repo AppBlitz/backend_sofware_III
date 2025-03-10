@@ -6,6 +6,7 @@ import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductServiceInterface {
@@ -33,7 +34,7 @@ public interface ProductServiceInterface {
    * @return
    * @throws ProductFetchException
    */
-  public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException;
+  public List<Product> getAvailableProducts() throws ProductFetchException;
 
 
   public Product updateProductListsSUpplier(ProductDtoAdd productDtoAdd);

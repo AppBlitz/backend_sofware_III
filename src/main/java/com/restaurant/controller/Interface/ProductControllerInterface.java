@@ -1,4 +1,4 @@
-package com.restaurant.controller.Inteface;
+package com.restaurant.controller.Interface;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -23,7 +23,7 @@ public interface IRecipeServices {
      * @param id The ID of the recipe to retrieve.
      * @return The recipe corresponding to the ID, or null if not found.
      */
-    Recipe getRecipeById(Integer id);
+    Recipe getRecipeById(String id);
 
     /**
      * Retrieves all recipes.
@@ -39,12 +39,12 @@ public interface IRecipeServices {
      * @param recipe The updated recipe.
      * @return The updated recipe, or null if the recipe with the provided ID is not found.
      */
-    Recipe updateRecipe(Integer id, Recipe recipe);
+    Recipe updateRecipe(String id, Recipe recipe);
 
     /**
      * Deletes a recipe by its ID.
      *
      * @param id The ID of the recipe to delete.
      */
-    void deleteRecipe(Integer id);
+    void deleteRecipe(String id);
 }

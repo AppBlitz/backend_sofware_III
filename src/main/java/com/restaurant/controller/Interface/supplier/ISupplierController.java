@@ -1,4 +1,4 @@
-package com.restaurant.controller.Inteface.supplier;
+package com.restaurant.controller.Interface.supplier;
 
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.dto.supplier.SupplierDtoEdit;

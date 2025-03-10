@@ -1,6 +1,6 @@
 package com.restaurant.controller.implementation.supplier;
 
-import com.restaurant.controller.Inteface.supplier.ISupplierController;
+import com.restaurant.controller.Interface.supplier.ISupplierController;
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.dto.supplier.SupplierDtoEdit;
 import com.restaurant.model.document.Supplier;
