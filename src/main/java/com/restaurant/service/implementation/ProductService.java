@@ -6,6 +6,8 @@ import java.util.Optional;
 import com.restaurant.exceptions.product.ProductFetchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.model.document.Product;
@@ -93,6 +95,11 @@ public class ProductService implements ProductServiceInterface {
         .priceProduct(productDtoAdd.priceProduct())
         .build();
     return productRepository.save(product);
+  }
+
+  @Override
+  public ArrayList<ListProducts> getAllProducts() {
+    return productValidators.listAllProducts();
   }
 
 }
