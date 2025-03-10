@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/menus")
+@CrossOrigin(origins = "*")
 public class MenuController implements MenuControllerInterface {
 
     @Autowired

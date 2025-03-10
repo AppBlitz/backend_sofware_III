@@ -14,10 +14,6 @@ public interface ProductoRepository extends MongoRepository<Product, String> {
 
   List<Product> findByStockGreaterThan(int stock);
   Optional<Product> findByNameProduct(String productName);
-  @Query("{ 'quantity' : { $lt: ?0 } }")
-
-
-  Optional<Product> findByNameProduct(String productName);
 
   @Query("{ 'quantity' : { $lt: ?0 } }")
   List<Product> findLowStockProducts(int stockThreshold);
