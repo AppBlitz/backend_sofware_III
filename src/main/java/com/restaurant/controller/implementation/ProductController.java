@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.restaurant.controller.Inteface.ProductControllerInterface;
+import com.restaurant.controller.Interface.ProductControllerInterface;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.model.document.Product;
 import com.restaurant.service.implementation.ProductService;
 
 import jakarta.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("product")
@@ -27,4 +28,12 @@ public class ProductController implements ProductControllerInterface {
     return ResponseEntity.status(200).body(product);
   }
 
+  @RequestMapping(value = "/available", method = RequestMethod.GET)
+  public ResponseEntity<List<Product>> getAvailableProducts() throws Exception {
+    List<Product> products = productService.getAvailableProducts();
+    if (products.isEmpty()) {
+      return ResponseEntity.status(204).build(); // No Content
+    }
+    return ResponseEntity.status(200).body(products);
+  }
 }

@@ -1,6 +1,7 @@
 package com.restaurant.service.implementation;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.restaurant.exceptions.product.ProductFetchException;
@@ -75,10 +76,13 @@ public class ProductService implements ProductServiceInterface {
   }
 
   @Override
-  public Optional<Product> ConsultarProductosDisponibles() throws ProductFetchException {
-    return productRepository.findByStockGreaterThan(0);
+  public List<Product> getAvailableProducts() throws ProductFetchException {
+    List<Product> products = productRepository.findByStockGreaterThan(0);
+    if (products.isEmpty()) {
+      throw new ProductFetchException("No products available");
+    }
+    return products;
   }
-
   @Override
   public Product createProduct(ProductDtoAdd productDtoAdd) {
     ArrayList<String> listSupplier = new ArrayList<>();

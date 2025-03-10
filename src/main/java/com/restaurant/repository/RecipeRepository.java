@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Provides methods for CRUD operations and custom queries.
  */
 @Repository
-public interface RecipeRepository extends MongoRepository<Recipe, Integer> {
+public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
     /**
      * Finds a recipe by its name.

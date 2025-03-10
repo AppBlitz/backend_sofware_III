@@ -1,6 +1,6 @@
 package com.restaurant.controller.implementation.supplier;
 
-import com.restaurant.controller.Inteface.supplier.IOrderController;
+import com.restaurant.controller.Interface.supplier.IOrderController;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.service.implementation.EmailService;
 import com.restaurant.service.implementation.OrderRecommendationService;

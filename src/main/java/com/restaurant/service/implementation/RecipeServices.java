@@ -37,7 +37,7 @@ public class RecipeServices implements IRecipeServices {
      * @return The recipe corresponding to the ID, or null if not found.
      */
     @Override
-    public Recipe getRecipeById(Integer id) {
+    public Recipe getRecipeById(String id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
         return recipe.orElse(null);
     }
@@ -60,7 +60,7 @@ public class RecipeServices implements IRecipeServices {
      * @return The updated recipe, or null if the recipe with the provided ID is not found.
      */
     @Override
-    public Recipe updateRecipe(Integer id, Recipe recipe) {
+    public Recipe updateRecipe(String id, Recipe recipe) {
         if (recipeRepository.existsById(id)) {
             recipe.setId(id);
             return recipeRepository.save(recipe);
@@ -74,7 +74,7 @@ public class RecipeServices implements IRecipeServices {
      * @param id The ID of the recipe to delete.
      */
     @Override
-    public void deleteRecipe(Integer id) {
+    public void deleteRecipe(String id) {
         recipeRepository.deleteById(id);
     }
 }

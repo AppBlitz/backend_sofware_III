@@ -1,4 +1,4 @@
-package com.restaurant.controller.Inteface.supplier;
+package com.restaurant.controller.Interface.supplier;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
