@@ -4,47 +4,47 @@ import com.restaurant.model.document.Menu;
 import java.util.List;
 
 /**
- * Interfaz para el servicio de gestión de menús.
- * Proporciona métodos para realizar operaciones CRUD en menús.
+ * Interface for the menu management service.
+ * Provides methods for performing CRUD operations on menus.
  */
 public interface IMenuServices {
 
     /**
-     * Crea un nuevo menú.
+     * Creates a new menu.
      *
-     * @param menu El menú a crear.
-     * @return El menú creado.
+     * @param menu The menu to create.
+     * @return The created menu.
      */
-    Menu crearMenu(Menu menu);
+    Menu createMenu(Menu menu);
 
     /**
-     * Obtiene un menú por su ID.
+     * Gets a menu by its ID.
      *
-     * @param id El ID del menú a obtener.
-     * @return El menú correspondiente al ID, o null si no se encuentra.
+     * @param id The ID of the menu to retrieve.
+     * @return The menu corresponding to the ID, or null if not found.
      */
-    Menu obtenerMenuPorId(Integer id);
+    Menu getMenuById(Integer id);
 
     /**
-     * Obtiene todos los menús.
+     * Gets all menus.
      *
-     * @return Una lista de todos los menús.
+     * @return A list of all menus.
      */
-    List<Menu> obtenerTodosLosMenus();
+    List<Menu> getAllMenus();
 
     /**
-     * Actualiza un menú existente.
+     * Updates an existing menu.
      *
-     * @param id El ID del menú a actualizar.
-     * @param menu El menú actualizado.
-     * @return El menú actualizado, o null si no se encuentra el menú con el ID proporcionado.
+     * @param id   The ID of the menu to update.
+     * @param menu The updated menu.
+     * @return The updated menu, or null if the menu with the provided ID is not found.
      */
-    Menu actualizarMenu(Integer id, Menu menu);
+    Menu updateMenu(Integer id, Menu menu);
 
     /**
-     * Elimina un menú por su ID.
+     * Deletes a menu by its ID.
      *
-     * @param id El ID del menú a eliminar.
+     * @param id The ID of the menu to delete.
      */
-    void eliminarMenu(Integer id);
+    void deleteMenu(Integer id);
 }

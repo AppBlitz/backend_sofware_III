@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementación del servicio de gestión de menús.
- * Proporciona métodos para realizar operaciones CRUD en menús.
+ * Implementation of the menu management service.
+ * Provides methods for performing CRUD operations on menus.
  */
 @Service
 public class MenuServices implements IMenuServices {
@@ -20,47 +20,48 @@ public class MenuServices implements IMenuServices {
     private MenuRepository menuRepository;
 
     /**
-     * Crea un nuevo menú.
+     * Creates a new menu.
      *
-     * @param menu El menú a crear.
-     * @return El menú creado.
+     * @param menu The menu to create.
+     * @return The created menu.
      */
     @Override
-    public Menu crearMenu(Menu menu) {
+    public Menu createMenu(Menu menu) {
         return menuRepository.save(menu);
     }
 
     /**
-     * Obtiene un menú por su ID.
+     * Gets a menu by its ID.
      *
-     * @param id El ID del menú a obtener.
-     * @return El menú correspondiente al ID, o null si no se encuentra.
+     * @param id The ID of the menu to retrieve.
+     * @return The menu corresponding to the ID, or null if not found.
      */
     @Override
-    public Menu obtenerMenuPorId(Integer id) {
+    public Menu getMenuById(Integer id) {
         Optional<Menu> menu = menuRepository.findById(id);
         return menu.orElse(null);
     }
 
     /**
-     * Obtiene todos los menús.
+     * Gets all menus.
      *
-     * @return Una lista de todos los menús.
+     * @return A list of all menus.
      */
     @Override
-    public List<Menu> obtenerTodosLosMenus() {
+    public List<Menu> getAllMenus() {
         return menuRepository.findAll();
     }
 
     /**
-     * Actualiza un menú existente.
+     * Updates an existing menu.
      *
-     * @param id El ID del menú a actualizar.
-     * @param menu El menú actualizado.
-     * @return El menú actualizado, o null si no se encuentra el menú con el ID proporcionado.
+     * @param id   The ID of the menu to update.
+     * @param menu The updated menu.
+     * @return The updated menu, or null if the menu with the provided ID is not
+     *         found.
      */
     @Override
-    public Menu actualizarMenu(Integer id, Menu menu) {
+    public Menu updateMenu(Integer id, Menu menu) {
         if (menuRepository.existsById(id)) {
             menu.setId(id);
             return menuRepository.save(menu);
@@ -69,12 +70,12 @@ public class MenuServices implements IMenuServices {
     }
 
     /**
-     * Elimina un menú por su ID.
+     * Deletes a menu by its ID.
      *
-     * @param id El ID del menú a eliminar.
+     * @param id The ID of the menu to delete.
      */
     @Override
-    public void eliminarMenu(Integer id) {
+    public void deleteMenu(Integer id) {
         menuRepository.deleteById(id);
     }
 }

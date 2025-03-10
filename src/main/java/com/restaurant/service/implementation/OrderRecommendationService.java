@@ -10,7 +10,7 @@ import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Supplier;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
-import com.restaurant.repository.ProductoRepository;
+import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.SupplierRepository;
 import com.restaurant.service.Interface.IOrderRecommendationService;
 
@@ -18,7 +18,7 @@ import com.restaurant.service.Interface.IOrderRecommendationService;
 public class OrderRecommendationService implements IOrderRecommendationService {
 
     @Autowired
-    ProductoRepository productoRepository;
+    ProductRepository productoRepository;
 
     @Autowired
     private SupplierRepository supplierRepository;

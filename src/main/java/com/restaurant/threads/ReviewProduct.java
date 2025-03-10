@@ -9,14 +9,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import com.restaurant.dto.product.ProductExpiration;
 import com.restaurant.model.document.Product;
-import com.restaurant.repository.ProductoRepository;
+import com.restaurant.repository.ProductRepository;
 import com.restaurant.service.implementation.EmailService;
 import com.restaurant.util.PdfGenerator;
 
 public class ReviewProduct extends Thread {
 
   @Autowired
-  ProductoRepository productoRepository;
+  ProductRepository productRepository;
 
   @Autowired(required = true)
   EmailService emailService;
