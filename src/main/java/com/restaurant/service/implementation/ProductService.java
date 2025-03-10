@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.restaurant.exceptions.product.ProductFetchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
+import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
-import com.restaurant.repository.ProductoRepository;
+import com.restaurant.repository.ProductRepository;
 import com.restaurant.service.Interface.ProductServiceInterface;
 import com.restaurant.validators.product.ProductValidators;
 
@@ -20,7 +20,7 @@ import com.restaurant.validators.product.ProductValidators;
 public class ProductService implements ProductServiceInterface {
 
   @Autowired
-  public ProductoRepository productRepository;
+  public ProductRepository productRepository;
 
   @Autowired
   public ProductValidators productValidators;
@@ -85,6 +85,7 @@ public class ProductService implements ProductServiceInterface {
     }
     return products;
   }
+
   @Override
   public Product createProduct(ProductDtoAdd productDtoAdd) {
     ArrayList<String> listSupplier = new ArrayList<>();

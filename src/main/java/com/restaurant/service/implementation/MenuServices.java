@@ -55,9 +55,10 @@ public class MenuServices implements IMenuServices {
     /**
      * Updates an existing menu.
      *
-     * @param id The ID of the menu to update.
+     * @param id   The ID of the menu to update.
      * @param menu The updated menu.
-     * @return The updated menu, or null if the menu with the provided ID is not found.
+     * @return The updated menu, or null if the menu with the provided ID is not
+     *         found.
      */
     @Override
     public Menu updateMenu(Integer id, Menu menu) {

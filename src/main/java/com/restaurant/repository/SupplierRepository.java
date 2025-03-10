@@ -10,6 +10,7 @@ import com.restaurant.model.document.Supplier;
 
 @Repository
 public interface SupplierRepository extends MongoRepository<Supplier, String> {
+
   boolean existsById(String idSupplier);
 
   boolean existsByNameSupplier(String nameSupplier);

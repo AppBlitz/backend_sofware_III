@@ -20,7 +20,7 @@ public class SupplierServices implements ISupplierServices {
     SupplierRepository supplierRepository;
 
     @Override
-    public Supplier getSupplier(String id)  throws ExceptionGetSupplier {
+    public Supplier getSupplier(String id) throws ExceptionGetSupplier {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         return supplier.get();
     }
@@ -39,32 +39,29 @@ public class SupplierServices implements ISupplierServices {
 
     @Override
     public Supplier editSupplier(SupplierDtoEdit supplierdtoedit) throws ExceptionEditSupplier {
-        Optional<Supplier> supplier= supplierRepository.findById(supplierdtoedit.id());
-        Supplier supplier1 = supplierDtoToSupplier(supplier.get(),supplierdtoedit);
+        Optional<Supplier> supplier = supplierRepository.findById(supplierdtoedit.id());
+        Supplier supplier1 = supplierDtoToSupplier(supplier.get(), supplierdtoedit);
         return supplierRepository.save(supplier1);
     }
 
     @Override
     public Supplier deleteSupplier(String id) {
-        Optional<Supplier> supplier= supplierRepository.findById(id);
+        Optional<Supplier> supplier = supplierRepository.findById(id);
         Supplier supplier1 = supplier.get();
         supplier1.setStateActivity(StateEnum.IDLE);
         supplierRepository.save(supplier1);
         return supplier1;
     }
 
-    public Supplier supplierDtoToSupplier(SupplierDtoAdd supplierdtoadd){
-        Supplier supplier= Supplier.builder().
-                nameSupplier(supplierdtoadd.nameSupplier()).
-                location(supplierdtoadd.location()).
-                offeredProducts(supplierdtoadd.offeredProducts()).
-                orderDate(supplierdtoadd.orderDate()).
-                stateActivity(supplierdtoadd.stateActivity()).build();
+    public Supplier supplierDtoToSupplier(SupplierDtoAdd supplierdtoadd) {
+        Supplier supplier = Supplier.builder().nameSupplier(supplierdtoadd.nameSupplier())
+                .location(supplierdtoadd.location()).offeredProducts(supplierdtoadd.offeredProducts())
+                .orderDate(supplierdtoadd.orderDate()).stateActivity(supplierdtoadd.stateActivity()).build();
 
         return supplier;
     }
 
-    public Supplier supplierDtoToSupplier(Supplier supplier, SupplierDtoEdit supplierdtoedit){
+    public Supplier supplierDtoToSupplier(Supplier supplier, SupplierDtoEdit supplierdtoedit) {
         supplier.setNameSupplier(supplierdtoedit.nameSupplier());
         supplier.setLocation(supplierdtoedit.location());
         supplier.setOfferedProducts(supplierdtoedit.offeredProducts());
