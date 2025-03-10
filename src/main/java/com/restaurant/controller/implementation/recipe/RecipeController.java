@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/recipes")
+@CrossOrigin(origins = "*")
 public class RecipeController implements RecipeControllerInterface {
 
     @Autowired
