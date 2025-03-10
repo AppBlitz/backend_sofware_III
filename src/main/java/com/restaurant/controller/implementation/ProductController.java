@@ -16,6 +16,7 @@ import com.restaurant.service.implementation.ProductService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("product")
 public class ProductController implements ProductControllerInterface {
