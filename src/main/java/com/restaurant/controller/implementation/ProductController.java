@@ -1,8 +1,6 @@
 package com.restaurant.controller.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +17,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("product")
+@CrossOrigin(origins = "*")
 public class ProductController implements ProductControllerInterface {
 
   @Autowired(required = true)
