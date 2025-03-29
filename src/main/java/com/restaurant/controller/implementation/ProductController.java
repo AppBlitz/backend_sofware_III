@@ -14,7 +14,6 @@ import com.restaurant.service.implementation.ProductService;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("product")
 @CrossOrigin(origins = "*")
@@ -49,11 +48,11 @@ public class ProductController implements ProductControllerInterface {
   public ResponseEntity<Product> getProduct(@PathVariable String id) throws Exception {
     Product products = productService.getProduct(id);
     return ResponseEntity.status(200).body(products);
-}
+  }
 
   @RequestMapping(value = "/allProducts", method = RequestMethod.GET)
   public ResponseEntity<List<Product>> getListProducts() {
-    List<Product> p=productService.getListProducts();
+    List<Product> p = productService.getListProducts();
     return ResponseEntity.status(200).body(p);
   }
 

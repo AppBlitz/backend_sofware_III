@@ -7,6 +7,6 @@ import com.restaurant.model.vo.Ingredient;
 import lombok.*;
 
 public record RecipeDtoAdd(@NonNull String name, @NonNull List<Ingredient> ingredients, @NonNull String instructions,
-                           @NonNull int preparationTime, @NonNull int servings, String comment,
-                           @NonNull LocalDate creationDate, @NonNull String recipeStatus) {
+                                                      int preparationTime, int servings, String comment,
+                                                      @NonNull LocalDate creationDate, @NonNull String recipeStatus) {
 }

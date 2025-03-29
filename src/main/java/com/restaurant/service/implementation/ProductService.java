@@ -107,12 +107,19 @@ public class ProductService implements ProductServiceInterface {
     return productValidators.listAllProducts();
   }
 
-  public List<Product> getListProducts(){
+  public List<Product> getListProducts() {
     return productRepository.findAll();
   }
 
-  public Product getProduct(String id) throws Exception{
-    Optional<Product> producto=productRepository.findById(id);
+  public Product getProduct(String id) throws Exception {
+    Optional<Product> producto = productRepository.findById(id);
     return producto.get();
   }
+
+  @Override
+  public Product updateProduct() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+  }
+
 }

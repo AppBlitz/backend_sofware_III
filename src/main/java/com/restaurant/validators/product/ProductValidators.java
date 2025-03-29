@@ -1,11 +1,13 @@
 package com.restaurant.validators.product;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.restaurant.dto.product.ListProducts;
 import com.restaurant.model.document.Product;
@@ -93,4 +95,16 @@ public class ProductValidators implements ProductInterfaceValidators {
         product.getSuppliers(), product.getDateExpiration(), product.getDateRegister(), product.getWeightProduct());
   }
 
+  public byte[] addImageProduct(MultipartFile image) {
+    if (image.isEmpty()) {
+      return null;
+    }
+
+    try {
+      return image.getBytes();
+    } catch (IOException e) {
+      e.printStackTrace();
+      throw new RuntimeException("Error al procesar la imagen: " + e.getMessage(), e);
+    }
+  }
 }
