@@ -3,11 +3,13 @@
 # spring.data.mongodb.database=elalero
 
 spring:
+  config:
+    import: configuration.yml
   mail:
     host: smtp.gmail.com
     port: 587
-    username: equiporoblox520@gmail.com
-    password: vzjq tyle doef ihzv
+    username: ${data.email}
+    password: ${data.password}
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -19,5 +21,5 @@ spring:
     name: restaurant
   data:
     mongodb:
-      uri: mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-      database: elalero
+      uri: ${data.url}
+      database: ${data.database}
