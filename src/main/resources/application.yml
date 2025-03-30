@@ -1,7 +1,3 @@
-# spring.application.nameSupplier=restaurant
-# spring.data.mongodb.uri=mongodb+srv://carlos:BEuWvDfNd9HwfwLn@cluster0.5expw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-# spring.data.mongodb.database=elalero
-
 spring:
   config:
     import: configuration.yml
