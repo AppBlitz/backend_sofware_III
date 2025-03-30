@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -16,13 +16,15 @@ import com.restaurant.validators.product.ProductValidators;
 @SpringBootTest
 public class validatorTest {
 
+  @Value("${my.test.imageOne.route}")
+  String imageOne;
+
   @Autowired
   private ProductValidators productValidators;
 
-  @ParameterizedTest
-  @ValueSource(strings = { "src/test/java/com/restaurant/images/images.webp" })
-  public void testValidatorImage(String route) throws IOException {
-    FileInputStream fileInputStream = new FileInputStream(route);
+  @Test
+  public void testValidatorImage() throws IOException {
+    FileInputStream fileInputStream = new FileInputStream(imageOne);
 
     MockMultipartFile mockFile = new MockMultipartFile(
         "image",
