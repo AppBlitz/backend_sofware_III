@@ -10,9 +10,11 @@ import org.springframework.data.mongodb.repository.Query;
 import com.restaurant.model.document.Product;
 
 @Repository
-public interface ProductoRepository extends MongoRepository<Product, String> {
+public interface ProductRepository extends MongoRepository<Product, String> {
 
+  @Query("{ 'quantity' : { $lt: ?0 } }")
   List<Product> findByStockGreaterThan(int stock);
+
   Optional<Product> findByNameProduct(String productName);
 
   @Query("{ 'quantity' : { $lt: ?0 } }")

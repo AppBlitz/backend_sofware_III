@@ -1,5 +1,8 @@
 package com.restaurant.controller.implementation.recipe;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,20 +11,18 @@ import com.restaurant.controller.Interface.recipe.RecipeControllerInterface;
 import com.restaurant.dto.recipe.RecipeDtoAdd;
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
 import com.restaurant.model.document.Recipe;
-import com.restaurant.service.Interface.IRecipeServices;
+import com.restaurant.service.implementation.RecipeServices;
 
 import jakarta.validation.Valid;
 
-import java.time.LocalDate;
-import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/recipes")
-@CrossOrigin(origins = "*")
+
 public class RecipeController implements RecipeControllerInterface {
 
     @Autowired
-    private IRecipeServices recipeServices;
+    private RecipeServices recipeServices;
 
     @Override
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -59,7 +60,8 @@ public class RecipeController implements RecipeControllerInterface {
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable String id, @Valid @RequestBody RecipeDtoUpdate recipeDtoUpdate) {
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable String id,
+            @Valid @RequestBody RecipeDtoUpdate recipeDtoUpdate) {
         Recipe recipe = new Recipe();
         recipe.setName(recipeDtoUpdate.name());
         recipe.setIngredients(recipeDtoUpdate.ingredients());
@@ -76,6 +78,7 @@ public class RecipeController implements RecipeControllerInterface {
             return ResponseEntity.notFound().build();
         }
     }
+
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteRecipe(@PathVariable String id) {

@@ -1,18 +1,22 @@
 package com.restaurant.model.document;
 
-import com.restaurant.model.Enum.RecipeStatus;
-import com.restaurant.model.vo.Ingredient;
-import lombok.*;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.restaurant.model.vo.Ingredient;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
-@Document(collection ="recipe")
+@Document(collection = "recipe")
 @Builder
 @NoArgsConstructor
 @ToString
@@ -20,7 +24,7 @@ import java.util.List;
 @Setter
 public class Recipe {
     @Id
-    String  id;
+    String id;
     private String name;
     private List<Ingredient> ingredients;
     private String instructions;

@@ -55,9 +55,10 @@ public class RecipeServices implements IRecipeServices {
     /**
      * Updates an existing recipe.
      *
-     * @param id The ID of the recipe to update.
+     * @param id     The ID of the recipe to update.
      * @param recipe The updated recipe.
-     * @return The updated recipe, or null if the recipe with the provided ID is not found.
+     * @return The updated recipe, or null if the recipe with the provided ID is not
+     *         found.
      */
     @Override
     public Recipe updateRecipe(String id, Recipe recipe) {
