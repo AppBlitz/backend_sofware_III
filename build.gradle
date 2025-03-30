@@ -12,9 +12,13 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
 repositories {
     mavenCentral()
+}
+javadoc{
+    destinationDir = file("./build/generated/docs/javadoc/")
+    include 'com/baeldung/addition/**'
+    exclude 'com/baeldung/subtraction/**'
 }
 
 dependencies {
@@ -42,10 +46,10 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 tasks.named('bootJar') {
     archiveFileName = 'how-much-pay-api-0.0.1.jar'
 }
+
 
 tasks.named('bootJar') {
 	archiveFileName = 'how-much-pay-api-0.0.1.jar'
