@@ -16,9 +16,8 @@ repositories {
     mavenCentral()
 }
 javadoc{
-    destinationDir = file("./build/generated/docs/javadoc/")
-    include 'com/baeldung/addition/**'
-    exclude 'com/baeldung/subtraction/**'
+
+  destinationDir = file("${buildDir}/docs/testjavadoc")
 }
 
 dependencies {
@@ -49,8 +48,6 @@ tasks.named('test') {
 tasks.named('bootJar') {
     archiveFileName = 'how-much-pay-api-0.0.1.jar'
 }
-
-
 tasks.named('bootJar') {
 	archiveFileName = 'how-much-pay-api-0.0.1.jar'
 }
