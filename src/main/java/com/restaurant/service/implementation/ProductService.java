@@ -2,13 +2,16 @@ package com.restaurant.service.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
+import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
@@ -117,9 +120,37 @@ public class ProductService implements ProductServiceInterface {
   }
 
   @Override
-  public Product updateProduct() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+  public Product updateProduct(ProductUpdateDto productUpdateDto) {
+    Optional<Product> product = productRepository.findById(productUpdateDto.id());
+    if (product.isEmpty())
+      throw new NoSuchElementException("This product not existe");
+    else {
+      Product productUpdate = product.get();
+      productUpdate.setDateExpiration(productUpdateDto.dateExpiration());
+      productUpdate.setNameProduct(productUpdate.getNameProduct());
+      productUpdate.setPriceProduct(productUpdateDto.priceProduct());
+      productUpdate.setStock(productUpdateDto.amount() + productUpdate.getStock());
+      productUpdate.setWeightProduct(productUpdateDto.weightProduct());
+      productUpdate.setSuppliers(productUpdateDto.suppliers());
+      productUpdate.setDateRegister(productUpdateDto.dateAdd());
+      if (productUpdateDto.images().size() == 1) {
+        byte images[] = productValidators.addImageProduct(productUpdateDto.images().get(0));
+        List<byte[]> listImages = productUpdate.getImages();
+        listImages.add(images);
+        productUpdate.setImages(listImages);
+      } else if (productUpdateDto.images().size() >= 2) {
+        ArrayList<byte[]> listImages = new ArrayList<>();
+        for (MultipartFile image : productUpdateDto.images()) {
+          listImages.add(productValidators.addImageProduct(image));
+        }
+        productUpdate.setImages(listImages);
+      } else {
+        productUpdate.setImages(null);
+      }
+
+      return productUpdate;
+    }
+
   }
 
 }

@@ -24,8 +24,8 @@ public class Product {
     @NonNull
     String nameProduct;
 
-    @NonNull
-    ArrayList<String> suppliers;
+    @Builder.Default
+    ArrayList<String> suppliers = new ArrayList<>();
 
     @NonNull
     LocalDate dateExpiration;

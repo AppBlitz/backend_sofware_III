@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
+import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import com.restaurant.exceptions.product.ProductFetchException;
@@ -54,6 +55,10 @@ public interface ProductServiceInterface {
    */
   public ArrayList<ListProducts> getAllProducts();
 
-  public Product updateProduct();
+  /**
+   * @param productUpdateDto for update product
+   * @return priduct update
+   */
+  public Product updateProduct(ProductUpdateDto productUpdateDto);
 
 }
