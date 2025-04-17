@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Null;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public record ProductDtoAdd(@NonNull String nameProduct, @NonNull String supplier, @NonNull LocalDate dateExpiration,
-    @NonNull LocalDate dateAdd, double weightProduct, int amount, double priceProduct, @Nullable List<MultipartFile> images) {
+public record ProductDtoAdd(@NonNull String nameProduct, @NonNull String supplier, /*@NonNull LocalDate dateExpiration,*/
+    @NonNull LocalDate dateAdd, double weightProduct, int amount, double priceProduct, @Nullable List<MultipartFile> images,    @NonNull
+                            String typeStock) {
 }

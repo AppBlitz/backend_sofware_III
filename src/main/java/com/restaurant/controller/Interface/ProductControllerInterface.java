@@ -20,8 +20,8 @@ public interface ProductControllerInterface {
    */
   public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductDtoAdd productDtoAdd) throws Exception;
 
-  /**
-   * @return
-   */
-  public ArrayList<ListProducts> getAllProducts();
+//  /**
+//   * @return
+//   */
+//  public ArrayList<ListProducts> getAllProducts();
 }

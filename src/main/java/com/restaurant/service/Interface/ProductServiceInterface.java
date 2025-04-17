@@ -50,10 +50,10 @@ public interface ProductServiceInterface {
    */
   public Product createProduct(ProductDtoAdd productDtoAdd);
 
-  /**
-   * @return list of products
-   */
-  public ArrayList<ListProducts> getAllProducts();
+//  /**
+//   * @return list of products
+//   */
+//  public ArrayList<ListProducts> getAllProducts();
 
   /**
    * @param productUpdateDto for update product

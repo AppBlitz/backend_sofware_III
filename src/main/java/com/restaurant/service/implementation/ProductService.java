@@ -1,12 +1,17 @@
 package com.restaurant.service.implementation;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.restaurant.dto.product.MovementDto;
 import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.Enum.MovementAction;
 import com.restaurant.model.document.Supplier;
+import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.repository.MovementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +37,9 @@ public class ProductService implements ProductServiceInterface {
 
   @Autowired
   public SupplierServices supplierServices;
+
+  @Autowired
+  public MovementRepository movementRepository;
 
   @Override
   public Product addProduct(ProductDtoAdd ProductDtoAdd) throws ExceptioAddedProduct {
@@ -98,30 +106,34 @@ public class ProductService implements ProductServiceInterface {
   public Product createProduct(ProductDtoAdd productDtoAdd) {
     ArrayList<String> listSupplier = new ArrayList<>();
     ArrayList<byte[]> listImages = new ArrayList<>();
-    for (MultipartFile image : productDtoAdd.images()) {
-      listImages.add(productValidators.addImageProduct(image));
-    }
+      for (MultipartFile image : productDtoAdd.images()) {
+        listImages.add(productValidators.addImageProduct(image));
+      }
+
 
     listSupplier.add(productValidators.searchSupplierName(productDtoAdd.supplier()).getId());
     Product product = Product.builder()
         .nameProduct(productDtoAdd.nameProduct())
         .suppliers(listSupplier)
         .stock(productDtoAdd.amount())
-        .dateExpiration(productDtoAdd.dateExpiration())
+      //  .dateExpiration.add(productDtoAdd.dateExpiration())
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
         .priceProduct(productDtoAdd.priceProduct())
             .images(listImages)
+            .typeStock(productDtoAdd.typeStock())
         .build();
+  product.setDateExpiration(new ArrayList<>());
+  product.setControldateExpiration(new ArrayList<>());
     Product p= productRepository.save(product);
     verification_product_supplier(p.getId(),p.getSuppliers());
     return p;
   }
 
-  @Override
-  public ArrayList<ListProducts> getAllProducts() {
-    return productValidators.listAllProducts();
-  }
+//  @Override
+//  public ArrayList<ListProducts> getAllProducts() {
+//    return productValidators.listAllProducts();
+//  }
 
   public List<Product> getListProducts() {
     return productRepository.findAll();
@@ -158,7 +170,7 @@ public class ProductService implements ProductServiceInterface {
         }
         productUpdate.setImages(listImages);
       }
-
+      productUpdate.setTypeStock(productUpdateDto.typeStock());
       verification_product_supplier(productUpdate.getId(),productUpdate.getSuppliers());
       return productUpdate;
     }
@@ -171,6 +183,51 @@ public class ProductService implements ProductServiceInterface {
     p1.setEstate(Estate.INACTIVE);
     productRepository.save(p1);
     return p1;
+  }
+
+  public MovementProduct updateAmount(String idProduct, MovementDto movementDto){
+    Product p= getProduct(idProduct);
+    MovementProduct o= new MovementProduct(p.getNameProduct(),
+            movementDto.action(),
+            movementDto.amount(),
+            movementDto.reason(),
+            movementDto.timestamp(),
+            movementDto.expiration());
+
+    if(movementDto.action()== MovementAction.ENTRADA){
+      inputMovement(idProduct, movementDto.amount(), movementDto.expiration());
+    }else{
+      outputMovement(idProduct, movementDto.amount());
+    }
+
+    return movementRepository.save(o);
+  }
+
+  public Product inputMovement(String idProduct, int amount, LocalDate expiration){
+    Product p= getProduct(idProduct);
+
+    p.setStock(p.getStock()+amount);
+    p.getDateExpiration().add(expiration);
+    p.getControldateExpiration().add(p.getStock());
+
+
+    return productRepository.save(p);
+  }
+
+  public Product outputMovement(String idProduct,int amount){
+    Product p= getProduct(idProduct);
+    for(int i=0;i<p.getControldateExpiration().size();i++){
+      if(p.getControldateExpiration().get(i)-amount<=0){
+        p.getControldateExpiration().remove(i);
+        p.getDateExpiration().remove(i);
+      }else{
+        p.getControldateExpiration().set(i,p.getControldateExpiration().get(i)-amount);
+      }
+    }
+    p.setStock(p.getStock()-amount);
+
+
+    return productRepository.save(p);
   }
 
   public void verification_product_supplier(String idProduct, List<String> suppliers){
