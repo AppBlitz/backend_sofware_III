@@ -3,6 +3,8 @@ package com.restaurant.model.document;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.restaurant.model.Enum.Estate;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,13 +26,24 @@ import lombok.ToString;
 @Setter
 public class Recipe {
     @Id
-    String id;
+    @NotNull
+    public String id;
+    @NotNull
     private String name;
+    @NotNull
     private List<Ingredient> ingredients;
+    @NotNull
     private String instructions;
+    @NotNull
     private int preparationTime;
+    @NotNull
     private int servings;
+
     private String comment;
+    @NotNull
     private LocalDate creationDate;
-    private String recipeStatus;
+    @NotNull
+    private Estate estate;
+
+    //200 ok
 }
