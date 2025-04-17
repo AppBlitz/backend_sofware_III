@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,25 +18,23 @@ import lombok.*;
 @Getter
 @Setter
 public class Product {
-
     @Id
-    String id;
+    @NotNull
+    private String id;
+    @NotNull
+    private String nameProduct;
+    private ArrayList<String> suppliers;
+    @NotNull
+    private LocalDate dateExpiration;
+    @NotNull
+    private LocalDate dateRegister;
+    @NotNull
+    private double weightProduct;
+    @NotNull
+    private double priceProduct;
+    @NotNull
+    private int stock;
+    private List<byte[]> images;
 
-    @NonNull
-    String nameProduct;
-
-    @NonNull
-    ArrayList<String> suppliers;
-
-    @NonNull
-    LocalDate dateExpiration;
-    @NonNull
-    LocalDate dateRegister;
-
-    double weightProduct;
-    double priceProduct;
-    int stock;
-
-    @Builder.Default
-    List<byte[]> images = new ArrayList<>();
+    //200 ok
 }
