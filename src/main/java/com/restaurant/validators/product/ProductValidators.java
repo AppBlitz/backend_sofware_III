@@ -22,7 +22,7 @@ public class ProductValidators implements ProductInterfaceValidators {
   @Autowired
   ProductRepository productRepository;
 
-  @Autowired(required = true)
+  @Autowired
   SupplierRepository supplierRepository;
 
   @Override
@@ -53,7 +53,6 @@ public class ProductValidators implements ProductInterfaceValidators {
       }
     }
     return false;
-
   }
 
   public boolean validatorIdSupplier(String idSupplier) {

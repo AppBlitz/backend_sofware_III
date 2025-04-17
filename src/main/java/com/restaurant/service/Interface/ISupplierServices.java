@@ -9,6 +9,7 @@ import java.util.List;
 public interface ISupplierServices {
     /**
      * get supplier
+     *
      * @param id
      * @return a supplier
      */
@@ -16,12 +17,14 @@ public interface ISupplierServices {
 
     /**
      * gets the existing suppliers
+     *
      * @return a list of suppliers
      */
     public List<Supplier> getSuppliers();
 
     /**
      * add Supplier to the DataBase
+     *
      * @param supplierdtoadd
      * @return a add´s supplier
      */
@@ -29,6 +32,7 @@ public interface ISupplierServices {
 
     /**
      * edit the attributes of the supplier
+     *
      * @param supplierdtoedit
      * @return supplier
      */
@@ -36,6 +40,7 @@ public interface ISupplierServices {
 
     /**
      * delete supplier of the DataBase
+     *
      * @param id
      * @return a supplier
      */
@@ -43,6 +48,7 @@ public interface ISupplierServices {
 
     /**
      * Convert the SupplierDto to a Supplier for later addition
+     *
      * @param supplierdtoadd
      * @return a supplier
      */
@@ -51,9 +57,18 @@ public interface ISupplierServices {
     /**
      * Take the existing supplier and update its data with the SupplierDto
      * to save it with the new information
+     *
      * @param supplier
      * @param supplierdtoedit
      * @return a supplier
      */
     public Supplier supplierDtoToSupplier(Supplier supplier, SupplierDtoEdit supplierdtoedit);
+
+
+    /**
+     * add supplier to products
+     * @param idSupplier
+     * @param products
+     */
+    public void verification_product_supplier(String idSupplier, List<String> products);
 }

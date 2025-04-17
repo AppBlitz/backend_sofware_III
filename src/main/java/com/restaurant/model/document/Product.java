@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.restaurant.model.Enum.Estate;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -34,7 +35,10 @@ public class Product {
     private double priceProduct;
     @NotNull
     private int stock;
+
     private List<byte[]> images;
+
+    private Estate estate;
 
     //200 ok
 }

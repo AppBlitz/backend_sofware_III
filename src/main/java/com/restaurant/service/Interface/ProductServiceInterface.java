@@ -61,4 +61,10 @@ public interface ProductServiceInterface {
    */
   public Product updateProduct(ProductUpdateDto productUpdateDto);
 
+  /**
+   * add product to suppliers
+   * @param idProduct
+   * @param suppliers
+   */
+  public void verification_product_supplier(String idProduct, List<String> suppliers);
 }
