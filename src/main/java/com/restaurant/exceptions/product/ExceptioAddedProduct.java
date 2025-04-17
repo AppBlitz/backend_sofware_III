@@ -1,7 +1,7 @@
 package com.restaurant.exceptions.product;
 
 public class ExceptioAddedProduct extends Exception {
-  ExceptioAddedProduct(String message) {
+  public ExceptioAddedProduct(String message) {
     super(message);
   }
 }

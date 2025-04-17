@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.document.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,9 @@ public class ProductService implements ProductServiceInterface {
   @Autowired
   public ProductValidators productValidators;
 
+  @Autowired
+  public SupplierServices supplierServices;
+
   @Override
   public Product addProduct(ProductDtoAdd ProductDtoAdd) throws ExceptioAddedProduct {
     if (productValidators.identificationSupplierForName(ProductDtoAdd.supplier())) {
@@ -42,7 +47,7 @@ public class ProductService implements ProductServiceInterface {
         return createProduct(ProductDtoAdd);
       }
     } else {
-      return new Product();
+      throw new ExceptioAddedProduct("es necesario ingresar un proveedor que exista para el producto");
     }
   }
 
@@ -92,6 +97,11 @@ public class ProductService implements ProductServiceInterface {
   @Override
   public Product createProduct(ProductDtoAdd productDtoAdd) {
     ArrayList<String> listSupplier = new ArrayList<>();
+    ArrayList<byte[]> listImages = new ArrayList<>();
+    for (MultipartFile image : productDtoAdd.images()) {
+      listImages.add(productValidators.addImageProduct(image));
+    }
+
     listSupplier.add(productValidators.searchSupplierName(productDtoAdd.supplier()).getId());
     Product product = Product.builder()
         .nameProduct(productDtoAdd.nameProduct())
@@ -101,8 +111,11 @@ public class ProductService implements ProductServiceInterface {
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
         .priceProduct(productDtoAdd.priceProduct())
+            .images(listImages)
         .build();
-    return productRepository.save(product);
+    Product p= productRepository.save(product);
+    verification_product_supplier(p.getId(),p.getSuppliers());
+    return p;
   }
 
   @Override
@@ -114,7 +127,7 @@ public class ProductService implements ProductServiceInterface {
     return productRepository.findAll();
   }
 
-  public Product getProduct(String id) throws Exception {
+  public Product getProduct(String id) {
     Optional<Product> producto = productRepository.findById(id);
     return producto.get();
   }
@@ -129,7 +142,7 @@ public class ProductService implements ProductServiceInterface {
       productUpdate.setDateExpiration(productUpdateDto.dateExpiration());
       productUpdate.setNameProduct(productUpdate.getNameProduct());
       productUpdate.setPriceProduct(productUpdateDto.priceProduct());
-      productUpdate.setStock(productUpdateDto.amount() + productUpdate.getStock());
+     // productUpdate.setStock(productUpdateDto.amount() + productUpdate.getStock());
       productUpdate.setWeightProduct(productUpdateDto.weightProduct());
       productUpdate.setSuppliers(productUpdateDto.suppliers());
       productUpdate.setDateRegister(productUpdateDto.dateAdd());
@@ -144,13 +157,29 @@ public class ProductService implements ProductServiceInterface {
           listImages.add(productValidators.addImageProduct(image));
         }
         productUpdate.setImages(listImages);
-      } else {
-        productUpdate.setImages(null);
       }
 
+      verification_product_supplier(productUpdate.getId(),productUpdate.getSuppliers());
       return productUpdate;
     }
 
+  }
+
+  public Product deleteProduct(String id){
+    Optional<Product> product = productRepository.findById(id);
+    Product p1= product.get();
+    p1.setEstate(Estate.INACTIVE);
+    productRepository.save(p1);
+    return p1;
+  }
+
+  public void verification_product_supplier(String idProduct, List<String> suppliers){
+    for( String s: suppliers){
+      Supplier supplier =  supplierServices.getSupplier(s);
+      if(!supplier.getOfferedProducts().contains(idProduct)){
+        supplier.getOfferedProducts().add(idProduct);
+      }
+    }
   }
 
 }

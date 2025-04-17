@@ -21,7 +21,7 @@ public class OrderRecommendationService implements IOrderRecommendationService {
     ProductRepository productoRepository;
 
     @Autowired
-    private SupplierRepository supplierRepository;
+    SupplierServices supplierServices;
     /**
      * Generates an order recommendation for products with low stock.
      *
@@ -44,8 +44,8 @@ public class OrderRecommendationService implements IOrderRecommendationService {
 
             // Retrieve supplier names for the product
             for (String idSupplier : product.getSuppliers()) {
-                Optional<Supplier> supplier = supplierRepository.findById(idSupplier);
-                recommendation.getSuppliersName().add(supplier.get().getNameSupplier());
+                Supplier supplier=supplierServices.getSupplier(idSupplier);
+                recommendation.getSuppliersName().add(supplier.getNameSupplier());
             }
 
             recommendedProducts.add(recommendation);

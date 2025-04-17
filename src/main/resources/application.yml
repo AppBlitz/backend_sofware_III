@@ -2,8 +2,8 @@ spring:
   config:
     import: configuration.yml
   mail:
-    host: smtp.gmail.com
-    port: 587
+    host: ${data.host}
+    port: ${data.port}
     username: ${data.email}
     password: ${data.password}
     properties:
@@ -14,7 +14,7 @@ spring:
       mail.smtp.timeout: 5000
       mail.smtp.writetimeout: 5000
   application:
-    name: restaurant
+    name: ${data.name}
   data:
     mongodb:
       uri: ${data.url}

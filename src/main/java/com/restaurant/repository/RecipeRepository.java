@@ -29,5 +29,5 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
      * @param recipeStatus The status of the recipe to find.
      * @return An Optional containing the found recipe, or empty if no recipe is found.
      */
-    Optional<Recipe> findByRecipeStatus(@NonNull Estate recipeStatus);
+    Optional<Recipe> findByEstate(@NonNull Estate estate);
 }
