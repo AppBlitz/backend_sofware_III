@@ -37,7 +37,7 @@ public class ReviewProduct extends Thread {
     ArrayList<ProductExpiration> productsExpiration = new ArrayList<>();
     LocalDate how = LocalDate.now();
     for (Product producto : products) {
-      if (calcularDate(how, producto.getDateExpiration())) {
+      if (calcularDate(how, producto.getDateExpiration().get(0))) {
         productsExpiration.add(createStructureProductExpiration(producto));
       }
     }
@@ -53,7 +53,7 @@ public class ReviewProduct extends Thread {
   }
 
   public ProductExpiration createStructureProductExpiration(Product product) {
-    ProductExpiration productExpiration = new ProductExpiration(product.getNameProduct(), product.getDateExpiration());
+    ProductExpiration productExpiration = new ProductExpiration(product.getNameProduct(), product.getDateExpiration().get(0));
     return productExpiration;
 
   }

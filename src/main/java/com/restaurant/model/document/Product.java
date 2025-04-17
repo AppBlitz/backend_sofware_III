@@ -26,7 +26,9 @@ public class Product {
     private String nameProduct;
     private ArrayList<String> suppliers;
     @NotNull
-    private LocalDate dateExpiration;
+    private ArrayList<LocalDate> dateExpiration;
+    @NotNull
+    private ArrayList<Integer> controldateExpiration;
     @NotNull
     private LocalDate dateRegister;
     @NotNull
@@ -39,6 +41,9 @@ public class Product {
     private List<byte[]> images;
 
     private Estate estate;
+
+    @NonNull
+    private String typeStock;
 
     //200 ok
 }

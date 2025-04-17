@@ -42,15 +42,15 @@ public interface ProductInterfaceValidators {
    */
   public Supplier searchSupplierName(String nameSupplier);
 
-  /**
-   * @return
-   */
-  public ArrayList<ListProducts> listAllProducts();
-
-  /**
-   * @return
-   */
-  public ListProducts createProductDto(Product product);
+//  /**
+//   * @return
+//   */
+//  public ArrayList<ListProducts> listAllProducts();
+//
+//  /**
+//   * @return
+//   */
+//  public ListProducts createProductDto(Product product);
 
   public byte[] addImageProduct(MultipartFile image);
 
