@@ -6,6 +6,7 @@ import com.restaurant.enums.StateEnum;
 import com.restaurant.exceptions.supplier.*;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Supplier;
+import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.SupplierRepository;
 import com.restaurant.service.Interface.ISupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class SupplierServices implements ISupplierServices {
     SupplierRepository supplierRepository;
 
     @Autowired
-    ProductService productService;
+    ProductRepository productRepository;
 
     @Override
     public Supplier getSupplier(String id) throws ExceptionGetSupplier {
@@ -79,7 +80,8 @@ public class SupplierServices implements ISupplierServices {
 
     public void verification_product_supplier(String idSupplier, List<String> products) {
         for( String s: products){
-            Product product =  productService.getProduct(s);
+            Optional<Product> p= productRepository.findById(s);
+            Product product =  p.get();
             if(!product.getSuppliers().contains(idSupplier)){
             product.getSuppliers().add(idSupplier);
             }

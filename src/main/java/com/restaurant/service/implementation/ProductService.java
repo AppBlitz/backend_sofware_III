@@ -47,7 +47,7 @@ public class ProductService implements ProductServiceInterface {
         return createProduct(ProductDtoAdd);
       }
     } else {
-      throw new ExceptioAddedProduct("es necesario ingresar un proveedor para el producto");
+      throw new ExceptioAddedProduct("es necesario ingresar un proveedor que exista para el producto");
     }
   }
 
