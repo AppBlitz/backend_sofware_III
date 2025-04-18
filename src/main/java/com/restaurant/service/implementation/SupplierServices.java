@@ -78,13 +78,26 @@ public class SupplierServices implements ISupplierServices {
         return supplier;
     }
 
-    public void verification_product_supplier(String idSupplier, List<String> products) {
-        for( String s: products){
-            Optional<Product> p= productRepository.findById(s);
-            Product product =  p.get();
-            if(!product.getSuppliers().contains(idSupplier)){
-            product.getSuppliers().add(idSupplier);
+public void verification_product_supplier(String idSupplier, List<String> products) {
+    if (idSupplier == null || products == null || products.isEmpty()) {
+        throw new IllegalArgumentException("El ID del proveedor o la lista de productos no puede estar vacía");
+    }
+
+    for (String productId : products) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+
+            if (!product.getSuppliers().contains(idSupplier)) {
+                product.getSuppliers().add(idSupplier);
             }
+        } else {
+            System.out.println("Producto con ID " + productId + " no encontrado.");
+            // También podrías lanzar una excepción si es necesario:
+            // throw new NoSuchElementException("Producto con ID " + productId + " no encontrado.");
         }
     }
+}
+    
 }
