@@ -3,7 +3,7 @@ package com.restaurant.model.document;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.restaurant.model.Enum.State;
+import com.restaurant.model.Enum.Estate;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -43,7 +43,7 @@ public class Recipe {
     @NotNull
     private LocalDate creationDate;
     @NotNull
-    private State estate;
+    private Estate estate;
 
     //200 ok
 }

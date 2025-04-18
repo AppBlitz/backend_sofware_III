@@ -1,7 +1,10 @@
 package com.restaurant.model.vo;
 
 import com.restaurant.model.Enum.employees.RollEmployee;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import java.util.ArrayList;
 
 /**
  * The RollForEmployee class represents the role assigned to an employee.
@@ -17,11 +20,13 @@ public class RollForEmployee {
     /**
      * The role assigned to the employee.
      */
+    @NotNull(message = "Role employee cannot be null")
     private RollEmployee rollEmployee;
 
     /**
      * The permissions associated with the employee's role.
      */
-    private Permisions permisions;
+    @NotNull(message = "Permissions cannot be null")
+    @Size(min = 1, message = "There must be at least one permission")
+    private ArrayList<Permissions> permissions;
 }
-

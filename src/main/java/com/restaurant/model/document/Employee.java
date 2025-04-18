@@ -2,6 +2,7 @@ package com.restaurant.model.document;
 
 import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.interfaces.IEmployee;
+import com.restaurant.model.vo.RollForEmployee;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -22,25 +23,29 @@ import java.time.LocalDate;
  * It includes information about the employee's ID, DNI, name, schedule, charge, base salary, email, password, permissions, and role.
  */
 public class Employee implements IEmployee {
- private enum EPS {
+ public enum EPS {
   SALUD_TOTAL, NUEVA_EPS, SURA, SANITAS
  }
- private enum ARL {
+ public enum ARL {
   SURA, POSITIVA, SEGUROS_BOLIVAR
  }
- private enum CCF {
+ public enum CCF {
   COMFENALCO_QUINDIO, COMFENALCO_ANTIOQUIA, COMFAMA, CAFAM
  }
- private enum RiskLevel {
+ public enum RiskLevel {
   LEVEL_I, LEVEL_II, LEVEL_III, LEVEL_IV, LEVEL_V
  }
- private enum Cesantias {
+ public enum Cesantias {
   PORVENIR, COLFONDOS, FNA, PROTECCION
  }
- private enum Pension {
+ public enum Pension {
   COLPENSIONES, PORVENIR, PROTECCION
  }
- private class User {
+ @Data
+ @AllArgsConstructor
+ @NoArgsConstructor
+ @ToString
+ public static class User {
   @Email
   @NotBlank
   private String email;
@@ -49,7 +54,7 @@ public class Employee implements IEmployee {
   @Size(min = 8, message = "Password must be at least 8 characters long")
   private String password;
  }
- private enum Area {
+ public enum Area {
   KITCHEN, WAREHOUSE, SALES
  }
 
@@ -82,7 +87,7 @@ public class Employee implements IEmployee {
  private double baseSalary;
 
  @NotNull(message = "Role cannot be null")
- private RollEmployee roll;
+ private RollForEmployee roll;
 
  @NotNull(message = "User cannot be null")
  private User user;

@@ -1,6 +1,5 @@
 package com.restaurant.service.implementation.employees;
 
-import com.restaurant.model.Enum.State;
 import com.restaurant.model.Enum.UpdateType;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.document.Payroll;
@@ -58,7 +57,7 @@ public class PayrollServices implements IPayrollServices {
     @Override
     public Payroll construirNominaBase() {
         Payroll payroll = new Payroll();
-        ArrayList<Employee> employees = employeeRepository.getAllByState(State.ACTIVE);
+        ArrayList<Employee> employees = employeeRepository.getAllByRetirementDateIsNullOrRetirementDateAfter(LocalDate.now());
         ArrayList<UpdateDetails> updateDetails = new ArrayList<>();
         for (Employee employee : employees){
             UpdateDetails updateDetail =new UpdateDetails();

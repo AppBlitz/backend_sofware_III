@@ -1,6 +1,6 @@
 package com.restaurant.model.Enum;
 
-public enum State {
+public enum Estate {
     ACTIVE, INACTIVE
 
 }

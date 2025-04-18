@@ -7,7 +7,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.restaurant.model.Enum.Estate;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
