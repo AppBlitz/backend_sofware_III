@@ -3,6 +3,7 @@ package com.restaurant.controller.implementation.recipe;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.restaurant.model.Enum.Estate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class RecipeController implements RecipeControllerInterface {
         recipe.setServings(recipeDtoAdd.servings());
         recipe.setComment(recipeDtoAdd.comment());
         recipe.setCreationDate(recipeDtoAdd.creationDate());
-        recipe.setRecipeStatus(recipeDtoAdd.recipeStatus());
+        recipe.setEstate(Estate.ACTIVE);
         Recipe newRecipe = recipeServices.createRecipe(recipe);
         return ResponseEntity.status(200).body(newRecipe);
     }
@@ -70,7 +71,7 @@ public class RecipeController implements RecipeControllerInterface {
         recipe.setServings(recipeDtoUpdate.servings());
         recipe.setComment(recipeDtoUpdate.comment());
         recipe.setCreationDate(LocalDate.from(recipeDtoUpdate.creationDate()));
-        recipe.setRecipeStatus(String.valueOf(recipeDtoUpdate.recipeStatus()));
+        recipe.setEstate(recipeDtoUpdate.recipeStatus());
         Recipe updatedRecipe = recipeServices.updateRecipe(id, recipe);
         if (updatedRecipe != null) {
             return ResponseEntity.ok(updatedRecipe);

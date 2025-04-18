@@ -50,10 +50,10 @@ public interface ProductServiceInterface {
    */
   public Product createProduct(ProductDtoAdd productDtoAdd);
 
-  /**
-   * @return list of products
-   */
-  public ArrayList<ListProducts> getAllProducts();
+//  /**
+//   * @return list of products
+//   */
+//  public ArrayList<ListProducts> getAllProducts();
 
   /**
    * @param productUpdateDto for update product
@@ -61,4 +61,10 @@ public interface ProductServiceInterface {
    */
   public Product updateProduct(ProductUpdateDto productUpdateDto);
 
+  /**
+   * add product to suppliers
+   * @param idProduct
+   * @param suppliers
+   */
+  public void verification_product_supplier(String idProduct, List<String> suppliers);
 }

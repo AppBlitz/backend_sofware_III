@@ -1,22 +1,30 @@
 package com.restaurant.controller.implementation;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
 
+import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.controller.Interface.ProductControllerInterface;
-import com.restaurant.dto.product.ListProducts;
+import com.restaurant.dto.product.MovementDto;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.model.document.Product;
-import com.restaurant.service.implementation.inventory.ProductService;
+import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.service.implementation.ProductService;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("product")
-@CrossOrigin(origins = "*")
 public class ProductController implements ProductControllerInterface {
 
   @Autowired(required = true)
@@ -38,12 +46,6 @@ public class ProductController implements ProductControllerInterface {
     return ResponseEntity.status(200).body(products);
   }
 
-  @Override
-  @RequestMapping(value = "/all", method = RequestMethod.GET)
-  public ArrayList<ListProducts> getAllProducts() {
-    return productService.getAllProducts();
-  }
-
   @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
   public ResponseEntity<Product> getProduct(@PathVariable String id) throws Exception {
     Product products = productService.getProduct(id);
@@ -55,5 +57,40 @@ public class ProductController implements ProductControllerInterface {
     List<Product> p = productService.getListProducts();
     return ResponseEntity.status(200).body(p);
   }
+
+  @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<Product> DeleteProduct(@PathVariable String id) throws Exception {
+    Product products = productService.deleteProduct(id);
+    return ResponseEntity.status(200).body(products);
+  }
+
+  @RequestMapping(value = "/movement/{id}", method = RequestMethod.POST)
+  public ResponseEntity<MovementProduct> movementProduct(@PathVariable String id,
+      @RequestBody @Valid MovementDto movementdto) throws ExceptionUpdateProduct {
+    MovementProduct products = productService.updateAmount(id, movementdto);
+    return ResponseEntity.status(200).body(products);
+  }
+
+//  @RequestMapping(value = "/allMovements",method = RequestMethod.GET)
+//  public ResponseEntity<List<MovementProduct>> getByDate() {
+//    List<MovementProduct> results = productService.consult_movementsByDate(date);
+//    return ResponseEntity.ok(results);
+//  }
+
+
+  @RequestMapping(value = "/movementByDate",method = RequestMethod.GET)
+  public ResponseEntity<List<MovementProduct>> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    List<MovementProduct> results = productService.consult_movementsByDate(date);
+    return ResponseEntity.ok(results);
+  }
+
+  @RequestMapping(value = "/movementByRangeHour",method = RequestMethod.GET)
+  public ResponseEntity<List<MovementProduct>> getByHour(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                         @RequestParam int startHour,
+                                                         @RequestParam int endHour) {
+    List<MovementProduct> results = productService.consult_movementsByHour(date, startHour, endHour);
+    return ResponseEntity.ok(results);
+  }
+
 
 }

@@ -2,7 +2,7 @@ package com.restaurant.repository;
 
 import java.util.Optional;
 
-import com.restaurant.model.Enum.State;
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Recipe;
 import lombok.NonNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -29,5 +29,5 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
      * @param recipeStatus The status of the recipe to find.
      * @return An Optional containing the found recipe, or empty if no recipe is found.
      */
-    Optional<Recipe> findByRecipeStatus(@NonNull State recipeStatus);
+    Optional<Recipe> findByEstate(@NonNull Estate estate);
 }
