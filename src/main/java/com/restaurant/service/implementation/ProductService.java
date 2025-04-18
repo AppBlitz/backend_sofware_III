@@ -1,12 +1,14 @@
 package com.restaurant.service.implementation;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.restaurant.dto.product.MovementDto;
+import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.Enum.MovementAction;
 import com.restaurant.model.document.Supplier;
@@ -116,7 +118,7 @@ public class ProductService implements ProductServiceInterface {
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
         .priceProduct(productDtoAdd.priceProduct())
-        .images(null)
+        .images(listImages)
         .typeStock(productDtoAdd.typeStock())
         .build();
     product.setDateExpiration(new ArrayList<>());
@@ -169,7 +171,7 @@ public class ProductService implements ProductServiceInterface {
     return p1;
   }
 
-  public MovementProduct updateAmount(String idProduct, MovementDto movementDto) {
+  public MovementProduct updateAmount(String idProduct, MovementDto movementDto) throws ExceptionUpdateProduct {
     Product p = getProduct(idProduct);
     MovementProduct o = new MovementProduct(p.getNameProduct(),
         movementDto.action(),
@@ -197,20 +199,54 @@ public class ProductService implements ProductServiceInterface {
     return productRepository.save(p);
   }
 
-  public Product outputMovement(String idProduct, int amount) {
+  public Product outputMovement(String idProduct, int amount) throws ExceptionUpdateProduct {
+
     Product p = getProduct(idProduct);
+    if(!p.getDateExpiration().isEmpty()){
+      if(p.getStock()-amount>=0){
+        return changeOutput(p,amount);
+      }else{
+        throw new ExceptionUpdateProduct("el stock no cuenta con suficiente cantidad");
+      }
+    }
+    else{
+      throw new ExceptionUpdateProduct("no se registra stock existente");
+    }
+
+  }
+
+  public Product changeOutput(Product p,int amount){
     for (int i = 0; i < p.getControldateExpiration().size(); i++) {
       if (p.getControldateExpiration().get(i) - amount <= 0) {
         p.getControldateExpiration().remove(i);
         p.getDateExpiration().remove(i);
-      } else {
+      }
+      else  {
         p.getControldateExpiration().set(i, p.getControldateExpiration().get(i) - amount);
       }
     }
     p.setStock(p.getStock() - amount);
-
     return productRepository.save(p);
   }
+
+  public List<MovementProduct> consult_all_movements(){
+    return movementRepository.findAll();
+  }
+
+  public List<MovementProduct> consult_movementsByDate(LocalDate date){
+    LocalDateTime start = date.atStartOfDay();
+    LocalDateTime end = date.plusDays(1).atStartOfDay();
+    return movementRepository.findByTimestampBetween(start, end);
+
+  }
+
+  public List<MovementProduct> consult_movementsByHour(LocalDate date, int startHour,int endHour){
+    LocalDateTime start = date.atTime(startHour, 0);
+    LocalDateTime end = date.atTime(endHour, 0);
+    return movementRepository.findByTimestampBetween(start, end);
+  }
+
+
 
   public void verification_product_supplier(String idProduct, List<String> suppliers) {
     for (String s : suppliers) {
