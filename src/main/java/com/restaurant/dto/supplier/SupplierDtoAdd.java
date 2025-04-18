@@ -1,6 +1,6 @@
 package com.restaurant.dto.supplier;
 
-import com.restaurant.enums.StateEnum;
+import com.restaurant.model.Enum.StateEnum;
 import lombok.NonNull;
 
 import java.time.LocalDate;

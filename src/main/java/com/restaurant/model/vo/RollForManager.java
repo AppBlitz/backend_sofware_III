@@ -1,6 +1,6 @@
 package com.restaurant.model.vo;
 
-import com.restaurant.model.Enum.RollManager;
+import com.restaurant.model.Enum.employees.RollManager;
 import lombok.*;
 
 /**

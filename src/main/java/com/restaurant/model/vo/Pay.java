@@ -2,6 +2,7 @@ package com.restaurant.model.vo;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class Pay {
     /**
      * The date of the payment.
      */
-    private Date fecha;
+    private LocalDate fecha;
 
     /**
      * The amount of the payment.

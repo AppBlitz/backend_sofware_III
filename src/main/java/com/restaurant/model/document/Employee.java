@@ -1,11 +1,13 @@
 package com.restaurant.model.document;
-import com.restaurant.model.Enum.RollEmployee;
+
+import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.interfaces.IEmployee;
-import com.restaurant.model.vo.Permisions;
+import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 
 
 @AllArgsConstructor
@@ -20,54 +22,90 @@ import java.util.ArrayList;
  * It includes information about the employee's ID, DNI, name, schedule, charge, base salary, email, password, permissions, and role.
  */
 public class Employee implements IEmployee {
+ private enum EPS {
+  SALUD_TOTAL, NUEVA_EPS, SURA, SANITAS
+ }
+ private enum ARL {
+  SURA, POSITIVA, SEGUROS_BOLIVAR
+ }
+ private enum CCF {
+  COMFENALCO_QUINDIO, COMFENALCO_ANTIOQUIA, COMFAMA, CAFAM
+ }
+ private enum RiskLevel {
+  LEVEL_I, LEVEL_II, LEVEL_III, LEVEL_IV, LEVEL_V
+ }
+ private enum Cesantias {
+  PORVENIR, COLFONDOS, FNA, PROTECCION
+ }
+ private enum Pension {
+  COLPENSIONES, PORVENIR, PROTECCION
+ }
+ private class User {
+  @Email
+  @NotBlank
+  private String email;
 
-    /**
-     * The unique identifier for the employee.
-     */
-    private String id;
+  @NotBlank
+  @Size(min = 8, message = "Password must be at least 8 characters long")
+  private String password;
+ }
+ private enum Area {
+  KITCHEN, WAREHOUSE, SALES
+ }
 
-    /**
-     * The DNI (Documento Nacional de Identidad) of the employee.
-     */
-    private String dni;
+ @Id
+ private String id;
 
-    /**
-     * The name of the employee.
-     */
-    private String nameEmployee;
+ @NotBlank(message = "Employee name cannot be blank")
+ private String nameEmployee;
 
-    /**
-     * The schedule of the employee.
-     */
-    private String schedule;
+ @NotBlank(message = "Address cannot be blank")
+ private String address;
 
-    /**
-     * The charge or position of the employee.
-     */
-    private String charge;
+ @NotBlank(message = "City cannot be blank")
+ private String city;
 
-    /**
-     * The base salary of the employee.
-     */
-    private double baseSalary;
+ @NotBlank(message = "Phone number cannot be blank")
+ @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 characters")
+ private String phoneNumber;
 
-    /**
-     * The email of the employee.
-     */
-    private String email;
+ @NotBlank(message = "Entry date cannot be null")
+ private LocalDate entryDate;
 
-    /**
-     * The password of the employee.
-     */
-    private String password;
+ //retirementDate can be null
+ private LocalDate retirementDate;
 
-    /**
-     * The permissions associated with the employee.
-     */
-    private ArrayList<Permisions> permisions;
+ @NotNull(message = "Retirement status cannot be null")
+ private Boolean isRetired;
 
-    /**
-     * The role assigned to the employee.
-     */
-    private RollEmployee rollEmployee;
+ @Min(value = 0, message = "Base salary must be positive")
+ private double baseSalary;
+
+ @NotNull(message = "Role cannot be null")
+ private RollEmployee roll;
+
+ @NotNull(message = "User cannot be null")
+ private User user;
+
+ // Attributes from enums
+ @NotNull(message = "EPS cannot be null")
+ private EPS eps;
+
+ @NotNull(message = "ARL cannot be null")
+ private ARL arl;
+
+ @NotNull(message = "CCF cannot be null")
+ private CCF ccf;
+
+ @NotNull(message = "Risk level cannot be null")
+ private RiskLevel riskLevel;
+
+ @NotNull(message = "Cesantias cannot be null")
+ private Cesantias cesantias;
+
+ @NotNull(message = "Pension cannot be null")
+ private Pension pension;
+
+ @NotNull(message = "Area cannot be null")
+ private Area area;
 }

@@ -1,4 +1,4 @@
-package com.restaurant.enums;
+package com.restaurant.model.Enum;
 
 public enum StateEnum {
     ASSET,

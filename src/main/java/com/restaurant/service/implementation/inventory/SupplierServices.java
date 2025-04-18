@@ -1,12 +1,12 @@
-package com.restaurant.service.implementation;
+package com.restaurant.service.implementation.inventory;
 
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.dto.supplier.SupplierDtoEdit;
-import com.restaurant.enums.StateEnum;
+import com.restaurant.model.Enum.StateEnum;
 import com.restaurant.exceptions.supplier.*;
 import com.restaurant.model.document.Supplier;
 import com.restaurant.repository.SupplierRepository;
-import com.restaurant.service.Interface.ISupplierServices;
+import com.restaurant.service.Interface.inventory.ISupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

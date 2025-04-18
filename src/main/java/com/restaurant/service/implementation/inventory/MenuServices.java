@@ -1,8 +1,8 @@
-package com.restaurant.service.implementation;
+package com.restaurant.service.implementation.inventory;
 
 import com.restaurant.model.document.Menu;
 import com.restaurant.repository.MenuRepository;
-import com.restaurant.service.Interface.IMenuServices;
+import com.restaurant.service.Interface.inventory.IMenuServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
 package com.restaurant.model.vo;
 
+import com.restaurant.model.Enum.UpdateType;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ public class Update {
     /**
      * The type of update.
      */
-    private String updateType;
+    private UpdateType updateType;
 
     /**
      * The date of the update.

@@ -1,4 +1,4 @@
-package com.restaurant.service.Interface;
+package com.restaurant.service.Interface.inventory;
 
 import java.util.ArrayList;
 import java.util.List;

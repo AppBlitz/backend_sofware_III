@@ -4,7 +4,7 @@ import com.restaurant.controller.Interface.supplier.ISupplierController;
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.dto.supplier.SupplierDtoEdit;
 import com.restaurant.model.document.Supplier;
-import com.restaurant.service.implementation.SupplierServices;
+import com.restaurant.service.implementation.inventory.SupplierServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

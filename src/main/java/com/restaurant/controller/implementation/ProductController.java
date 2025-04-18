@@ -10,7 +10,7 @@ import com.restaurant.controller.Interface.ProductControllerInterface;
 import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.model.document.Product;
-import com.restaurant.service.implementation.ProductService;
+import com.restaurant.service.implementation.inventory.ProductService;
 
 import jakarta.validation.Valid;
 

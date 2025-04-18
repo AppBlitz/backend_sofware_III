@@ -1,4 +1,4 @@
-package com.restaurant.service.implementation;
+package com.restaurant.service.implementation.inventory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.SupplierRepository;
-import com.restaurant.service.Interface.IOrderRecommendationService;
+import com.restaurant.service.Interface.inventory.IOrderRecommendationService;
 
 @Service
 public class OrderRecommendationService implements IOrderRecommendationService {
