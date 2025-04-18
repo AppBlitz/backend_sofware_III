@@ -1,6 +1,6 @@
 package com.restaurant.model.document;
 
-import com.restaurant.model.Enum.RollManager;
+import com.restaurant.model.Enum.employees.RollManager;
 import com.restaurant.model.interfaces.IEmployee;
 import com.restaurant.model.vo.Permisions;
 import lombok.*;

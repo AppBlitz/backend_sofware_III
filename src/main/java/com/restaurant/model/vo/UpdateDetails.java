@@ -25,4 +25,7 @@ public class UpdateDetails {
      * The employee associated with the updates.
      */
     private Employee employee;
+
+    private Integer days;
+
 }

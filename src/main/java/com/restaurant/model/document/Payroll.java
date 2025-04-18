@@ -3,9 +3,11 @@ package com.restaurant.model.document;
 import com.restaurant.model.vo.Pay;
 import com.restaurant.model.vo.UpdateDetails;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * The Payroll class represents the payroll information.
@@ -19,6 +21,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Payroll {
+    @Id
+    private String id;
 
     /**
      * The payment information.
@@ -28,7 +32,7 @@ public class Payroll {
     /**
      * The update details.
      */
-    private UpdateDetails updateDetails;
+    private ArrayList<UpdateDetails> updateDetails;
 
     /**
      * The date when the payroll was generated.
@@ -38,6 +42,14 @@ public class Payroll {
     /**
      * The month of the payroll.
      */
-    private String month;
-}
+    private Month month;
 
+    public enum Month {
+        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+    }
+
+    /**
+     * The year of the payroll.
+     */
+    private int anio;
+}

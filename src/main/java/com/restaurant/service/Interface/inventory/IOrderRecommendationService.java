@@ -1,4 +1,4 @@
-package com.restaurant.service.Interface;
+package com.restaurant.service.Interface.inventory;
 
 import com.restaurant.model.vo.OrderRecommendation;
 

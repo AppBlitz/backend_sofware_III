@@ -11,7 +11,7 @@ import com.restaurant.controller.Interface.recipe.MenuControllerInterface;
 import com.restaurant.dto.recipe.MenuDtoAdd;
 import com.restaurant.dto.recipe.MenuDtoUpdate;
 import com.restaurant.model.document.Menu;
-import com.restaurant.service.implementation.MenuServices;
+import com.restaurant.service.implementation.inventory.MenuServices;
 
 import jakarta.validation.Valid;
 

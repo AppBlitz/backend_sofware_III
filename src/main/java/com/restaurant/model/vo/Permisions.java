@@ -1,7 +1,7 @@
 package com.restaurant.model.vo;
 
 import com.restaurant.model.Enum.Objeto;
-import com.restaurant.model.Enum.PermisionsCRUD;
+import com.restaurant.model.Enum.employees.PermisionsCRUD;
 import lombok.*;
 import java.util.HashSet;
 

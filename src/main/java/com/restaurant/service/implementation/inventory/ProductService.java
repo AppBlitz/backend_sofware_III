@@ -1,4 +1,4 @@
-package com.restaurant.service.implementation;
+package com.restaurant.service.implementation.inventory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductRepository;
-import com.restaurant.service.Interface.ProductServiceInterface;
+import com.restaurant.service.Interface.inventory.ProductServiceInterface;
 import com.restaurant.validators.product.ProductValidators;
 
 @Service

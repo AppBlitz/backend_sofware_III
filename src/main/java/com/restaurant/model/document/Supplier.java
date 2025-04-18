@@ -1,6 +1,6 @@
 package com.restaurant.model.document;
 
-import com.restaurant.enums.StateEnum;
+import com.restaurant.model.Enum.StateEnum;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
