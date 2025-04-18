@@ -42,7 +42,7 @@ public class Product {
     @NotNull
     private int stock;
 
-    @Null
+
     private List<byte[]> images;
 
     private Estate estate;

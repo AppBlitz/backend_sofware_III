@@ -9,6 +9,6 @@ import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public record ProductDtoAdd(@NonNull String nameProduct, @NonNull String supplier, /*@NonNull LocalDate dateExpiration,*/
-    @NonNull LocalDate dateAdd, double weightProduct, int amount, double priceProduct, @Null List<MultipartFile> images,    @NonNull
+    @NonNull LocalDate dateAdd, double weightProduct, int amount, double priceProduct, List<MultipartFile> images,    @NonNull
                             String typeStock) {
 }
