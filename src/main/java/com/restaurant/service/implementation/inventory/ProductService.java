@@ -16,9 +16,7 @@ import com.restaurant.model.vo.MovementProduct;
 import com.restaurant.repository.MovementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.restaurant.dto.product.ListProducts;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;

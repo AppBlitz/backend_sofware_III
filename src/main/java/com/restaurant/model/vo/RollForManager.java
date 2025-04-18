@@ -1,7 +1,11 @@
 package com.restaurant.model.vo;
 
 import com.restaurant.model.Enum.employees.RollManager;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.ArrayList;
 
 /**
  * The RollForManager class represents the role assigned to a manager.
@@ -17,10 +21,13 @@ public class RollForManager {
     /**
      * The role assigned to the manager.
      */
-    private RollManager rollManagment;
+    @NotNull(message = "Role manager cannot be null")
+    private RollManager rollManager;
 
     /**
      * The permissions associated with the manager's role.
      */
-    private Permisions permisions;
+    @NotNull(message = "Permissions cannot be null")
+    @Size(min = 1, message = "There must be at least one permission")
+    private ArrayList<Permissions> permissions;
 }

@@ -19,7 +19,7 @@ import com.restaurant.dto.product.MovementDto;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.vo.MovementProduct;
-import com.restaurant.service.implementation.ProductService;
+import com.restaurant.service.implementation.inventory.ProductService;
 
 import jakarta.validation.Valid;
 

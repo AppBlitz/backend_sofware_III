@@ -1,12 +1,13 @@
 package com.restaurant.model.document;
-
 import com.restaurant.model.Enum.employees.RollManager;
 import com.restaurant.model.interfaces.IEmployee;
-import com.restaurant.model.vo.Permisions;
+import com.restaurant.model.vo.RollForManager;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.ArrayList;
 
 @AllArgsConstructor
 @Document(collection = "manager")
@@ -20,15 +21,21 @@ public class Manager implements IEmployee {
     /**
      * The wrapped IEmployee instance.
      */
-    private Employee wrappe;
-
-    /**
-     * The permissions associated with the manager.
-     */
-    private ArrayList<Permisions> permisions;
+    @Id
+    @NotBlank
+    @NotNull(message = "Wrapped employee cannot be null")
+    private String wrappeID;
 
     /**
      * The role assigned to the manager.
      */
-    private RollManager rollManager;
+    @NotNull(message = "Role manager cannot be null")
+    private RollForManager rollManager;
+
+    /**
+     * The salary increment for the manager.
+     */
+    @Min(value = 0, message = "Increment salary must be positive")
+    private Double incrementSalary;
 }
+

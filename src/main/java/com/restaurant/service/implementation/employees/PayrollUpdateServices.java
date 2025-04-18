@@ -62,7 +62,7 @@ public class PayrollUpdateServices implements IPayrollUpdateServices {
      */
     @Override
     public Double calculateVacationPay(Double salary, int days) {
-        return ;
+        return null;
     }
 
     /**
@@ -74,7 +74,7 @@ public class PayrollUpdateServices implements IPayrollUpdateServices {
      */
     @Override
     public Double calculateDisabilityPay(Double salary, int days) {
-        return ;
+        return null;
     }
 
     /**
