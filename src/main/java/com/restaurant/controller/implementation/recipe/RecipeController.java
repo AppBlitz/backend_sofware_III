@@ -16,7 +16,6 @@ import com.restaurant.service.implementation.RecipeServices;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/recipes")
 
@@ -53,15 +52,15 @@ public class RecipeController implements RecipeControllerInterface {
     }
 
     @Override
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ResponseEntity<List<Recipe>> getAllRecipes() {
         List<Recipe> recipes = recipeServices.getAllRecipes();
         return ResponseEntity.ok(recipes);
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable String id,
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable("id") String id,
             @Valid @RequestBody RecipeDtoUpdate recipeDtoUpdate) {
         Recipe recipe = new Recipe();
         recipe.setName(recipeDtoUpdate.name());
@@ -81,7 +80,7 @@ public class RecipeController implements RecipeControllerInterface {
     }
 
     @Override
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteRecipe(@PathVariable String id) {
         recipeServices.deleteRecipe(id);
         return ResponseEntity.noContent().build();
