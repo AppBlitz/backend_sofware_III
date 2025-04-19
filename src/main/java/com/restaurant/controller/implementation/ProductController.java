@@ -3,6 +3,7 @@ package com.restaurant.controller.implementation;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,6 +35,12 @@ public class ProductController implements ProductControllerInterface {
   @RequestMapping(value = "/add", method = RequestMethod.POST)
   public ResponseEntity<Product> addProduct(@RequestBody @Valid ProductDtoAdd productDtoAdd) throws Exception {
     Product product = productService.addProduct(productDtoAdd);
+    return ResponseEntity.status(200).body(product);
+  }
+
+  @RequestMapping(value = "/update", method = RequestMethod.PUT)
+  public ResponseEntity<Product> editProduct( @RequestBody @Valid ProductUpdateDto productUpdateDto) throws Exception {
+    Product product = productService.updateProduct(productUpdateDto);
     return ResponseEntity.status(200).body(product);
   }
 
@@ -70,12 +77,6 @@ public class ProductController implements ProductControllerInterface {
     MovementProduct products = productService.updateAmount(id, movementdto);
     return ResponseEntity.status(200).body(products);
   }
-
-//  @RequestMapping(value = "/allMovements",method = RequestMethod.GET)
-//  public ResponseEntity<List<MovementProduct>> getByDate() {
-//    List<MovementProduct> results = productService.consult_movementsByDate(date);
-//    return ResponseEntity.ok(results);
-//  }
 
 
   @RequestMapping(value = "/movementByDate",method = RequestMethod.GET)
