@@ -19,7 +19,7 @@ public class Pay {
     /**
      * The date of the payment.
      */
-    private LocalDate fecha;
+    private LocalDate date;
 
     /**
      * The amount of the payment.

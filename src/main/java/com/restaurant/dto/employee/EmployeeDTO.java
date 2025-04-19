@@ -3,10 +3,11 @@ package com.restaurant.dto.employee;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.RollForEmployee;
 import jakarta.validation.constraints.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
-
 public record EmployeeDTO(
         @Id
         String id,
@@ -27,7 +28,6 @@ public record EmployeeDTO(
         Boolean isRetired,
         @Min(value = 0, message = "Base salary must be positive")
         double baseSalary,
-        @NotNull(message = "Role cannot be null")
         RollForEmployee roll,
         @Email
         @NotBlank
