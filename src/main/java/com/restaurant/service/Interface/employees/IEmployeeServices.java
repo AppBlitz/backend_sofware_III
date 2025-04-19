@@ -52,6 +52,8 @@ public interface IEmployeeServices {
      */
     EmployeeDTO addPermissions(PermissionsEmployeeDTO permissionsEmployeeDTO);
 
+    EmployeeDTO removePermissions(PermissionsEmployeeDTO permissionsEmployeeDTO);
+
     /**
      * Updates the password of a user associated with an employee.
      * @param userDTO The UserDTO containing the updated password.

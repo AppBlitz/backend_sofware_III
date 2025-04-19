@@ -106,6 +106,12 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedEmployee);
     }
 
+    @DeleteMapping("/permissions")
+    public ResponseEntity<EmployeeDTO> removePermissions(@RequestBody PermissionsEmployeeDTO permissionsEmployeeDTO) {
+        EmployeeDTO updatedEmployee = employeeServices.removePermissions(permissionsEmployeeDTO);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
     /**
      * Updates the user information (e.g., password) for an employee.
      *

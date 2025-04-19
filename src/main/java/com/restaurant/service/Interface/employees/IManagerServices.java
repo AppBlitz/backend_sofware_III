@@ -52,4 +52,12 @@ public interface IManagerServices {
      * @return boolean
      */
     boolean isEmployeeAssociatedWithManager(String employeeId);
+
+    ManagerDTO removePermissions(PermissionsManagerDTO permissionsManagerDTO);
+
+    /**
+     * Updates the password of a user associated with an employee.
+     * @param userDTO The UserDTO containing the updated password.
+     * @return The updated UserDTO with the new password.
+     */
 }

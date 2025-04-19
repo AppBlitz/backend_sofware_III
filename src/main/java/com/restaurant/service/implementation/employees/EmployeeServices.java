@@ -4,12 +4,10 @@ import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
 import com.restaurant.dto.employee.UserDTO;
 import com.restaurant.mapping.EmployeeMapper;
-import com.restaurant.model.Enum.Objeto;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.Permissions;
 import com.restaurant.repository.EmployeeRepository;
 import com.restaurant.service.Interface.employees.IEmployeeServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -104,6 +102,21 @@ public class EmployeeServices implements IEmployeeServices {
         return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
     }
 
+    @Override
+    public EmployeeDTO removePermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
+        Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
+        Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
+        for(Permissions permissions1 : employee.getRoll().getPermissions()){
+            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
+                permissions1.getPermissions().removeAll(permissions.getPermissions());
+                int index = employee.getRoll().getPermissions().indexOf(permissions1);
+                employee.getRoll().getPermissions().set(index,permissions1);
+                return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
+            }
+        }
+        employee.getRoll().getPermissions().add(permissions);
+        return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
+    }
     /**
      * Updates the password of a user associated with an employee.
      *
