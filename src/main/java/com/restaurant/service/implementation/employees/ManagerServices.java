@@ -55,6 +55,16 @@ public class ManagerServices implements IManagerServices {
     public boolean isEmployeeAssociatedWithManager(String employeeId) {
         return managerRepository.findById(employeeId).isPresent();
     }
+
+    /**
+     * @param permissionsManagerDTO
+     * @return
+     */
+    @Override
+    public ManagerDTO removePermissions(PermissionsManagerDTO permissionsManagerDTO) {
+        return null;
+    }
+
     /**
      * Creates a new manager record.
      *
