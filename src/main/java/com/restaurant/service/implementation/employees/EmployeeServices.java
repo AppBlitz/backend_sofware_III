@@ -2,10 +2,13 @@ package com.restaurant.service.implementation.employees;
 
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
+import com.restaurant.dto.employee.RollDTO;
 import com.restaurant.dto.employee.UserDTO;
 import com.restaurant.mapping.EmployeeMapper;
+import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.Permissions;
+import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.repository.EmployeeRepository;
 import com.restaurant.service.Interface.employees.IEmployeeServices;
 import org.springframework.stereotype.Service;
@@ -65,6 +68,14 @@ public class EmployeeServices implements IEmployeeServices {
      */
     @Override
     public EmployeeDTO create(EmployeeDTO employeeDTO) {
+        if(employeeDTO.roll() == null){
+            RollForEmployee roll = new RollForEmployee();
+            roll.setPermissions(new ArrayList<>());
+            roll.setRollEmployee(RollEmployee.DEFAULT);
+            Employee employee = mapper.employeeDTOToEmployee(employeeDTO);
+            employee.setRoll(roll);
+            return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
+        }
         return mapper.employeeToEmployeeDTO(employeeRepository.save(mapper.employeeDTOToEmployee(employeeDTO)));
     }
 
@@ -140,5 +151,11 @@ public class EmployeeServices implements IEmployeeServices {
     @Override
     public List<EmployeeDTO> getActiveEmployeesUntilDate(LocalDate date) {
         return convertList(employeeRepository.getAllByRetirementDateIsNullOrRetirementDateAfter(date));
+    }
+
+    public EmployeeDTO updateRoll(RollDTO rollDTO){
+        Employee employee = employeeRepository.getById(rollDTO.id());
+        employee.getRoll().setRollEmployee(rollDTO.rollEmployee());
+        return mapper.employeeToEmployeeDTO(employee);
     }
 }

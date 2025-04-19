@@ -33,7 +33,7 @@ public class PayrollServices implements IPayrollServices {
     @Override
     public Payroll pagar(@NotNull Payroll payroll) {
         Pay pay = new Pay();
-        pay.setFecha(LocalDate.now());
+        pay.setDate(LocalDate.now());
         pay.setAmount(calculateTotal(payroll));
         payroll.setPay(pay);
         return payrollRepository.save(payroll);
@@ -74,7 +74,7 @@ public class PayrollServices implements IPayrollServices {
         Update update = new Update();
         update.setUpdateDate(LocalDate.now());
         update.setAmount(payrollUpdateServices.calculateTransportationAux(30));
-        update.setUpdateType(UpdateType.TRANSPORTATION_ALLOWANCE);
+        update.setUpdateType(UpdateType.AUXILIO_DE_TRANSPORTE);
         update.setDescription("Auxilio de transporte");
         return update;
     }

@@ -2,7 +2,9 @@ package com.restaurant.controller.implementation.employee;
 
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
+import com.restaurant.dto.employee.RollDTO;
 import com.restaurant.dto.employee.UserDTO;
+import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.service.implementation.employees.EmployeeServices;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -80,6 +82,9 @@ public class EmployeeController {
      */
     @PostMapping("/add")
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        if(employeeDTO.roll() == null){
+
+        }
         EmployeeDTO createdEmployee = employeeServices.create(employeeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
@@ -125,5 +130,11 @@ public class EmployeeController {
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
         UserDTO updatedUser = employeeServices.UpdateUser(userDTO);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @PutMapping("/roll")
+    public ResponseEntity<EmployeeDTO> updateRoll(@RequestBody RollDTO rollDTO){
+        return ResponseEntity.ok(employeeServices.updateRoll(rollDTO));
+
     }
 }

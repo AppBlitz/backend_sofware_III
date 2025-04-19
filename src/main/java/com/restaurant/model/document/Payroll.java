@@ -45,11 +45,11 @@ public class Payroll {
     private Month month;
 
     public enum Month {
-        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+        ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO,SEPTIEMBRE,OCTUBRE,NOVIEMBRE,DICIEMBRE
     }
 
     /**
      * The year of the payroll.
      */
-    private int anio;
+    private int year;
 }
