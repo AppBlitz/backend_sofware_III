@@ -2,7 +2,7 @@ package com.restaurant.service.implementation.inventory;
 
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.dto.supplier.SupplierDtoEdit;
-import com.restaurant.model.Enum.StateEnum;
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.exceptions.supplier.*;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Supplier;
@@ -27,7 +27,11 @@ public class SupplierServices implements ISupplierServices {
     @Override
     public Supplier getSupplier(String id) throws ExceptionGetSupplier {
         Optional<Supplier> supplier = supplierRepository.findById(id);
-        return supplier.get();
+        if(supplier.isPresent()){
+            return supplier.get();}
+        else{
+            throw new ExceptionGetSupplier("no se ha encontrado proveedor");
+        }
     }
 
     @Override
@@ -55,7 +59,7 @@ public class SupplierServices implements ISupplierServices {
     public Supplier deleteSupplier(String id) {
         Optional<Supplier> supplier = supplierRepository.findById(id);
         Supplier supplier1 = supplier.get();
-        supplier1.setStateActivity(StateEnum.IDLE);
+        supplier1.setStateActivity(Estate.INACTIVE);
         supplierRepository.save(supplier1);
         return supplier1;
     }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.restaurant.model.Enum.Estate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.restaurant.model.document.Product;
@@ -36,19 +38,21 @@ public class OrderRecommendationService implements IOrderRecommendationService {
 
         // Process each low-stock product to generate recommendations
         for (Product product : lowStockProducts) {
+            if(product.getEstate().equals(Estate.ACTIVE)){
+                ProductRecommendation recommendation = new ProductRecommendation();
+                recommendation.setProductName(product.getNameProduct());
+                recommendation.setCurrentStock(product.getStock());
+                recommendation.setRecommendedQuantity(( (product.getStock()+30) )); // Arbitrary recommended quantity
+                recommendation.setSuppliersName(new ArrayList<>());
+                // Retrieve supplier names for the product
+                for (String idSupplier : product.getSuppliers()) {
+                    Supplier supplier=supplierServices.getSupplier(idSupplier);
+                    if(supplier.getStateActivity().equals(Estate.ACTIVE)){
+                    recommendation.getSuppliersName().add(supplier.getNameSupplier());}
+                }
 
-            ProductRecommendation recommendation = new ProductRecommendation();
-            recommendation.setProductName(product.getNameProduct());
-            recommendation.setCurrentStock(product.getStock());
-            recommendation.setRecommendedQuantity(product.getStock() * 3); // Arbitrary recommended quantity
-
-            // Retrieve supplier names for the product
-            for (String idSupplier : product.getSuppliers()) {
-                Supplier supplier=supplierServices.getSupplier(idSupplier);
-                recommendation.getSuppliersName().add(supplier.getNameSupplier());
+                recommendedProducts.add(recommendation);
             }
-
-            recommendedProducts.add(recommendation);
         }
 
         // Create the final order recommendation object

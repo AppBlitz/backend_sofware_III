@@ -65,7 +65,7 @@ public class ProductService implements ProductServiceInterface {
     Product aux = product.get();
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(aux.getWeightProduct());
-    updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
+   // updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(aux.getSuppliers());
     updateProduct.setPriceProduct(productDtoAdd.priceProduct());
     updateProduct.setWeightProduct(productDtoAdd.weightProduct());
@@ -86,7 +86,7 @@ public class ProductService implements ProductServiceInterface {
     suppliers.add(productValidators.searchSupplierName(productDtoAdd.supplier()).getId());
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(productDtoAdd.weightProduct());
-    updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
+    //updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(suppliers);
     updateProduct.setPriceProduct(productDtoAdd.priceProduct());
 
@@ -111,12 +111,13 @@ public class ProductService implements ProductServiceInterface {
     Product product = Product.builder()
         .nameProduct(productDtoAdd.nameProduct())
         .suppliers(listSupplier)
-        .stock(productDtoAdd.amount())
+        //.stock(productDtoAdd.amount())
         // .dateExpiration.add(productDtoAdd.dateExpiration())
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
         .priceProduct(productDtoAdd.priceProduct())
         .images(listImages)
+            .estate(productDtoAdd.state())
         .typeStock(productDtoAdd.typeStock())
         .build();
     product.setDateExpiration(new ArrayList<>());
@@ -155,8 +156,9 @@ public class ProductService implements ProductServiceInterface {
       productUpdate.setSuppliers(productUpdateDto.suppliers());
       productUpdate.setDateRegister(productUpdateDto.dateAdd());
       productUpdate.setTypeStock(productUpdateDto.typeStock());
+      productUpdate.setEstate(productUpdateDto.state());
       verification_product_supplier(productUpdate.getId(), productUpdate.getSuppliers());
-      return productUpdate;
+      return productRepository.save(productUpdate);
     }
 
   }
