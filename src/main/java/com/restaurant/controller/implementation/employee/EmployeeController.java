@@ -20,6 +20,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeServices employeeServices;
+
     /**
      * Constructor-based dependency injection for EmployeeServices.
      *
@@ -30,7 +31,8 @@ public class EmployeeController {
     }
 
     /**
-     * Retrieves all employees currently active (not retired or retired after today).
+     * Retrieves all employees currently active (not retired or retired after
+     * today).
      *
      * @return A list of EmployeeDTO objects.
      */
@@ -76,7 +78,7 @@ public class EmployeeController {
      * @param employeeDTO The EmployeeDTO containing the employee's details.
      * @return The created EmployeeDTO.
      */
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO createdEmployee = employeeServices.create(employeeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
@@ -97,7 +99,8 @@ public class EmployeeController {
     /**
      * Adds permissions to a specific employee.
      *
-     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing permissions details.
+     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing
+     *                               permissions details.
      * @return The EmployeeDTO with updated permissions.
      */
     @PostMapping("/permissions")
