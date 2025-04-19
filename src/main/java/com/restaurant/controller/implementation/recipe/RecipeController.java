@@ -4,7 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.vo.HistoryRecipe;
+import com.restaurant.model.vo.MovementProduct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,5 +87,19 @@ public class RecipeController implements RecipeControllerInterface {
     public ResponseEntity<Void> deleteRecipe(@PathVariable String id) {
         recipeServices.deleteRecipe(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/movementByDate",method = RequestMethod.GET)
+    public ResponseEntity<List<HistoryRecipe>> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        List<HistoryRecipe> results = recipeServices.consult_movementsByDate(date);
+        return ResponseEntity.ok(results);
+    }
+
+    @RequestMapping(value = "/movementByRangeHour",method = RequestMethod.GET)
+    public ResponseEntity<List<HistoryRecipe>> getByHour(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                           @RequestParam int startHour,
+                                                           @RequestParam int endHour) {
+        List<HistoryRecipe> results = recipeServices.consult_movementsByHour(date, startHour, endHour);
+        return ResponseEntity.ok(results);
     }
 }
