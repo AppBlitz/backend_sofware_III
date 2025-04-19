@@ -4,6 +4,7 @@ import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
 import com.restaurant.dto.employee.UserDTO;
 import com.restaurant.mapping.EmployeeMapper;
+import com.restaurant.model.Enum.Objeto;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.Permissions;
 import com.restaurant.repository.EmployeeRepository;
@@ -91,6 +92,14 @@ public class EmployeeServices implements IEmployeeServices {
     public EmployeeDTO addPermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
         Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
         Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
+        for(Permissions permissions1 : employee.getRoll().getPermissions()){
+            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
+                permissions.getPermissions().addAll(permissions1.getPermissions());
+                int index = employee.getRoll().getPermissions().indexOf(permissions1);
+                employee.getRoll().getPermissions().set(index,permissions);
+                return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
+            }
+        }
         employee.getRoll().getPermissions().add(permissions);
         return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
     }
