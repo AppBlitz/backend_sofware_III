@@ -27,7 +27,7 @@ public class ReviewProduct extends Thread {
   @Autowired(required = true)
   PdfGenerator pdfGenerator;
 
-  @Scheduled(cron = "0 34 4 * * *")
+  @Scheduled(cron = "0 0 8 * * *")
   public void sendMessage() throws Exception {
     // Send email
     foundProduct();
