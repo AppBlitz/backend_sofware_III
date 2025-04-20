@@ -1,5 +1,12 @@
 package com.restaurant.service.implementation.employees;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
 import com.restaurant.dto.employee.RollDTO;
@@ -11,12 +18,6 @@ import com.restaurant.model.vo.Permissions;
 import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.repository.EmployeeRepository;
 import com.restaurant.service.Interface.employees.IEmployeeServices;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServices implements IEmployeeServices {
@@ -27,8 +28,6 @@ public class EmployeeServices implements IEmployeeServices {
         this.employeeRepository = employeeRepository;
         this.managerServices = managerServices;
     }
-
-
 
     private final EmployeeMapper mapper = EmployeeMapper.INSTANCE;
 
@@ -48,7 +47,6 @@ public class EmployeeServices implements IEmployeeServices {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-
     /**
      * Fetches the details of a specific employee by their ID.
      *
@@ -57,13 +55,15 @@ public class EmployeeServices implements IEmployeeServices {
      */
     @Override
     public EmployeeDTO get(String id) {
-        return mapper.employeeToEmployeeDTO(employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found")));
+        return mapper.employeeToEmployeeDTO(
+                employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found")));
     }
 
     /**
      * Creates a new employee record in the system.
      *
-     * @param employeeDTO The EmployeeDTO containing the details of the new employee.
+     * @param employeeDTO The EmployeeDTO containing the details of the new
+     *                    employee.
      * @return The created EmployeeDTO.
      */
     @Override
@@ -82,7 +82,8 @@ public class EmployeeServices implements IEmployeeServices {
     /**
      * Updates the details of an existing employee.
      *
-     * @param employeeDTO The EmployeeDTO containing the updated employee information.
+     * @param employeeDTO The EmployeeDTO containing the updated employee
+     *                    information.
      * @return The updated EmployeeDTO.
      */
     @Override
@@ -90,22 +91,22 @@ public class EmployeeServices implements IEmployeeServices {
         return mapper.employeeToEmployeeDTO(employeeRepository.save(mapper.employeeDTOToEmployee(employeeDTO)));
     }
 
-
     /**
      * Adds permissions to a specific employee.
      *
-     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing the permission details.
+     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing the
+     *                               permission details.
      * @return The updated PermissionsEmployeeDTO with the applied permissions.
      */
     @Override
     public EmployeeDTO addPermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
         Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
         Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
-        for(Permissions permissions1 : employee.getRoll().getPermissions()){
-            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
+        for (Permissions permissions1 : employee.getRoll().getPermissions()) {
+            if (permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())) {
                 permissions.getPermissions().addAll(permissions1.getPermissions());
                 int index = employee.getRoll().getPermissions().indexOf(permissions1);
-                employee.getRoll().getPermissions().set(index,permissions);
+                employee.getRoll().getPermissions().set(index, permissions);
                 return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
             }
         }
@@ -117,17 +118,18 @@ public class EmployeeServices implements IEmployeeServices {
     public EmployeeDTO removePermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
         Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
         Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
-        for(Permissions permissions1 : employee.getRoll().getPermissions()){
-            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
+        for (Permissions permissions1 : employee.getRoll().getPermissions()) {
+            if (permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())) {
                 permissions1.getPermissions().removeAll(permissions.getPermissions());
                 int index = employee.getRoll().getPermissions().indexOf(permissions1);
-                employee.getRoll().getPermissions().set(index,permissions1);
+                employee.getRoll().getPermissions().set(index, permissions1);
                 return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
             }
         }
         employee.getRoll().getPermissions().add(permissions);
         return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
     }
+
     /**
      * Updates the password of a user associated with an employee.
      *
@@ -143,10 +145,12 @@ public class EmployeeServices implements IEmployeeServices {
     }
 
     /**
-     * Retrieves a list of active employees whose status is valid until a specific date.
+     * Retrieves a list of active employees whose status is valid until a specific
+     * date.
      *
      * @param date The cut-off date for retrieving active employees.
-     * @return A list of EmployeeDTOs representing active employees until the given date.
+     * @return A list of EmployeeDTOs representing active employees until the given
+     *         date.
      */
     @Override
     public List<EmployeeDTO> getActiveEmployeesUntilDate(LocalDate date) {

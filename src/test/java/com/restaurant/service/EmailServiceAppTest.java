@@ -1,8 +1,8 @@
-package com.restaurant.components;
+package com.restaurant.service;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class validatorTest {
+public class EmailServiceAppTest {
 
 }
