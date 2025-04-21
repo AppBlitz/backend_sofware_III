@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+
 public record EmployeeDTO(
         @Id
         String id,
@@ -51,5 +53,7 @@ public record EmployeeDTO(
         @NotNull(message = "Pension cannot be null")
         Employee.Pension pension,
         @NotNull(message = "Area cannot be null")
-        Employee.Area area
+        Employee.Area area,
+        @NotNull
+        HashMap<Employee.Day, Employee.Hours> schedule
 ) {}
