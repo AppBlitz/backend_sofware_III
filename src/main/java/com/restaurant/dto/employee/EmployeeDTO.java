@@ -7,12 +7,15 @@ import org.springframework.data.annotation.Id;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.RollForEmployee;
 
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.HashMap;
 
 public record EmployeeDTO(
 
@@ -36,5 +39,7 @@ public record EmployeeDTO(
                 @NotNull(message = "Risk level cannot be null") Employee.RiskLevel riskLevel,
                 @NotNull(message = "Cesantias cannot be null") Employee.Cesantias cesantias,
                 @NotNull(message = "Pension cannot be null") Employee.Pension pension,
-                @NotNull(message = "Area cannot be null") Employee.Area area) {
+                @NotNull(message = "Area cannot be null") Employee.Area area,
+                @NotNull HashMap<Employee.Day, Employee.Hours> schedule) {
 }
+

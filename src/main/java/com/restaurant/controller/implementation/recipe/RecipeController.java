@@ -1,11 +1,17 @@
 package com.restaurant.controller.implementation.recipe;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.document.Employee;
 import com.restaurant.model.vo.HistoryRecipe;
 import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.service.implementation.employees.EmployeeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +32,9 @@ public class RecipeController implements RecipeControllerInterface {
 
     @Autowired
     private RecipeServices recipeServices;
+
+    @Autowired
+    private EmployeeServices employeeServices;
 
     @Override
     @RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -102,4 +111,29 @@ public class RecipeController implements RecipeControllerInterface {
         List<HistoryRecipe> results = recipeServices.consult_movementsByHour(date, startHour, endHour);
         return ResponseEntity.ok(results);
     }
+
+    @RequestMapping(value = "/historyEmployee",method = RequestMethod.GET)
+    public ResponseEntity<List<HistoryRecipe>> getHistoryByEmployeeAndDate(
+            @RequestParam String employeeId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        DayOfWeek dayOfWeek = date.getDayOfWeek(); // Ej: MONDAY
+        Employee.Day diaSemana = Employee.Day.valueOf(dayOfWeek.name()); // Convertir a tu enum
+
+        EmployeeDTO empleado = employeeServices.get(employeeId);
+        Map<Employee.Day, Employee.Hours> horarios = empleado.schedule();
+
+        if (!horarios.containsKey(diaSemana)) {
+            return ResponseEntity.ok(Collections.emptyList()); // No trabajó ese día
+        }
+
+        Employee.Hours horario = horarios.get(diaSemana);
+
+        List<HistoryRecipe> actividades = recipeServices.consult_movementsByHour(
+                date, horario.getHourStart(), horario.getHourEnd()
+        );
+
+        return ResponseEntity.ok(actividades);
+    }
+
 }

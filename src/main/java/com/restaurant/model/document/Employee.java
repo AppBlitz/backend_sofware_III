@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 @AllArgsConstructor
@@ -113,4 +114,20 @@ public class Employee implements IEmployee {
 
  @NotNull(message = "Area cannot be null")
  private Area area;
+
+ @NotNull
+ private HashMap<Day,Hours> schedule;
+
+ @Builder
+ @Data
+ @AllArgsConstructor
+ @NoArgsConstructor
+ @ToString
+ public static class Hours{
+  int HourStart;
+  int HourEnd;
+ }
+ public enum Day{
+  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+ }
 }
