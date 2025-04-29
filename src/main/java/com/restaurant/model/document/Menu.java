@@ -37,4 +37,3 @@ public class Menu {
     @NonNull
     LocalTime date;
 }
-
