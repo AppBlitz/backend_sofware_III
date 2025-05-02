@@ -83,4 +83,21 @@ public class validatorsCartCom implements CartValidatorsInt {
     }
   }
 
+  @Override
+  public ArrayList<Menu> deleteItems(ArrayList<Menu> menus, String idShopping) {
+    ArrayList<Menu> men = new ArrayList<>();
+    for (Menu menu : menus) {
+      if (menu.getRest() >= 1 && menu.getAmount() > 0) {
+        menu.getMenuItems().values().stream()
+            .map(Recipe::getId)
+            .forEach(id -> {
+              recipeServices.uptadedRecipeCount(id, menu.getRest());
+            });
+      } else {
+        men.add(menu);
+      }
+    }
+    return men;
+  }
+
 }

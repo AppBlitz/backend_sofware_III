@@ -37,7 +37,8 @@ public interface IMenuServices {
      *
      * @param id   The ID of the menu to update.
      * @param menu The updated menu.
-     * @return The updated menu, or null if the menu with the provided ID is not found.
+     * @return The updated menu, or null if the menu with the provided ID is not
+     *         found.
      */
     Menu updateMenu(Integer id, Menu menu);
 
@@ -47,4 +48,5 @@ public interface IMenuServices {
      * @param id The ID of the menu to delete.
      */
     void deleteMenu(Integer id);
+
 }

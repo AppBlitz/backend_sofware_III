@@ -12,15 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.restaurant.dto.cart.ActivateShopping;
 import com.restaurant.dto.cart.AddProductDto;
+import com.restaurant.dto.cart.DeleteMenuShopping;
 import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.Menu;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.document.ShoppingCart;
 import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
-import com.restaurant.service.implementation.inventory.MenuServices;
 import com.restaurant.service.implementation.inventory.RecipeServices;
 
 @SpringBootTest
@@ -63,15 +62,18 @@ public class ShoppinCartServiceTest {
     Menu menus = Menu.builder()
         .menuItems(menu)
         .date(time)
-        .amount(5)
+        .amount(3)
+        .rest(1)
         .build();
 
     ArrayList<Menu> listMenu = new ArrayList<>();
     listMenu.add(menus);
 
-    AddProductDto product = new AddProductDto("b4d95f9e-f08c-4bbb-ae9e-136e45784a9f", StateCart.PENDING, listMenu);
+    DeleteMenuShopping product = new DeleteMenuShopping("b4d95f9e-f08c-4bbb-ae9e-136e45784a9f", StateCart.PENDING,
+        listMenu,
+        3);
 
-    assertNotNull(shoppinCartServiceIm.addMenuCart(product));
+    assertNotNull(shoppinCartServiceIm.deleteMenu(product));
   }
 
 }

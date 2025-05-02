@@ -133,4 +133,23 @@ public class RecipeServices implements IRecipeServices {
         recipeRepository.save(update);
     }
 
+    @Override
+    public void uptadedRecipeCount(String id, int count) {
+        Recipe recipe = recipeRepository.findById(id).get();
+
+        Recipe updatedRecipe = Recipe.builder()
+                .id(recipe.id)
+                .name(recipe.getName())
+                .ingredients(recipe.getIngredients())
+                .instructions(recipe.getInstructions())
+                .preparationTime(recipe.getPreparationTime())
+                .servings(recipe.getServings() + count)
+                .comment(recipe.getComment())
+                .creationDate(recipe.getCreationDate())
+                .estate(recipe.getEstate())
+                .build();
+
+        recipeRepository.save(updatedRecipe);
+    }
+
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.cart.ActivateShopping;
 import com.restaurant.dto.cart.AddProductDto;
+import com.restaurant.dto.cart.DeleteMenuShopping;
 import com.restaurant.exceptions.cart.SearchCartException;
 import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.ShoppingCart;
@@ -76,6 +77,18 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
         .build();
     shoppingCartRepository.save(cartUpdate);
     return cartUpdate;
+  }
+
+  @Override
+  public ShoppingCart deleteMenu(DeleteMenuShopping deleteMenuShopping) {
+    ShoppingCart deleteMenu = validatorsCartCom.searchCart(deleteMenuShopping.id());
+    ShoppingCart updated = ShoppingCart.builder()
+        .id(deleteMenu.getId())
+        .stateCart(deleteMenuShopping.stateCart())
+        .menus(validatorsCartCom.deleteItems(deleteMenuShopping.menus(), deleteMenu.getId()))
+        .amount(deleteMenuShopping.amount())
+        .build();
+    return shoppingCartRepository.save(updated);
   }
 
 }

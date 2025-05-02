@@ -20,4 +20,6 @@ public interface CartValidatorsInt {
 
   public int deleteItems(int rest);
 
+  public ArrayList<Menu> deleteItems(ArrayList<Menu> menus, String idShopping);
+
 }

@@ -2,6 +2,7 @@ package com.restaurant.service.Interface.cart;
 
 import com.restaurant.dto.cart.ActivateShopping;
 import com.restaurant.dto.cart.AddProductDto;
+import com.restaurant.dto.cart.DeleteMenuShopping;
 import com.restaurant.model.document.ShoppingCart;
 
 public interface ShoppingCartServiceInterface {
@@ -26,5 +27,7 @@ public interface ShoppingCartServiceInterface {
   public ShoppingCart searchCartId(String id);
 
   public ShoppingCart activateCart(ActivateShopping activateShopping);
+
+  public ShoppingCart deleteMenu(DeleteMenuShopping deleteMenuShopping);
 
 }

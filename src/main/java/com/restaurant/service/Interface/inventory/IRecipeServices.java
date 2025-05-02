@@ -51,4 +51,5 @@ public interface IRecipeServices {
 
     public void uptadesServingsRecipe(String id, int amount);
 
+    public void uptadedRecipeCount(String id, int count);
 }
