@@ -1,6 +1,5 @@
 package com.restaurant.model.document;
 
-import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.interfaces.IEmployee;
 import com.restaurant.model.vo.RollForEmployee;
 import jakarta.validation.constraints.*;
@@ -11,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-
 @AllArgsConstructor
 @Document(collection = "employee")
 @Builder
@@ -21,27 +19,34 @@ import java.util.HashMap;
 @Setter
 /*
  * The Employee class represents an employee in the restaurant.
- * It includes information about the employee's ID, DNI, name, schedule, charge, base salary, email, password, permissions, and role.
+ * It includes information about the employee's ID, DNI, name, schedule, charge,
+ * base salary, email, password, permissions, and role.
  */
 public class Employee implements IEmployee {
  public enum EPS {
   SALUD_TOTAL, NUEVA_EPS, SURA, SANITAS
  }
+
  public enum ARL {
   SURA, POSITIVA, SEGUROS_BOLIVAR
  }
+
  public enum CCF {
   COMFENALCO_QUINDIO, COMFENALCO_ANTIOQUIA, COMFAMA, CAFAM
  }
+
  public enum RiskLevel {
   LEVEL_I, LEVEL_II, LEVEL_III, LEVEL_IV, LEVEL_V
  }
+
  public enum Cesantias {
   PORVENIR, COLFONDOS, FNA, PROTECCION
  }
+
  public enum Pension {
   COLPENSIONES, PORVENIR, PROTECCION
  }
+
  @Data
  @AllArgsConstructor
  @NoArgsConstructor
@@ -55,6 +60,7 @@ public class Employee implements IEmployee {
   @Size(min = 8, message = "Password must be at least 8 characters long")
   private String password;
  }
+
  public enum Area {
   KITCHEN, WAREHOUSE, SALES
  }
@@ -78,7 +84,7 @@ public class Employee implements IEmployee {
  @NotBlank(message = "Entry date cannot be null")
  private LocalDate entryDate;
 
- //retirementDate can be null
+ // retirementDate can be null
  private LocalDate retirementDate;
 
  @NotNull(message = "Retirement status cannot be null")
@@ -116,18 +122,19 @@ public class Employee implements IEmployee {
  private Area area;
 
  @NotNull
- private HashMap<Day,Hours> schedule;
+ private HashMap<Day, Hours> schedule;
 
  @Builder
  @Data
  @AllArgsConstructor
  @NoArgsConstructor
  @ToString
- public static class Hours{
+ public static class Hours {
   int HourStart;
   int HourEnd;
  }
- public enum Day{
+
+ public enum Day {
   MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
  }
 }

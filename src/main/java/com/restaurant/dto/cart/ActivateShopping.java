@@ -2,5 +2,5 @@ package com.restaurant.dto.cart;
 
 import lombok.NonNull;
 
-public record updateCartDto(@NonNull String id) {
+public record ActivateShopping(@NonNull String id) {
 }

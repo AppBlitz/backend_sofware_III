@@ -29,11 +29,14 @@ public class Menu {
      * A map of recipes and their respective prices in the menu.
      */
     @NonNull
-    HashMap<Recipe, Double> menuItems;
+    HashMap<String, Recipe> menuItems;
 
     /**
      * The date the menu was created.
      */
     @NonNull
     LocalTime date;
+
+    int amount;
+    int rest;
 }

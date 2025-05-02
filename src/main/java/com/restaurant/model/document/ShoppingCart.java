@@ -19,13 +19,12 @@ public class ShoppingCart {
   @Id
   String id;
 
-  @NonNull
-  String orderNumber;
-
   @Builder.Default
   ArrayList<Menu> menus = new ArrayList<>();
 
   @NonNull
   StateCart stateCart;
+
+  int amount;
 
 }

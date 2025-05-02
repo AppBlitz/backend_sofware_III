@@ -1,18 +1,26 @@
 package com.restaurant.controller.implementation.employee;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO;
 import com.restaurant.dto.employee.RollDTO;
 import com.restaurant.dto.employee.UserDTO;
-import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.service.implementation.employees.EmployeeServices;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  * REST controller for handling Employee operations.
@@ -82,7 +90,7 @@ public class EmployeeController {
      */
     @PostMapping("/add")
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        if(employeeDTO.roll() == null){
+        if (employeeDTO.roll() == null) {
 
         }
         EmployeeDTO createdEmployee = employeeServices.create(employeeDTO);
@@ -133,7 +141,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/roll")
-    public ResponseEntity<EmployeeDTO> updateRoll(@RequestBody RollDTO rollDTO){
+    public ResponseEntity<EmployeeDTO> updateRoll(@RequestBody RollDTO rollDTO) {
         return ResponseEntity.ok(employeeServices.updateRoll(rollDTO));
 
     }

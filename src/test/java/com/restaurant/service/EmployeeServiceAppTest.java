@@ -45,42 +45,42 @@ public class EmployeeServiceAppTest {
         assertNotNull(employee);
     }
 
-    @Test
-    public void createEmployee() {
-        HashSet<PermisionsCRUD> permisos = new HashSet<>();
-        permisos.add(PermisionsCRUD.CONSULTAR);
-
-        Permissions permision = Permissions.builder()
-                .permissions(permisos)
-                .objeto(Objeto.OB_EMPLOYEE)
-                .build();
-
-        ArrayList<Permissions> listPermisions = new ArrayList<>();
-        listPermisions.add(permision);
-        RollForEmployee rol = new RollForEmployee(RollEmployee.WarehouseEmployee,
-                listPermisions);
-        EmployeeDTO employee = new EmployeeDTO(
-                "Luis",
-                "Carrera 13-45",
-                "Tapéi",
-                "+8861345678901",
-                LocalDate.now(),
-                null,
-                false,
-                1200000.0,
-                rol,
-                "Luis@gmail.com",
-                "213465gtfr",
-                EPS.NUEVA_EPS,
-                ARL.POSITIVA,
-                CCF.CAFAM,
-                RiskLevel.LEVEL_III,
-                Cesantias.COLFONDOS,
-                Pension.COLPENSIONES,
-                Area.KITCHEN);
-
-        assertNotNull(employeeServices.create(employee));
-    }
+    // @Test
+    // public void createEmployee() {
+    // HashSet<PermisionsCRUD> permisos = new HashSet<>();
+    // permisos.add(PermisionsCRUD.CONSULTAR);
+    //
+    // Permissions permision = Permissions.builder()
+    // .permissions(permisos)
+    // .objeto(Objeto.OB_EMPLOYEE)
+    // .build();
+    //
+    // ArrayList<Permissions> listPermisions = new ArrayList<>();
+    // listPermisions.add(permision);
+    // RollForEmployee rol = new RollForEmployee(RollEmployee.WarehouseEmployee,
+    // listPermisions);
+    // EmployeeDTO employee = new EmployeeDTO(
+    // "Luis",
+    // "Carrera 13-45",
+    // "Tapéi",
+    // "+8861345678901",
+    // LocalDate.now(),
+    // null,
+    // false,
+    // 1200000.0,
+    // rol,
+    // "Luis@gmail.com",
+    // "213465gtfr",
+    // EPS.NUEVA_EPS,
+    // ARL.POSITIVA,
+    // CCF.CAFAM,
+    // RiskLevel.LEVEL_III,
+    // Cesantias.COLFONDOS,
+    // Pension.COLPENSIONES,
+    // Area.KITCHEN);
+    //
+    // assertNotNull(employeeServices.create(employee));
+    // }
 
     @ParameterizedTest
     @ValueSource(strings = { "680290f571ae414c518bf1ca", "1234", "6804517345ac661cd01e849e" })

@@ -6,21 +6,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant.dto.employee.EmployeeDTO;
-import com.restaurant.model.Enum.Estate;
-import com.restaurant.model.document.Employee;
-import com.restaurant.model.vo.HistoryRecipe;
-import com.restaurant.model.vo.MovementProduct;
-import com.restaurant.service.implementation.employees.EmployeeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.controller.Interface.recipe.RecipeControllerInterface;
+import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.recipe.RecipeDtoAdd;
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
+import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.document.Employee;
 import com.restaurant.model.document.Recipe;
+import com.restaurant.model.vo.HistoryRecipe;
+import com.restaurant.service.implementation.employees.EmployeeServices;
 import com.restaurant.service.implementation.inventory.RecipeServices;
 
 import jakarta.validation.Valid;
@@ -98,21 +102,23 @@ public class RecipeController implements RecipeControllerInterface {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/movementByDate",method = RequestMethod.GET)
-    public ResponseEntity<List<HistoryRecipe>> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    @RequestMapping(value = "/movementByDate", method = RequestMethod.GET)
+    public ResponseEntity<List<HistoryRecipe>> getByDate(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<HistoryRecipe> results = recipeServices.consult_movementsByDate(date);
         return ResponseEntity.ok(results);
     }
 
-    @RequestMapping(value = "/movementByRangeHour",method = RequestMethod.GET)
-    public ResponseEntity<List<HistoryRecipe>> getByHour(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                           @RequestParam int startHour,
-                                                           @RequestParam int endHour) {
+    @RequestMapping(value = "/movementByRangeHour", method = RequestMethod.GET)
+    public ResponseEntity<List<HistoryRecipe>> getByHour(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam int startHour,
+            @RequestParam int endHour) {
         List<HistoryRecipe> results = recipeServices.consult_movementsByHour(date, startHour, endHour);
         return ResponseEntity.ok(results);
     }
 
-    @RequestMapping(value = "/historyEmployee",method = RequestMethod.GET)
+    @RequestMapping(value = "/historyEmployee", method = RequestMethod.GET)
     public ResponseEntity<List<HistoryRecipe>> getHistoryByEmployeeAndDate(
             @RequestParam String employeeId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -130,8 +136,7 @@ public class RecipeController implements RecipeControllerInterface {
         Employee.Hours horario = horarios.get(diaSemana);
 
         List<HistoryRecipe> actividades = recipeServices.consult_movementsByHour(
-                date, horario.getHourStart(), horario.getHourEnd()
-        );
+                date, horario.getHourStart(), horario.getHourEnd());
 
         return ResponseEntity.ok(actividades);
     }
