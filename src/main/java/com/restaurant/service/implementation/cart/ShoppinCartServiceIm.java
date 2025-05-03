@@ -1,5 +1,7 @@
 package com.restaurant.service.implementation.cart;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +91,11 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
         .amount(deleteMenuShopping.amount())
         .build();
     return shoppingCartRepository.save(updated);
+  }
+
+  @Override
+  public List<ShoppingCart> getAllShopping() {
+    return shoppingCartRepository.findAll();
   }
 
 }

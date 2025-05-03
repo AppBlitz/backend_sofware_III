@@ -1,4 +1,9 @@
-package com.restaurant.service.Interface;
+package com.restaurant.service.Interface.email;
+
+import com.restaurant.model.document.ShoppingCart;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 public interface IEmailService {
     /**
@@ -9,5 +14,11 @@ public interface IEmailService {
      * @throws Exception If an error occurs while sending the email.
      */
     void sendOrderRecommendationEmail(String toEmail, byte[] pdfContent) throws Exception;
+
+    void sendEmailBill(String to, String subject) throws MessagingException;
+
+    public void sendMessage(MimeMessage message) throws MessagingException;
+
+    public String createMessage(String name);
 
 }

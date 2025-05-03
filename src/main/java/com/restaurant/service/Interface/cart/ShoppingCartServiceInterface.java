@@ -1,5 +1,7 @@
 package com.restaurant.service.Interface.cart;
 
+import java.util.List;
+
 import com.restaurant.dto.cart.ActivateShopping;
 import com.restaurant.dto.cart.AddProductDto;
 import com.restaurant.dto.cart.DeleteMenuShopping;
@@ -29,5 +31,7 @@ public interface ShoppingCartServiceInterface {
   public ShoppingCart activateCart(ActivateShopping activateShopping);
 
   public ShoppingCart deleteMenu(DeleteMenuShopping deleteMenuShopping);
+
+  public List<ShoppingCart> getAllShopping();
 
 }

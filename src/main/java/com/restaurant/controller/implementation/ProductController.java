@@ -6,27 +6,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.restaurant.dto.employee.EmployeeDTO;
-import com.restaurant.dto.product.ProductUpdateDto;
-import com.restaurant.exceptions.product.ExceptionUpdateProduct;
-import com.restaurant.model.document.Employee;
-import com.restaurant.model.vo.HistoryRecipe;
-import com.restaurant.service.implementation.employees.EmployeeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.controller.Interface.ProductControllerInterface;
+import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.product.MovementDto;
 import com.restaurant.dto.product.ProductDtoAdd;
+import com.restaurant.dto.product.ProductUpdateDto;
+import com.restaurant.exceptions.product.ExceptionUpdateProduct;
+import com.restaurant.model.document.Employee;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.service.implementation.employees.EmployeeServices;
 import com.restaurant.service.implementation.inventory.ProductService;
 
 import jakarta.validation.Valid;
@@ -49,7 +48,7 @@ public class ProductController implements ProductControllerInterface {
   }
 
   @RequestMapping(value = "/update", method = RequestMethod.PUT)
-  public ResponseEntity<Product> editProduct( @RequestBody @Valid ProductUpdateDto productUpdateDto) throws Exception {
+  public ResponseEntity<Product> editProduct(@RequestBody @Valid ProductUpdateDto productUpdateDto) throws Exception {
     Product product = productService.updateProduct(productUpdateDto);
     return ResponseEntity.status(200).body(product);
   }
@@ -88,25 +87,26 @@ public class ProductController implements ProductControllerInterface {
     return ResponseEntity.status(200).body(products);
   }
 
-
-  @RequestMapping(value = "/movementByDate",method = RequestMethod.GET)
-  public ResponseEntity<List<MovementProduct>> getByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+  @RequestMapping(value = "/movementByDate", method = RequestMethod.GET)
+  public ResponseEntity<List<MovementProduct>> getByDate(
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
     List<MovementProduct> results = productService.consult_movementsByDate(date);
     return ResponseEntity.ok(results);
   }
 
-  @RequestMapping(value = "/movementByRangeHour",method = RequestMethod.GET)
-  public ResponseEntity<List<MovementProduct>> getByHour(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                         @RequestParam int startHour,
-                                                         @RequestParam int endHour) {
+  @RequestMapping(value = "/movementByRangeHour", method = RequestMethod.GET)
+  public ResponseEntity<List<MovementProduct>> getByHour(
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+      @RequestParam int startHour,
+      @RequestParam int endHour) {
     List<MovementProduct> results = productService.consult_movementsByHour(date, startHour, endHour);
     return ResponseEntity.ok(results);
   }
 
-  @RequestMapping(value = "/historyEmployee",method = RequestMethod.GET)
+  @RequestMapping(value = "/historyEmployee", method = RequestMethod.GET)
   public ResponseEntity<List<MovementProduct>> getHistoryByEmployeeAndDate(
-          @RequestParam String employeeId,
-          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+      @RequestParam String employeeId,
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 
     DayOfWeek dayOfWeek = date.getDayOfWeek(); // Ej: MONDAY
     Employee.Day diaSemana = Employee.Day.valueOf(dayOfWeek.name()); // Convertir a tu enum
@@ -121,8 +121,7 @@ public class ProductController implements ProductControllerInterface {
     Employee.Hours horario = horarios.get(diaSemana);
 
     List<MovementProduct> actividades = productService.consult_movementsByHour(
-            date, horario.getHourStart(), horario.getHourEnd()
-    );
+        date, horario.getHourStart(), horario.getHourEnd());
 
     return ResponseEntity.ok(actividades);
   }

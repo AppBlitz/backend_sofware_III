@@ -17,7 +17,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/menus")
-@CrossOrigin(origins = "*")
 public class MenuController implements MenuControllerInterface {
 
     @Autowired

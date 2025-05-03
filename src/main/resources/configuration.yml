@@ -2,7 +2,9 @@ my:
   test:
     imageOne:
       route: src/test/java/com/restaurant/images/images.webp
-  userOne:
+    userOne:
+    email:
+      to: carlosf.corralesz@uqvirtual.edu.co
 
 data:
   email: equiporoblox520@gmail.com
