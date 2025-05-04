@@ -17,7 +17,7 @@ public class ServiceEmailAppTest {
   @Test
   public void sendEmail() throws MessagingException {
 
-    String to = "carlosfabiancorraleszapata9@gmail.com";
+    String to = "";
     String subject = "Factura eléctronica";
     emailService.sendEmailBill(to, subject);
   }
