@@ -1,7 +1,5 @@
 package com.restaurant.service.implementation.email;
 
-import java.util.ArrayList;
-
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.api.mailer.config.TransportStrategy;
@@ -13,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.restaurant.dto.cart.UserDto;
 import com.restaurant.service.Interface.email.IEmailService;
 import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.restaurant.util.PdfGenerator;
@@ -68,13 +67,13 @@ public class EmailService implements IEmailService {
         }
 
         @Override
-        public void sendEmailBill(String to, String subject, String idShopping) throws MessagingException {
+        public void sendEmailBill(UserDto userDto, String subject, String idShopping) throws MessagingException {
                 MimeMessage message = javaMailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setFrom(username);
-                helper.setTo(to);
+                helper.setTo(userDto.email());
                 helper.setSubject(subject);
-                helper.setText(createMessage("Carlos"), true);
+                helper.setText(createMessage(userDto.name()), true);
 
                 String fileName = "invoice.pdf";
                 ByteArrayDataSource dataSource = new ByteArrayDataSource(

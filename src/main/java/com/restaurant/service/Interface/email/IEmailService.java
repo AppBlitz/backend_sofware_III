@@ -1,6 +1,6 @@
 package com.restaurant.service.Interface.email;
 
-import com.restaurant.model.document.ShoppingCart;
+import com.restaurant.dto.cart.UserDto;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -15,10 +15,30 @@ public interface IEmailService {
      */
     void sendOrderRecommendationEmail(String toEmail, byte[] pdfContent) throws Exception;
 
-    void sendEmailBill(String to, String subject, String idShopping) throws MessagingException;
+    /**
+     * @param to         email of destination
+     * @param subject
+     * @param idShopping for search shopping cart
+     * @throws MessagingException
+     *
+     *                            The aim of this method is to be able to send the
+     *                            payment invoice when the shopping cart is checked
+     *                            out.
+     */
+    void sendEmailBill(UserDto user, String subject, String idShopping) throws MessagingException;
 
+    /**
+     * @param message
+     * @throws MessagingException
+     */
     public void sendMessage(MimeMessage message) throws MessagingException;
 
+    /**
+     * @param name user
+     * @return message
+     *
+     *         Message structure for when the message is sent
+     */
     public String createMessage(String name);
 
 }
