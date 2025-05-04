@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Electronic Invoice</title>
+    <style>
+      body {
+        background-color: #121212;
+        color: #ffffff;
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #ffffff;
+      }
+      .header p {
+        margin: 0;
+        font-size: 14px;
+        color: #b0b0b0;
+      }
+      .content {
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 12px;
+        color: #b0b0b0;
+      }
+      .button {
+        display: inline-block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        color: #ffffff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Hello,${user}</h1>
+        <p>Your invoice is ready</p>
+      </div>
+      <div class="content">
+        <p>
+          We are delighted to provide you with the details of your invoice.
+          Attached you will find all the necessary information regarding your
+          recent transaction.
+        </p>
+        <p>
+          If you have any questions or need further assistance, do not hesitate
+          to contact us. Your satisfaction is our priority.
+        </p>
+        <a href="#" class="button">View Invoice</a>
+      </div>
+      <div class="footer">
+        <p>Thank you for trusting us with your business.</p>
+        <p>&copy; 2025 Your Company Name. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

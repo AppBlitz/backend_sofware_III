@@ -35,6 +35,7 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
         .stateCart(cartAdd.getStateCart())
         .menus(addProduct.menus())
         .amount(addProduct.menus().size())
+        .total(addProduct.total())
         .build();
     validatorsCartCom.runListMenus(addProduct.menus());
     return shoppingCartRepository.save(cartUpdate);

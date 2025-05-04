@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.employee.EmployeeDTO;
@@ -21,12 +22,13 @@ import com.restaurant.service.Interface.employees.IEmployeeServices;
 
 @Service
 public class EmployeeServices implements IEmployeeServices {
+    @Autowired
     private final EmployeeRepository employeeRepository;
-    private final ManagerServices managerServices;
+    // private final ManagerServices managerServices;
 
     public EmployeeServices(EmployeeRepository employeeRepository, ManagerServices managerServices) {
         this.employeeRepository = employeeRepository;
-        this.managerServices = managerServices;
+        // this.managerServices = managerServices;
     }
 
     private final EmployeeMapper mapper = EmployeeMapper.INSTANCE;
@@ -68,7 +70,7 @@ public class EmployeeServices implements IEmployeeServices {
      */
     @Override
     public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        if(employeeDTO.roll() == null){
+        if (employeeDTO.roll() == null) {
             RollForEmployee roll = new RollForEmployee();
             roll.setPermissions(new ArrayList<>());
             roll.setRollEmployee(RollEmployee.DEFAULT);
@@ -157,7 +159,7 @@ public class EmployeeServices implements IEmployeeServices {
         return convertList(employeeRepository.getAllByRetirementDateIsNullOrRetirementDateAfter(date));
     }
 
-    public EmployeeDTO updateRoll(RollDTO rollDTO){
+    public EmployeeDTO updateRoll(RollDTO rollDTO) {
         Employee employee = employeeRepository.getById(rollDTO.id());
         employee.getRoll().setRollEmployee(rollDTO.rollEmployee());
         return mapper.employeeToEmployeeDTO(employee);

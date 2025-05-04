@@ -8,5 +8,6 @@ import com.restaurant.model.document.Menu;
 import jakarta.validation.constraints.Null;
 import lombok.NonNull;
 
-public record AddProductDto(@Null String id, @NonNull StateCart stateCart, @NonNull ArrayList<Menu> menus) {
+public record AddProductDto(@Null String id, @NonNull StateCart stateCart, @NonNull ArrayList<Menu> menus,
+    double total) {
 }

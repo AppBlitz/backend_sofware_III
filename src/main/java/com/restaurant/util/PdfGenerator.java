@@ -3,7 +3,7 @@ package com.restaurant.util;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -11,12 +11,15 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
 import com.restaurant.dto.product.ProductExpiration;
+import com.restaurant.model.document.Menu;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
+import com.restaurant.util.interfaces.PdfGeneratosInter;
 
-@Service
-public class PdfGenerator {
+@Component
+public class PdfGenerator implements PdfGeneratosInter {
 
     public static byte[] generateOrderRecommendationPdf(OrderRecommendation recommendation) throws Exception {
         // Instances required to create the PDF
@@ -37,20 +40,24 @@ public class PdfGenerator {
         Table table = new Table(columnWidths); // Create the table
 
         // Add recommended products
-        if(recommendation.getProducts().isEmpty()){
+        if (recommendation.getProducts().isEmpty()) {
             table.addCell(new Cell().add(new Paragraph(("no hay recomendacion de pedido por fabricar"))));
-        }else {
+        } else {
             table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setBold())); // Create the first column
             table.addHeaderCell(new Cell().add(new Paragraph("Current Stock").setBold())); // Create the second column
-            table.addHeaderCell(new Cell().add(new Paragraph("Recommended Quantity").setBold())); // Create the third column
-            table.addHeaderCell(new Cell().add(new Paragraph("Available Suppliers").setBold())); // Create the fourth column
+            table.addHeaderCell(new Cell().add(new Paragraph("Recommended Quantity").setBold())); // Create the third
+                                                                                                  // column
+            table.addHeaderCell(new Cell().add(new Paragraph("Available Suppliers").setBold())); // Create the fourth
+                                                                                                 // column
 
             for (ProductRecommendation product : recommendation.getProducts()) { // Iterate through recommended products
                 table.addCell(new Cell().add(new Paragraph(product.getProductName()))); // Add the product name
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the current
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the
+                                                                                                         // current
                 // stock of the
                 // product
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add the
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add
+                                                                                                                // the
                 // recommended
                 // quantity
                 // Load the product's suppliers
@@ -73,7 +80,7 @@ public class PdfGenerator {
     }
 
     public static byte[] expirationProducts(ArrayList<ProductExpiration> products) throws Exception {
-        // Instancias necesarias para crear el PDF
+        // Instancias necesarias para com.crear el PDF
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(outputStream);
         PdfDocument pdf = new PdfDocument(writer);
@@ -103,6 +110,56 @@ public class PdfGenerator {
         document.close(); // Cerrar el documento para finalizar el contenido
 
         // Retornar el PDF generado como un arreglo de bytes
+        return outputStream.toByteArray();
+    }
+
+    @Override
+    public byte[] createInvoice(ArrayList<Menu> listMenus) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfWriter writer = new PdfWriter(outputStream);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        document.add(new Paragraph("Invoice")
+                .setBold()
+                .setFontSize(16)
+                .setTextAlignment(TextAlignment.CENTER));
+
+        float[] columnWidths = { 200F, 100F, 100F };
+        Table table = new Table(columnWidths);
+
+        table.addHeaderCell(new Cell().add(new Paragraph("Recipe name").setBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Price").setBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Quantity").setBold()));
+
+        double total = 0.0;
+        double taxRate = 0.19;
+
+        for (Menu item : listMenus) {
+            double price = item.getPrice();
+            double quantity = item.getAmount();
+
+            table.addCell(new Cell().add(new Paragraph(String.format("$%.2f", price))));
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(quantity))));
+            total = total + (quantity * item.getPrice());
+        }
+
+        document.add(table);
+
+        double tax = total * taxRate;
+        double totalWithTax = total + tax;
+
+        document.add(new Paragraph("\n"));
+        document.add(new Paragraph(String.format("Subtotal: $%.2f", total))
+                .setTextAlignment(TextAlignment.RIGHT));
+        document.add(new Paragraph(String.format("Tax (19%%): $%.2f", tax))
+                .setTextAlignment(TextAlignment.RIGHT));
+        document.add(new Paragraph(String.format("Total: $%.2f", totalWithTax))
+                .setBold()
+                .setTextAlignment(TextAlignment.RIGHT));
+
+        document.close();
+
         return outputStream.toByteArray();
     }
 

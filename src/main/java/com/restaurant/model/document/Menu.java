@@ -37,6 +37,7 @@ public class Menu {
     @NonNull
     LocalTime date;
 
+    double price;
     int amount;
     int rest;
 }

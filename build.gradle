@@ -38,11 +38,11 @@ dependencies {
     implementation 'com.itextpdf:layout:7.1.15'
     implementation 'com.itextpdf:kernel:7.1.15'
 
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'javax.activation:activation:1.1.1'
     implementation 'org.simplejavamail:simple-java-mail:8.11.2'
     implementation 'org.simplejavamail:batch-module:8.10.1'
-
 }
 
 tasks.named('test') {

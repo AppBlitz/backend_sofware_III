@@ -2,7 +2,7 @@ package com.restaurant.controller.implementation.supplier;
 
 import com.restaurant.controller.Interface.supplier.IOrderController;
 import com.restaurant.model.vo.OrderRecommendation;
-import com.restaurant.service.implementation.EmailService;
+import com.restaurant.service.implementation.email.EmailService;
 import com.restaurant.service.implementation.inventory.OrderRecommendationService;
 import com.restaurant.util.PdfGenerator;
 import org.springframework.beans.factory.annotation.Autowired;

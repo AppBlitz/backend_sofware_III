@@ -1,4 +1,4 @@
-package com.restaurant.controller.implementation;
+package com.restaurant.controller.implementation.recipe;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
