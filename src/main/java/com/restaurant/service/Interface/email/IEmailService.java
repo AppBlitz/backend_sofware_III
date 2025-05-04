@@ -15,7 +15,7 @@ public interface IEmailService {
      */
     void sendOrderRecommendationEmail(String toEmail, byte[] pdfContent) throws Exception;
 
-    void sendEmailBill(String to, String subject) throws MessagingException;
+    void sendEmailBill(String to, String subject, String idShopping) throws MessagingException;
 
     public void sendMessage(MimeMessage message) throws MessagingException;
 

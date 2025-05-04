@@ -68,7 +68,7 @@ public class EmailService implements IEmailService {
         }
 
         @Override
-        public void sendEmailBill(String to, String subject) throws MessagingException {
+        public void sendEmailBill(String to, String subject, String idShopping) throws MessagingException {
                 MimeMessage message = javaMailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setFrom(username);
@@ -79,7 +79,7 @@ public class EmailService implements IEmailService {
                 String fileName = "invoice.pdf";
                 ByteArrayDataSource dataSource = new ByteArrayDataSource(
                                 pdfGenerator.createInvoice(shoppinCartServiceIm
-                                                .searchCartId("c1d41b66-c0df-48d5-a01a-0f4cd97bc40d").getMenus()),
+                                                .searchCartId(idShopping).getMenus()),
                                 "application/pdf");
                 helper.addAttachment(fileName, dataSource);
                 sendMessage(message);
