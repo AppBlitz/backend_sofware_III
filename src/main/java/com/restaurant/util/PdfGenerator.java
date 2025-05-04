@@ -2,6 +2,7 @@ package com.restaurant.util;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import com.restaurant.dto.product.ProductExpiration;
 import com.restaurant.model.document.Menu;
+import com.restaurant.model.document.Recipe;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
 import com.restaurant.util.interfaces.PdfGeneratosInter;
@@ -120,14 +122,17 @@ public class PdfGenerator implements PdfGeneratosInter {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
+        // Título de la factura
         document.add(new Paragraph("Invoice")
                 .setBold()
                 .setFontSize(16)
                 .setTextAlignment(TextAlignment.CENTER));
 
+        // Definir estructura de la tabla
         float[] columnWidths = { 200F, 100F, 100F };
         Table table = new Table(columnWidths);
 
+        // Encabezados de la tabla
         table.addHeaderCell(new Cell().add(new Paragraph("Recipe name").setBold()));
         table.addHeaderCell(new Cell().add(new Paragraph("Price").setBold()));
         table.addHeaderCell(new Cell().add(new Paragraph("Quantity").setBold()));
@@ -135,20 +140,25 @@ public class PdfGenerator implements PdfGeneratosInter {
         double total = 0.0;
         double taxRate = 0.19;
 
+        // Rellenar filas de la tabla
         for (Menu item : listMenus) {
             double price = item.getPrice();
             double quantity = item.getAmount();
 
-            table.addCell(new Cell().add(new Paragraph(String.format("$%.2f", price))));
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(quantity))));
-            total = total + (quantity * item.getPrice());
+            table.addCell(new Cell().add(new Paragraph(nameRecipe(item.getMenuItems())))); // Nombre de la receta
+            table.addCell(new Cell().add(new Paragraph(String.format("$%.2f", price)))); // Precio
+            table.addCell(new Cell().add(new Paragraph(String.valueOf(quantity)))); // Cantidad
+            total += quantity * price;
         }
 
+        // Agregar la tabla al documento
         document.add(table);
 
+        // Calcular impuestos y total
         double tax = total * taxRate;
         double totalWithTax = total + tax;
 
+        // Agregar detalles finales al documento
         document.add(new Paragraph("\n"));
         document.add(new Paragraph(String.format("Subtotal: $%.2f", total))
                 .setTextAlignment(TextAlignment.RIGHT));
@@ -158,9 +168,18 @@ public class PdfGenerator implements PdfGeneratosInter {
                 .setBold()
                 .setTextAlignment(TextAlignment.RIGHT));
 
+        // Cerrar documento
         document.close();
 
         return outputStream.toByteArray();
     }
 
+    public String nameRecipe(HashMap<String, Recipe> items) {
+        String aux = "";
+        for (String key : items.keySet()) {
+            aux = items.get(key).getName();
+        }
+        return aux;
+
+    }
 }

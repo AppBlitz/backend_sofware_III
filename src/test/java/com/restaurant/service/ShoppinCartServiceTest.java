@@ -63,17 +63,17 @@ public class ShoppinCartServiceTest {
         .menuItems(menu)
         .date(time)
         .amount(3)
-        .rest(1)
+        .rest(2)
         .build();
 
     ArrayList<Menu> listMenu = new ArrayList<>();
     listMenu.add(menus);
 
-    DeleteMenuShopping product = new DeleteMenuShopping("b4d95f9e-f08c-4bbb-ae9e-136e45784a9f", StateCart.PENDING,
+    AddProductDto product = new AddProductDto("c1d41b66-c0df-48d5-a01a-0f4cd97bc40d", StateCart.PENDING,
         listMenu,
         3);
 
-    assertNotNull(shoppinCartServiceIm.deleteMenu(product));
+    assertNotNull(shoppinCartServiceIm.addMenuCart(product));
   }
 
 }

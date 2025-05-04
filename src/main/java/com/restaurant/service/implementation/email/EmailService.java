@@ -14,6 +14,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.service.Interface.email.IEmailService;
+import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.restaurant.util.PdfGenerator;
 
 import jakarta.mail.MessagingException;
@@ -28,6 +29,9 @@ public class EmailService implements IEmailService {
 
         @Autowired
         PdfGenerator pdfGenerator;
+
+        @Autowired
+        ShoppinCartServiceIm shoppinCartServiceIm;
 
         @Value("${spring.mail.username}")
         String username;
@@ -73,7 +77,9 @@ public class EmailService implements IEmailService {
                 helper.setText(createMessage("Carlos"), true);
 
                 String fileName = "invoice.pdf";
-                ByteArrayDataSource dataSource = new ByteArrayDataSource(pdfGenerator.createInvoice(new ArrayList<>()),
+                ByteArrayDataSource dataSource = new ByteArrayDataSource(
+                                pdfGenerator.createInvoice(shoppinCartServiceIm
+                                                .searchCartId("c1d41b66-c0df-48d5-a01a-0f4cd97bc40d").getMenus()),
                                 "application/pdf");
                 helper.addAttachment(fileName, dataSource);
                 sendMessage(message);
