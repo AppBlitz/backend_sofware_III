@@ -1,11 +1,18 @@
 package com.restaurant.model.document;
 
-import lombok.*;
+import java.time.LocalDate;
+import java.util.HashMap;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalTime;
-import java.util.HashMap;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Represents a menu in the restaurant.
@@ -35,7 +42,13 @@ public class Menu {
      * The date the menu was created.
      */
     @NonNull
-    LocalTime date;
+    LocalDate date;
+
+    @NonNull
+    String name;
+
+    @NonNull
+    String description;
 
     double price;
     int amount;

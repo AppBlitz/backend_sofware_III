@@ -1,11 +1,14 @@
 package com.restaurant.service.implementation.inventory;
 
+import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.model.document.Menu;
 import com.restaurant.repository.MenuRepository;
 import com.restaurant.service.Interface.inventory.IMenuServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,8 +51,14 @@ public class MenuServices implements IMenuServices {
      * @return A list of all menus.
      */
     @Override
-    public List<Menu> getAllMenus() {
-        return menuRepository.findAll();
+    public List<MenuALl> getAllMenus() {
+        List<MenuALl> allMenus = new ArrayList<>();
+        List<Menu> menus = menuRepository.findByDates(LocalDate.now());
+        for (Menu menu : menus) {
+            MenuALl menuAll = new MenuALl(menu.getId() + "", menu.getName(), menu.getDate(), menu.getDescription());
+            allMenus.add(menuAll);
+        }
+        return allMenus;
     }
 
     /**

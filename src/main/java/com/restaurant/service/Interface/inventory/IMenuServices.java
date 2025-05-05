@@ -1,5 +1,6 @@
 package com.restaurant.service.Interface.inventory;
 
+import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.model.document.Menu;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface IMenuServices {
      *
      * @return A list of all menus.
      */
-    List<Menu> getAllMenus();
+    List<MenuALl> getAllMenus();
 
     /**
      * Updates an existing menu.
