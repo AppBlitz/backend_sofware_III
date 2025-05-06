@@ -86,7 +86,7 @@ public class RecipeController implements RecipeControllerInterface {
         recipe.setComment(recipeDtoUpdate.comment());
         recipe.setCreationDate(LocalDate.from(recipeDtoUpdate.creationDate()));
         recipe.setEstate(recipeDtoUpdate.recipeStatus());
-        Recipe updatedRecipe = recipeServices.updateRecipe(id, recipe);
+        Recipe updatedRecipe = recipeServices.updateRecipe(recipeDtoUpdate);
         if (updatedRecipe != null) {
             return ResponseEntity.ok(updatedRecipe);
         } else {

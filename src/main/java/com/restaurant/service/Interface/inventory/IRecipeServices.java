@@ -1,5 +1,6 @@
 package com.restaurant.service.Interface.inventory;
 
+import com.restaurant.dto.recipe.RecipeDtoUpdate;
 import com.restaurant.model.document.Recipe;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public interface IRecipeServices {
      * @return The updated recipe, or null if the recipe with the provided ID is not
      *         found.
      */
-    Recipe updateRecipe(String id, Recipe recipe);
+    Recipe updateRecipe(RecipeDtoUpdate recipeUpdate);
 
     /**
      * Deletes a recipe by its ID.

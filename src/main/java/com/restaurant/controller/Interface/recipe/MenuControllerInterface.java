@@ -1,5 +1,6 @@
 package com.restaurant.controller.Interface.recipe;
 
+import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDtoAdd;
 import com.restaurant.dto.recipe.MenuDtoUpdate;
 import com.restaurant.model.document.Menu;
@@ -13,7 +14,7 @@ public interface MenuControllerInterface {
 
     ResponseEntity<Menu> getMenuById(Integer id);
 
-    ResponseEntity<List<Menu>> getAllMenus();
+    ResponseEntity<List<MenuALl>> getAllMenus();
 
     ResponseEntity<Menu> updateMenu(Integer id, MenuDtoUpdate menuDtoUpdate);
 

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.restaurant.controller.Interface.recipe.MenuControllerInterface;
+import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDtoAdd;
 import com.restaurant.dto.recipe.MenuDtoUpdate;
 import com.restaurant.model.document.Menu;
@@ -45,8 +46,8 @@ public class MenuController implements MenuControllerInterface {
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Menu>> getAllMenus() {
-        List<Menu> menus = menuServices.getAllMenus();
+    public ResponseEntity<List<MenuALl>> getAllMenus() {
+        List<MenuALl> menus = menuServices.getAllMenus();
         return ResponseEntity.ok(menus);
     }
 
