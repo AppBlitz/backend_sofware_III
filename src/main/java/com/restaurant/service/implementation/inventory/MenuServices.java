@@ -1,16 +1,19 @@
 package com.restaurant.service.implementation.inventory;
 
-import com.restaurant.dto.recipe.MenuALl;
-import com.restaurant.model.document.Menu;
-import com.restaurant.repository.MenuRepository;
-import com.restaurant.service.Interface.inventory.IMenuServices;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.restaurant.dto.recipe.MenuALl;
+import com.restaurant.dto.recipe.MenuDateDto;
+import com.restaurant.exceptions.menu.normal.MenuExceptionGetAll;
+import com.restaurant.exceptions.menu.runtime.MenuExceptionSearch;
+import com.restaurant.model.document.Menu;
+import com.restaurant.repository.MenuRepository;
+import com.restaurant.service.Interface.inventory.IMenuServices;
 
 /**
  * Implementation of the menu management service.
@@ -42,7 +45,9 @@ public class MenuServices implements IMenuServices {
     @Override
     public Menu getMenuById(Integer id) {
         Optional<Menu> menu = menuRepository.findById(id);
-        return menu.orElse(null);
+        if (menu.isEmpty())
+            throw new MenuExceptionSearch("menu not found");
+        return menu.get();
     }
 
     /**
@@ -51,11 +56,11 @@ public class MenuServices implements IMenuServices {
      * @return A list of all menus.
      */
     @Override
-    public List<MenuALl> getAllMenus() {
+    public List<MenuALl> getAllMenusNameAndDate() {
         List<MenuALl> allMenus = new ArrayList<>();
-        List<Menu> menus = menuRepository.findByDates(LocalDate.now());
+        List<Menu> menus = menuRepository.findAll();
         for (Menu menu : menus) {
-            MenuALl menuAll = new MenuALl(menu.getId() + "", menu.getName(), menu.getDate(), menu.getDescription());
+            MenuALl menuAll = new MenuALl(menu.getId() + "", menu.getName(), menu.getDate());
             allMenus.add(menuAll);
         }
         return allMenus;
@@ -86,6 +91,17 @@ public class MenuServices implements IMenuServices {
     @Override
     public void deleteMenu(Integer id) {
         menuRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Menu> getAllMenuForDate(MenuDateDto menuDateDtoh) {
+        List<Menu> menus = menuRepository.findByDates(menuDateDtoh.date());
+        return menus;
+    }
+
+    @Override
+    public List<Menu> getAll() throws MenuExceptionGetAll {
+        return menuRepository.findAll();
     }
 
 }

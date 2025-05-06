@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.restaurant.controller.Interface.ProductControllerInterface;
+import com.restaurant.controller.Interface.product.ProductControllerInterface;
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.product.MovementDto;
+import com.restaurant.dto.product.ProductActiveDto;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
@@ -124,6 +125,11 @@ public class ProductController implements ProductControllerInterface {
         date, horario.getHourStart(), horario.getHourEnd());
 
     return ResponseEntity.ok(actividades);
+  }
+
+  @Override
+  public ResponseEntity<List<ProductActiveDto>> productsActive() throws Exception {
+    return ResponseEntity.ok(productService.getAllProductActive());
   }
 
 }

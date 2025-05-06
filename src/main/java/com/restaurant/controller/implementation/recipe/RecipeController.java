@@ -20,6 +20,7 @@ import com.restaurant.controller.Interface.recipe.RecipeControllerInterface;
 import com.restaurant.dto.employee.EmployeeDTO;
 import com.restaurant.dto.recipe.RecipeDtoAdd;
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
+import com.restaurant.dto.recipe.RecipePrice;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Employee;
 import com.restaurant.model.document.Recipe;
@@ -38,6 +39,12 @@ public class RecipeController implements RecipeControllerInterface {
 
     @Autowired
     private EmployeeServices employeeServices;
+
+    @Override
+    public ResponseEntity<List<RecipePrice>> getAllRecipeActivate() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     @RequestMapping(value = "/add", method = RequestMethod.POST)

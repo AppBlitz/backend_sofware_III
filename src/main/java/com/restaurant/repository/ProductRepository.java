@@ -8,7 +8,10 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.mongodb.repository.Query;
 
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Product;
+
+import lombok.NonNull;
 
 @Repository
 public interface ProductRepository extends MongoRepository<Product, String> {
@@ -25,5 +28,8 @@ public interface ProductRepository extends MongoRepository<Product, String> {
   List<Product> findProductsExpiring(LocalDate startDate, LocalDate endDate);
 
   boolean existsByNameProduct(String nameProduct);
+
+  @Query("{ 'state' : ?0}")
+  List<Product> findByState(@NonNull Estate state);
 
 }

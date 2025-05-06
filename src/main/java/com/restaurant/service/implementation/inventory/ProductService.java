@@ -8,7 +8,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.restaurant.dto.product.MovementDto;
+import com.restaurant.dto.product.ProductActiveDto;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
+import com.restaurant.exceptions.product.ProductExcpetionState;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.Enum.MovementAction;
 import com.restaurant.model.document.Supplier;
@@ -65,7 +67,7 @@ public class ProductService implements ProductServiceInterface {
     Product aux = product.get();
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(aux.getWeightProduct());
-   // updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
+    // updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(aux.getSuppliers());
     updateProduct.setPriceProduct(productDtoAdd.priceProduct());
     updateProduct.setWeightProduct(productDtoAdd.weightProduct());
@@ -86,7 +88,7 @@ public class ProductService implements ProductServiceInterface {
     suppliers.add(productValidators.searchSupplierName(productDtoAdd.supplier()).getId());
     Product updateProduct = product.get();
     updateProduct.setWeightProduct(productDtoAdd.weightProduct());
-    //updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
+    // updateProduct.setStock(aux.getStock() + productDtoAdd.amount());
     updateProduct.setSuppliers(suppliers);
     updateProduct.setPriceProduct(productDtoAdd.priceProduct());
 
@@ -111,13 +113,13 @@ public class ProductService implements ProductServiceInterface {
     Product product = Product.builder()
         .nameProduct(productDtoAdd.nameProduct())
         .suppliers(listSupplier)
-        //.stock(productDtoAdd.amount())
+        // .stock(productDtoAdd.amount())
         // .dateExpiration.add(productDtoAdd.dateExpiration())
         .dateRegister(productDtoAdd.dateAdd())
         .weightProduct(productDtoAdd.weightProduct())
         .priceProduct(productDtoAdd.priceProduct())
         .images(listImages)
-            .estate(productDtoAdd.state())
+        .estate(productDtoAdd.state())
         .typeStock(productDtoAdd.typeStock())
         .build();
     product.setDateExpiration(new ArrayList<>());
@@ -202,26 +204,24 @@ public class ProductService implements ProductServiceInterface {
   public Product outputMovement(String idProduct, int amount) throws ExceptionUpdateProduct {
 
     Product p = getProduct(idProduct);
-    if(!p.getDateExpiration().isEmpty()){
-      if(p.getStock()-amount>=0){
-        return changeOutput(p,amount);
-      }else{
+    if (!p.getDateExpiration().isEmpty()) {
+      if (p.getStock() - amount >= 0) {
+        return changeOutput(p, amount);
+      } else {
         throw new ExceptionUpdateProduct("el stock no cuenta con suficiente cantidad");
       }
-    }
-    else{
+    } else {
       throw new ExceptionUpdateProduct("no se registra stock existente");
     }
 
   }
 
-  public Product changeOutput(Product p,int amount){
+  public Product changeOutput(Product p, int amount) {
     for (int i = 0; i < p.getControldateExpiration().size(); i++) {
       if (p.getControldateExpiration().get(i) - amount <= 0) {
         p.getControldateExpiration().remove(i);
         p.getDateExpiration().remove(i);
-      }
-      else  {
+      } else {
         p.getControldateExpiration().set(i, p.getControldateExpiration().get(i) - amount);
       }
     }
@@ -229,24 +229,22 @@ public class ProductService implements ProductServiceInterface {
     return productRepository.save(p);
   }
 
-  public List<MovementProduct> consult_all_movements(){
+  public List<MovementProduct> consult_all_movements() {
     return movementRepository.findAll();
   }
 
-  public List<MovementProduct> consult_movementsByDate(LocalDate date){
+  public List<MovementProduct> consult_movementsByDate(LocalDate date) {
     LocalDateTime start = date.atStartOfDay();
     LocalDateTime end = date.plusDays(1).atStartOfDay();
     return movementRepository.findByTimestampBetween(start, end);
 
   }
 
-  public List<MovementProduct> consult_movementsByHour(LocalDate date, int startHour,int endHour){
+  public List<MovementProduct> consult_movementsByHour(LocalDate date, int startHour, int endHour) {
     LocalDateTime start = date.atTime(startHour, 0);
     LocalDateTime end = date.atTime(endHour, 0);
     return movementRepository.findByTimestampBetween(start, end);
   }
-
-
 
   public void verification_product_supplier(String idProduct, List<String> suppliers) {
     for (String s : suppliers) {
@@ -255,6 +253,18 @@ public class ProductService implements ProductServiceInterface {
         supplier.getOfferedProducts().add(idProduct);
       }
     }
+  }
+
+  @Override
+  public List<ProductActiveDto> getAllProductActive() throws ProductExcpetionState {
+    List<ProductActiveDto> products = new ArrayList<>();
+    List<Product> productList = productRepository.findByState(Estate.ACTIVE);
+    for (Product productSe : productList) {
+      ProductActiveDto dto = new ProductActiveDto(productSe.getId(), productSe.getPrice(), productSe.getNameProduct(),
+          productSe.getStock());
+      products.add(dto);
+    }
+    return products;
   }
 
 }

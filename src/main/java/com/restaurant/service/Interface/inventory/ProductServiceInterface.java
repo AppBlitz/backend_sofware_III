@@ -1,13 +1,13 @@
 package com.restaurant.service.Interface.inventory;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.restaurant.dto.product.ListProducts;
+import com.restaurant.dto.product.ProductActiveDto;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
 import com.restaurant.exceptions.product.ExceptionUpdateProduct;
+import com.restaurant.exceptions.product.ProductExcpetionState;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
 
@@ -50,10 +50,10 @@ public interface ProductServiceInterface {
    */
   public Product createProduct(ProductDtoAdd productDtoAdd);
 
-//  /**
-//   * @return list of products
-//   */
-//  public ArrayList<ListProducts> getAllProducts();
+  // /**
+  // * @return list of products
+  // */
+  // public ArrayList<ListProducts> getAllProducts();
 
   /**
    * @param productUpdateDto for update product
@@ -63,8 +63,11 @@ public interface ProductServiceInterface {
 
   /**
    * add product to suppliers
+   * 
    * @param idProduct
    * @param suppliers
    */
   public void verification_product_supplier(String idProduct, List<String> suppliers);
+
+  public List<ProductActiveDto> getAllProductActive() throws ProductExcpetionState;
 }

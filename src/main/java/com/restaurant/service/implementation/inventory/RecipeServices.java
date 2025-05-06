@@ -2,6 +2,7 @@ package com.restaurant.service.implementation.inventory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
+import com.restaurant.dto.recipe.RecipePrice;
 import com.restaurant.exceptions.recipe.runTime.RecipeExceptionServings;
 import com.restaurant.exceptions.recipe.runTime.RecipeExceptionUpdate;
 import com.restaurant.model.Enum.Estate;
@@ -128,7 +130,6 @@ public class RecipeServices implements IRecipeServices {
         updatedRecipe.setServings(recipe.getServings() - count);
         updatedRecipe.setComment(recipe.getComment());
         updatedRecipe.setCreationDate(recipe.getCreationDate());
-        updatedRecipe.setPrice(recipe.getPrice());
         recipeRepository.save(updatedRecipe);
     }
 
@@ -146,9 +147,20 @@ public class RecipeServices implements IRecipeServices {
         update.setInstructions(recipeUpdate.instructions());
         update.setIngredients(recipeUpdate.ingredients());
         update.setComment(recipeUpdate.comment());
-        update.setPrice(recipeUpdate.price());
         update.setServings(recipeUpdate.servings());
         return recipeRepository.save(update);
+    }
+
+    @Override
+    public List<RecipePrice> getAllRecipeActivate(Estate state) {
+        List<RecipePrice> listRecipe = new ArrayList<>();
+        List<Recipe> recipes = recipeRepository.findByRecipes(Estate.ACTIVE);
+        for (Recipe recipess : recipes) {
+            RecipePrice recip = new RecipePrice(recipess.getId(), recipess.getName(), recipess.getServings(),
+                    recipess.getPrice());
+            listRecipe.add(recip);
+        }
+        return listRecipe;
     }
 
 }
