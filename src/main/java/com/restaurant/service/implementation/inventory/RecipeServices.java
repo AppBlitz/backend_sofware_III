@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.restaurant.model.document.Product;
+import com.restaurant.model.vo.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,8 @@ public class RecipeServices implements IRecipeServices {
 
     @Autowired
     private HistoryRecipeRepository historyRecipeRepository;
+
+    @Autowired ProductService productService;
 
     /**
      * Creates a new recipe.
@@ -92,6 +96,17 @@ public class RecipeServices implements IRecipeServices {
         recipeRepository.save(recipe);
     }
 
+
+    public double calculatePrice(List<Ingredient> lista){
+        double price=0;
+        for(Ingredient i : lista){
+            Product p=productService.getProduct(i.getProductId());
+            price+=p.getPriceProduct();
+        }
+        double numero= price + (price * 0.15);
+        return (double) Math.round(numero * 100) / 100;
+    }
+
     public List<HistoryRecipe> consult_movementsByDate(LocalDate date) {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = date.plusDays(1).atStartOfDay();
@@ -150,5 +165,24 @@ public class RecipeServices implements IRecipeServices {
         update.setServings(recipeUpdate.servings());
         return recipeRepository.save(update);
     }
+
+    public int getServings(String id){
+        Optional<Recipe> r= recipeRepository.findById(id);
+        if(r.isEmpty())
+            throw new RecipeExceptionUpdate("The recipe not found");
+
+        return calculateServings(r.get());
+    }
+
+    public int calculateServings(Recipe recipe){
+        int result=999;
+        for(Ingredient i: recipe.getIngredients()){
+            Product p=productService.getProduct(i.getProductId());
+            int quantity= (int) (p.getStock()/ i.getQuantity());
+            if(quantity<result){
+                result=quantity;
+            }
+        }
+    return result;}
 
 }

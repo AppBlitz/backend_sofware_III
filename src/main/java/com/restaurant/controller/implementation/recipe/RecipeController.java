@@ -51,6 +51,7 @@ public class RecipeController implements RecipeControllerInterface {
         recipe.setComment(recipeDtoAdd.comment());
         recipe.setCreationDate(recipeDtoAdd.creationDate());
         recipe.setEstate(Estate.ACTIVE);
+        recipe.setPrice(recipeServices.calculatePrice(recipeDtoAdd.ingredients()));
         Recipe newRecipe = recipeServices.createRecipe(recipe);
         return ResponseEntity.status(200).body(newRecipe);
     }
@@ -138,6 +139,13 @@ public class RecipeController implements RecipeControllerInterface {
                 date, horario.getHourStart(), horario.getHourEnd());
 
         return ResponseEntity.ok(actividades);
+    }
+
+    @RequestMapping(value = "/getServings/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Integer> MaxQuantity(@PathVariable String id){
+        int servings =recipeServices.getServings(id);
+
+        return ResponseEntity.ok(servings);
     }
 
 }
