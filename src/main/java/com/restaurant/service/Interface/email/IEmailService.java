@@ -1,6 +1,6 @@
 package com.restaurant.service.Interface.email;
 
-import com.restaurant.dto.cart.UserDto;
+import com.restaurant.dto.user.UserDto;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

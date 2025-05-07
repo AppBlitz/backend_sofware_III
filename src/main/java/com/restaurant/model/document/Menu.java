@@ -1,10 +1,12 @@
 package com.restaurant.model.document;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.restaurant.model.vo.MenuItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,13 +32,15 @@ public class Menu {
      * The unique identifier for the menu.
      */
     @Id
-    Integer id;
+    String id;
 
+    @NonNull
+    String name;
     /**
      * A map of recipes and their respective prices in the menu.
      */
-    @NonNull
-    HashMap<String, Recipe> menuItems;
+    @Builder.Default
+    ArrayList<MenuItem> items = new ArrayList<>();
 
     /**
      * The date the menu was created.
@@ -45,12 +49,6 @@ public class Menu {
     LocalDate date;
 
     @NonNull
-    String name;
-
-    @NonNull
     String description;
 
-    double price;
-    int amount;
-    int rest;
 }

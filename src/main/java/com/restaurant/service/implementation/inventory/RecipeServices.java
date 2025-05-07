@@ -2,6 +2,7 @@ package com.restaurant.service.implementation.inventory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
+import com.restaurant.dto.recipe.RecipePrice;
 import com.restaurant.exceptions.recipe.runTime.RecipeExceptionServings;
 import com.restaurant.exceptions.recipe.runTime.RecipeExceptionUpdate;
 import com.restaurant.model.Enum.Estate;
@@ -33,7 +35,8 @@ public class RecipeServices implements IRecipeServices {
     @Autowired
     private HistoryRecipeRepository historyRecipeRepository;
 
-    @Autowired ProductService productService;
+    @Autowired
+    ProductService productService;
 
     /**
      * Creates a new recipe.
@@ -96,14 +99,13 @@ public class RecipeServices implements IRecipeServices {
         recipeRepository.save(recipe);
     }
 
-
-    public double calculatePrice(List<Ingredient> lista){
-        double price=0;
-        for(Ingredient i : lista){
-            Product p=productService.getProduct(i.getProductId());
-            price+=p.getPriceProduct();
+    public double calculatePrice(List<Ingredient> lista) {
+        double price = 0;
+        for (Ingredient i : lista) {
+            Product p = productService.getProduct(i.getProductId());
+            price += p.getPriceProduct();
         }
-        double numero= price + (price * 0.15);
+        double numero = price + (price * 0.15);
         return (double) Math.round(numero * 100) / 100;
     }
 
@@ -143,7 +145,6 @@ public class RecipeServices implements IRecipeServices {
         updatedRecipe.setServings(recipe.getServings() - count);
         updatedRecipe.setComment(recipe.getComment());
         updatedRecipe.setCreationDate(recipe.getCreationDate());
-        updatedRecipe.setPrice(recipe.getPrice());
         recipeRepository.save(updatedRecipe);
     }
 
@@ -161,28 +162,83 @@ public class RecipeServices implements IRecipeServices {
         update.setInstructions(recipeUpdate.instructions());
         update.setIngredients(recipeUpdate.ingredients());
         update.setComment(recipeUpdate.comment());
-        update.setPrice(recipeUpdate.price());
         update.setServings(recipeUpdate.servings());
         return recipeRepository.save(update);
     }
 
-    public int getServings(String id){
-        Optional<Recipe> r= recipeRepository.findById(id);
-        if(r.isEmpty())
+    public int getServings(String id) {
+        Optional<Recipe> r = recipeRepository.findById(id);
+        if (r.isEmpty())
             throw new RecipeExceptionUpdate("The recipe not found");
 
         return calculateServings(r.get());
     }
 
-    public int calculateServings(Recipe recipe){
-        int result=999;
-        for(Ingredient i: recipe.getIngredients()){
-            Product p=productService.getProduct(i.getProductId());
-            int quantity= (int) (p.getStock()/ i.getQuantity());
-            if(quantity<result){
-                result=quantity;
+    public int calculateServings(Recipe recipe) {
+        int result = 999;
+        for (Ingredient i : recipe.getIngredients()) {
+            Product p = productService.getProduct(i.getProductId());
+            int quantity = (int) (p.getStock() / i.getQuantity());
+            if (quantity < result) {
+                result = quantity;
             }
         }
-    return result;}
+        return result;
+    }
+
+    @Override
+    public List<RecipePrice> getAllRecipeActivate(Estate state) {
+        List<RecipePrice> listRecipe = new ArrayList<>();
+        List<Recipe> recipes = recipeRepository.findByRecipes(Estate.ACTIVE);
+        for (Recipe recipess : recipes) {
+            RecipePrice recip = new RecipePrice(recipess.getId(), recipess.getName(), recipess.getServings(),
+                    recipess.getPrice());
+            listRecipe.add(recip);
+        }
+        return listRecipe;
+    }
+
+    @Override
+    public void modificationDataRecipe(String id, int amount, int rest) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        Recipe updated = recipe.get();
+        if (amount >= 1 && rest == 0) {
+            updated.setServings(updated.getServings() - amount);
+        } else {
+            if (amount >= 1 && rest >= 1) {
+                updated.setServings(updated.getServings() + rest);
+            }
+        }
+
+    }
+
+    @Override
+    public boolean verificationRecipeExists(String id) {
+        return recipeRepository.existsById(id);
+    }
+
+    @Override
+    public void sumServings(String idRecipe, int restSrvings) {
+        Optional<Recipe> recipeD = recipeRepository.findById(idRecipe);
+        if (recipeD.isEmpty())
+            throw new RecipeExceptionUpdate("the recipe not found");
+        Recipe recipeUpdate = recipeD.get();
+        recipeUpdate.setServings(recipeUpdate.getServings() + restSrvings);
+        recipeRepository.save(recipeUpdate);
+    }
+
+    @Override
+    public void restAmount(String idRecipe, int amount) {
+        Optional<Recipe> recipeD = recipeRepository.findById(idRecipe);
+        if (recipeD.isEmpty())
+            throw new RecipeExceptionUpdate("The recipe not found");
+        Recipe recipeUpdate = recipeD.get();
+        if (recipeUpdate.getServings() >= amount) {
+            recipeUpdate.setServings(recipeUpdate.getServings() - amount);
+        } else {
+            throw new RecipeExceptionUpdate("The recipe not found");
+        }
+        recipeRepository.save(recipeUpdate);
+    }
 
 }

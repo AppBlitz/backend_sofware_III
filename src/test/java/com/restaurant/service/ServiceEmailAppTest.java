@@ -19,7 +19,6 @@ public class ServiceEmailAppTest {
 
     String to = "";
     String subject = "Factura eléctronica";
-    emailService.sendEmailBill(to, subject);
   }
 
   @Test

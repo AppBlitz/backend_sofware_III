@@ -46,5 +46,4 @@ public class Recipe {
     private Estate estate;
 
     private double price;
-    // 200 ok
 }

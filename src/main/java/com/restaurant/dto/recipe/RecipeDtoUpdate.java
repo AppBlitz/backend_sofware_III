@@ -16,6 +16,5 @@ public record RecipeDtoUpdate(@NonNull String id,
                                                                                                                                                 int servings,
                                                                                                                                                 String comment,
                                                                                                                                                 @NonNull LocalDate creationDate,
-                                                                                                                                                @NonNull Estate recipeStatus,
-                                                                                                                                                double price) {
+                                                                                                                                                @NonNull Estate recipeStatus) {
 }

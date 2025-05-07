@@ -1,5 +1,6 @@
 package com.restaurant.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.restaurant.model.Enum.Estate;
@@ -38,5 +39,11 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
 
     @Query("{ '_id' : ?0 }")
     Optional<Recipe> findById(@NonNull String id);
+
+    @Query(" { 'state' : ?0 }")
+    List<Recipe> findByRecipes(@NonNull Estate state);
+
+    @Query("{ '_id' : ?0 }")
+    boolean existsById(String id);
 
 }

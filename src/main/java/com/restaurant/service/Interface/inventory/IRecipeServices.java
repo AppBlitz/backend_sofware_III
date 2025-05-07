@@ -1,6 +1,8 @@
 package com.restaurant.service.Interface.inventory;
 
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
+import com.restaurant.dto.recipe.RecipePrice;
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Recipe;
 import java.util.List;
 
@@ -53,4 +55,14 @@ public interface IRecipeServices {
     public void uptadesServingsRecipe(String id, int amount);
 
     public void uptadedRecipeCount(String id, int count);
+
+    public List<RecipePrice> getAllRecipeActivate(Estate state);
+
+    public void modificationDataRecipe(String id, int amount, int rest);
+
+    public boolean verificationRecipeExists(String id);
+
+    public void sumServings(String idRecipe, int restSrvings);
+
+    public void restAmount(String idRecipe, int amount);
 }

@@ -1,6 +1,8 @@
 package com.restaurant.service.Interface.inventory;
 
 import com.restaurant.dto.recipe.MenuALl;
+import com.restaurant.dto.recipe.MenuDateDto;
+import com.restaurant.exceptions.menu.normal.MenuExceptionGetAll;
 import com.restaurant.model.document.Menu;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public interface IMenuServices {
      *
      * @return A list of all menus.
      */
-    List<MenuALl> getAllMenus();
+    List<MenuALl> getAllMenusNameAndDate();
 
     /**
      * Updates an existing menu.
@@ -41,7 +43,6 @@ public interface IMenuServices {
      * @return The updated menu, or null if the menu with the provided ID is not
      *         found.
      */
-    Menu updateMenu(Integer id, Menu menu);
 
     /**
      * Deletes a menu by its ID.
@@ -49,5 +50,9 @@ public interface IMenuServices {
      * @param id The ID of the menu to delete.
      */
     void deleteMenu(Integer id);
+
+    public List<Menu> getAllMenuForDate(MenuDateDto menuDateDto);
+
+    public List<Menu> getAll() throws MenuExceptionGetAll;
 
 }
