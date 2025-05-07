@@ -17,8 +17,6 @@ public interface MenuControllerInterface {
 
     ResponseEntity<List<MenuALl>> getAllMenusNameAndDate();
 
-    ResponseEntity<Menu> updateMenu(Integer id, MenuDtoUpdate menuDtoUpdate);
-
     ResponseEntity<Void> deleteMenu(Integer id);
 
     ResponseEntity<List<Menu>> listMenusDates(MenuDateDto menuDateDto) throws Exception;

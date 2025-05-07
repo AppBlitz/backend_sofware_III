@@ -74,14 +74,6 @@ public class MenuServices implements IMenuServices {
      * @return The updated menu, or null if the menu with the provided ID is not
      *         found.
      */
-    @Override
-    public Menu updateMenu(Integer id, Menu menu) {
-        if (menuRepository.existsById(id)) {
-            menu.setId(id);
-            return menuRepository.save(menu);
-        }
-        return null;
-    }
 
     /**
      * Deletes a menu by its ID.

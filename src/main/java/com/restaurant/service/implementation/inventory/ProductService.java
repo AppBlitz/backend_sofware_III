@@ -7,23 +7,23 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import com.restaurant.dto.product.MovementDto;
-import com.restaurant.dto.product.ProductActiveDto;
-import com.restaurant.exceptions.product.ExceptionUpdateProduct;
-import com.restaurant.exceptions.product.ProductExcpetionState;
-import com.restaurant.model.Enum.Estate;
-import com.restaurant.model.Enum.MovementAction;
-import com.restaurant.model.document.Supplier;
-import com.restaurant.model.vo.MovementProduct;
-import com.restaurant.repository.MovementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.restaurant.dto.product.MovementDto;
+import com.restaurant.dto.product.ProductActiveDto;
 import com.restaurant.dto.product.ProductDtoAdd;
 import com.restaurant.dto.product.ProductUpdateDto;
 import com.restaurant.exceptions.product.ExceptioAddedProduct;
+import com.restaurant.exceptions.product.ExceptionUpdateProduct;
+import com.restaurant.exceptions.product.ProductExcpetionState;
 import com.restaurant.exceptions.product.ProductFetchException;
+import com.restaurant.model.Enum.Estate;
+import com.restaurant.model.Enum.MovementAction;
 import com.restaurant.model.document.Product;
+import com.restaurant.model.document.Supplier;
+import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.repository.MovementRepository;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.service.Interface.inventory.ProductServiceInterface;
 import com.restaurant.validators.product.ProductValidators;
@@ -265,6 +265,53 @@ public class ProductService implements ProductServiceInterface {
       products.add(dto);
     }
     return products;
+  }
+
+  @Override
+  public void ModificationProduct(String id, int amount, int rest) {
+    Optional<Product> product = productRepository.findById(id);
+
+    Product updateProduct = product.get();
+
+    if (rest >= 1) {
+      updateProduct.setStock(updateProduct.getStock() + rest);
+    } else {
+      if (rest == 0 && amount >= 1) {
+
+        updateProduct.setStock(updateProduct.getStock() + amount);
+      }
+    }
+
+  }
+
+  @Override
+  public boolean productExists(String id) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'productExists'");
+  }
+
+  @Override
+  public void sumStock(String idProduct, int rest) {
+    Optional<Product> productD = productRepository.findById(idProduct);
+    if (productD.isEmpty())
+      throw new ExceptionUpdateProduct("the product not found");
+    Product product = productD.get();
+    product.setStock(product.getStock() + rest);
+    productRepository.save(product);
+  }
+
+  @Override
+  public void resProduct(String idProduct, int amount) {
+    Optional<Product> cartD = productRepository.findById(idProduct);
+    if (cartD.isEmpty())
+      throw new ExceptionUpdateProduct("The product not found");
+    Product product = cartD.get();
+    if (product.getStock() >= amount) {
+      product.setStock(product.getStock() - amount);
+    } else {
+      throw new ExceptionUpdateProduct("the amount not acepted");
+    }
+    productRepository.save(product);
   }
 
 }

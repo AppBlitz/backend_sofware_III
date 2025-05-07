@@ -43,7 +43,6 @@ public interface IMenuServices {
      * @return The updated menu, or null if the menu with the provided ID is not
      *         found.
      */
-    Menu updateMenu(Integer id, Menu menu);
 
     /**
      * Deletes a menu by its ID.

@@ -27,9 +27,13 @@ public interface ProductRepository extends MongoRepository<Product, String> {
   @Query("{ 'dateExpiration.0': { $gte: ?0, $lte: ?1 } }")
   List<Product> findProductsExpiring(LocalDate startDate, LocalDate endDate);
 
+  @Query("{ 'nameProduct' : ?0 }")
   boolean existsByNameProduct(String nameProduct);
 
   @Query("{ 'state' : ?0}")
   List<Product> findByState(@NonNull Estate state);
+
+  @Query("{ '_id' : ?0 }")
+  boolean existsById(String id);
 
 }

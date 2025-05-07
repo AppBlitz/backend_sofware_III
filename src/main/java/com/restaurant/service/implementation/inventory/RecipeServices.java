@@ -163,4 +163,47 @@ public class RecipeServices implements IRecipeServices {
         return listRecipe;
     }
 
+    @Override
+    public void modificationDataRecipe(String id, int amount, int rest) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        Recipe updated = recipe.get();
+        if (amount >= 1 && rest == 0) {
+            updated.setServings(updated.getServings() - amount);
+        } else {
+            if (amount >= 1 && rest >= 1) {
+                updated.setServings(updated.getServings() + rest);
+            }
+        }
+
+    }
+
+    @Override
+    public boolean verificationRecipeExists(String id) {
+        return recipeRepository.existsById(id);
+    }
+
+    @Override
+    public void sumServings(String idRecipe, int restSrvings) {
+        Optional<Recipe> recipeD = recipeRepository.findById(idRecipe);
+        if (recipeD.isEmpty())
+            throw new RecipeExceptionUpdate("the recipe not found");
+        Recipe recipeUpdate = recipeD.get();
+        recipeUpdate.setServings(recipeUpdate.getServings() + restSrvings);
+        recipeRepository.save(recipeUpdate);
+    }
+
+    @Override
+    public void restAmount(String idRecipe, int amount) {
+        Optional<Recipe> recipeD = recipeRepository.findById(idRecipe);
+        if (recipeD.isEmpty())
+            throw new RecipeExceptionUpdate("The recipe not found");
+        Recipe recipeUpdate = recipeD.get();
+        if (recipeUpdate.getServings() >= amount) {
+            recipeUpdate.setServings(recipeUpdate.getServings() - amount);
+        } else {
+            throw new RecipeExceptionUpdate("The recipe not found");
+        }
+        recipeRepository.save(recipeUpdate);
+    }
+
 }

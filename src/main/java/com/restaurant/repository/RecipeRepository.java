@@ -43,4 +43,7 @@ public interface RecipeRepository extends MongoRepository<Recipe, String> {
     @Query(" { 'state' : ?0 }")
     List<Recipe> findByRecipes(@NonNull Estate state);
 
+    @Query("{ '_id' : ?0 }")
+    boolean existsById(String id);
+
 }

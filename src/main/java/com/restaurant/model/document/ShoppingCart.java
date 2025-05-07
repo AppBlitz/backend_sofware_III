@@ -1,11 +1,14 @@
 package com.restaurant.model.document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.restaurant.model.Enum.cart.StateCart;
+import com.restaurant.model.vo.Items;
 
 import lombok.*;
 
@@ -19,14 +22,13 @@ public class ShoppingCart {
   @Id
   String id;
 
+  @NonNull
+  LocalDate dateCreation;
+
   @Builder.Default
-  ArrayList<Menu> menus = new ArrayList<>();
+  List<Items> items = new ArrayList<>();
 
   @NonNull
   StateCart stateCart;
-
-  int amount;
-
-  double total;
 
 }

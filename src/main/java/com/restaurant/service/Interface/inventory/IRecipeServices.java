@@ -57,4 +57,12 @@ public interface IRecipeServices {
     public void uptadedRecipeCount(String id, int count);
 
     public List<RecipePrice> getAllRecipeActivate(Estate state);
+
+    public void modificationDataRecipe(String id, int amount, int rest);
+
+    public boolean verificationRecipeExists(String id);
+
+    public void sumServings(String idRecipe, int restSrvings);
+
+    public void restAmount(String idRecipe, int amount);
 }

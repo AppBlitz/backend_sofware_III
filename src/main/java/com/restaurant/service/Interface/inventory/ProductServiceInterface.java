@@ -70,4 +70,13 @@ public interface ProductServiceInterface {
   public void verification_product_supplier(String idProduct, List<String> suppliers);
 
   public List<ProductActiveDto> getAllProductActive() throws ProductExcpetionState;
+
+  public void ModificationProduct(String id, int amount, int rest);
+
+  public boolean productExists(String id);
+
+  public void sumStock(String idProduct, int rest);
+
+  public void resProduct(String idProduct, int amount);
+
 }
