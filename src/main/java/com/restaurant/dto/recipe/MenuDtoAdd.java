@@ -1,12 +1,11 @@
 package com.restaurant.dto.recipe;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-
 import com.restaurant.model.document.Recipe;
-
 import lombok.NonNull;
 
-public record MenuDtoAdd(@NonNull HashMap<String, Recipe> menuItems,
-                                                                                                                                                @NonNull LocalDate date) {
+import java.time.LocalTime;
+import java.util.HashMap;
+
+public record MenuDtoAdd(@NonNull HashMap<Recipe, Double> menuItems,
+                         @NonNull LocalTime date) {
 }

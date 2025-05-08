@@ -1,11 +1,8 @@
 package com.restaurant.model.vo;
 
-import com.restaurant.model.Enum.CategoriItem;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.restaurant.model.document.Product;
+import com.restaurant.model.document.Recipe;
+import lombok.*;
 
 /**
  * The MenuItem class represents an item on the restaurant's menu.
@@ -13,6 +10,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data // Generates getters, setters, equals, hashCode, and toString methods
 @AllArgsConstructor // Generates a constructor with all fields
+@NoArgsConstructor // Generates a no-args constructor
 @EqualsAndHashCode // Generates equals and hashCode methods based on all fields
 @Builder // Enables the builder pattern for creating instances of the class
 public class MenuItem {
@@ -20,12 +18,10 @@ public class MenuItem {
     /**
      * The product associated with the menu item.
      */
-    @Builder.Default
-    private String recipe = "";
+    private Product product;
 
-    @Builder.Default
-    private String product = "";
-
-    @lombok.NonNull
-    CategoriItem categoriItem;
+    /**
+     * The recipe for the menu item.
+     */
+    private Recipe recipe;
 }

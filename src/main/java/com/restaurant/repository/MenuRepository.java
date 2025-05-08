@@ -1,16 +1,12 @@
 package com.restaurant.repository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
+import com.restaurant.model.document.Menu;
+import lombok.NonNull;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.restaurant.model.document.Menu;
-
-import lombok.NonNull;
+import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * Repository interface for Menu documents.
@@ -25,10 +21,5 @@ public interface MenuRepository extends MongoRepository<Menu, Integer> {
      * @param date The date of the menu to find.
      * @return An Optional containing the found menu, or empty if no menu is found.
      */
-    @Query("{ 'date' : ?0 }")
-    Optional<Menu> findByDate(@NonNull LocalDate date);
-
-    @Query("{ 'date' : ?0 }")
-    List<Menu> findByDates(@NonNull LocalDate date);
-
+    Optional<Menu> findByDate(@NonNull LocalTime date);
 }

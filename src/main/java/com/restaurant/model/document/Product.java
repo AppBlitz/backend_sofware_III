@@ -41,14 +41,13 @@ public class Product {
     @NotNull
     private int stock;
 
+
     private List<byte[]> images;
 
     private Estate estate;
 
     @NonNull
     private String typeStock;
-
-    private double price;
 
     // 200 ok
 }

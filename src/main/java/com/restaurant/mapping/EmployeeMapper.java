@@ -11,14 +11,14 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface EmployeeMapper {
-    EmployeeMapper INSTANCE = Mappers.getMapper(EmployeeMapper.class);
+    EmployeeMapper INSTANCE =Mappers.getMapper(EmployeeMapper.class);
 
-    @Mapping(source = "user.email", target = "email")
-    @Mapping(source = "user.password", target = "password")
+    @Mapping(source = "user.email",target = "email")
+    @Mapping(source = "user.password",target = "password")
     EmployeeDTO employeeToEmployeeDTO(Employee employee);
 
-    @Mapping(source = "email", target = "user.email")
-    @Mapping(source = "password", target = "user.password")
+    @Mapping(source = "email",target = "user.email")
+    @Mapping(source = "password",target = "user.password")
     Employee employeeDTOToEmployee(EmployeeDTO employeeDTO);
 
     @Mapping(target = "employeeId", ignore = true)

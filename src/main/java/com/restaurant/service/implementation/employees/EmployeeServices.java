@@ -1,16 +1,9 @@
 package com.restaurant.service.implementation.employees;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.restaurant.dto.employee.*;
+import com.restaurant.exceptions.employees.DuplicateEmployeeException;
 import com.restaurant.exceptions.employees.NotCorrectPasswordException;
 import com.restaurant.exceptions.employees.NotFoundEmployeeException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.restaurant.mapping.EmployeeMapper;
 import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.document.Employee;
@@ -18,17 +11,24 @@ import com.restaurant.model.vo.Permissions;
 import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.repository.EmployeeRepository;
 import com.restaurant.service.Interface.employees.IEmployeeServices;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServices implements IEmployeeServices {
-    @Autowired
     private final EmployeeRepository employeeRepository;
-    // private final ManagerServices managerServices;
+    private final ManagerServices managerServices;
 
     public EmployeeServices(EmployeeRepository employeeRepository, ManagerServices managerServices) {
         this.employeeRepository = employeeRepository;
-        // this.managerServices = managerServices;
+        this.managerServices = managerServices;
     }
+
+
 
     private final EmployeeMapper mapper = EmployeeMapper.INSTANCE;
 
@@ -48,6 +48,7 @@ public class EmployeeServices implements IEmployeeServices {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+
     /**
      * Fetches the details of a specific employee by their ID.
      *
@@ -56,34 +57,34 @@ public class EmployeeServices implements IEmployeeServices {
      */
     @Override
     public EmployeeDTO get(String id) {
-        return mapper.employeeToEmployeeDTO(
-                employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found")));
+        return mapper.employeeToEmployeeDTO(employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Manager not found")));
     }
 
     /**
      * Creates a new employee record in the system.
      *
-     * @param employeeDTO The EmployeeDTO containing the details of the new
-     *                    employee.
+     * @param employeeDTO The EmployeeDTO containing the details of the new employee.
      * @return The created EmployeeDTO.
      */
     @Override
-    public EmployeeDTO create(EmployeeDTO employeeDTO) {
-
+    public EmployeeDTO create(EmployeeDTO employeeDTO) throws DuplicateEmployeeException {
+        if(employeeRepository.getByUser_Email(employeeDTO.email()) != null){
+            throw new DuplicateEmployeeException("El usuario ya existe");
+        }
         return mapper.employeeToEmployeeDTO(employeeRepository.save(mapper.employeeDTOToEmployee(employeeDTO)));
     }
 
     /**
      * Updates the details of an existing employee.
      *
-     * @param employeeDTO The EmployeeDTO containing the updated employee
-     *                    information.
+     * @param employeeDTO The EmployeeDTO containing the updated employee information.
      * @return The updated EmployeeDTO.
      */
     @Override
     public EmployeeDTO update(EmployeeDTO employeeDTO) {
         return mapper.employeeToEmployeeDTO(employeeRepository.save(mapper.employeeDTOToEmployee(employeeDTO)));
     }
+
 
 
 
@@ -102,12 +103,10 @@ public class EmployeeServices implements IEmployeeServices {
     }
 
     /**
-     * Retrieves a list of active employees whose status is valid until a specific
-     * date.
+     * Retrieves a list of active employees whose status is valid until a specific date.
      *
      * @param date The cut-off date for retrieving active employees.
-     * @return A list of EmployeeDTOs representing active employees until the given
-     *         date.
+     * @return A list of EmployeeDTOs representing active employees until the given date.
      */
     @Override
     public List<EmployeeDTO> getActiveEmployeesUntilDate(LocalDate date) {
@@ -117,13 +116,15 @@ public class EmployeeServices implements IEmployeeServices {
     /**
      * @param loginDTO
      * @return
-     * @throws NotFoundEmployeeException
-     * @throws NotCorrectPasswordException
      */
     @Override
     public EmployeeDTO login(LoginDTO loginDTO) throws NotFoundEmployeeException, NotCorrectPasswordException {
-        return null;
+        Employee employee = employeeRepository.getByUser_Email(loginDTO.email());
+        if(employee == null) {
+            throw new NotFoundEmployeeException("No se encontró el empleado por el email");
+        }if (employee.getUser().getPassword().equals(loginDTO.password())) {
+            return mapper.employeeToEmployeeDTO(employee);
+        }else
+            throw new NotCorrectPasswordException("La contraseña es incorrecta, login no permitido");
     }
-
-
 }
