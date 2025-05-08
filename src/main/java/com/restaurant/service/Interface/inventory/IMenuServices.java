@@ -26,7 +26,7 @@ public interface IMenuServices {
      * @param id The ID of the menu to retrieve.
      * @return The menu corresponding to the ID, or null if not found.
      */
-    Menu getMenuById(Integer id);
+    Menu getMenuById(String id);
 
     /**
      * Gets all menus.
@@ -49,7 +49,7 @@ public interface IMenuServices {
      *
      * @param id The ID of the menu to delete.
      */
-    void deleteMenu(Integer id);
+    void deleteMenu(String id);
 
     public List<Menu> getAllMenuForDate(MenuDateDto menuDateDto);
 

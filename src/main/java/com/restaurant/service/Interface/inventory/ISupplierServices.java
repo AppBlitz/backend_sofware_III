@@ -64,9 +64,9 @@ public interface ISupplierServices {
      */
     public Supplier supplierDtoToSupplier(Supplier supplier, SupplierDtoEdit supplierdtoedit);
 
-
     /**
      * add supplier to products
+     * 
      * @param idSupplier
      * @param products
      */

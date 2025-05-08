@@ -10,6 +10,7 @@ import com.restaurant.exceptions.product.ExceptionUpdateProduct;
 import com.restaurant.exceptions.product.ProductExcpetionState;
 import com.restaurant.exceptions.product.ProductFetchException;
 import com.restaurant.model.document.Product;
+import com.restaurant.model.vo.Items;
 
 public interface ProductServiceInterface {
   /**
@@ -78,5 +79,7 @@ public interface ProductServiceInterface {
   public void sumStock(String idProduct, int rest);
 
   public void resProduct(String idProduct, int amount);
+
+  public List<Product> getAllProductShoppingCart(List<Items> items);
 
 }

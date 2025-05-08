@@ -1,8 +1,10 @@
 package com.restaurant.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import com.restaurant.service.implementation.inventory.RecipeServices;
 import com.restaurant.model.vo.*;
 import com.restaurant.dto.cart.UpdateShopping;
 import com.restaurant.model.Enum.*;
+import com.restaurant.model.document.Product;
+import com.restaurant.model.document.Recipe;
 
 @SpringBootTest
 public class ShoppinCartServiceTest {
@@ -41,7 +45,6 @@ public class ShoppinCartServiceTest {
 
   }
 
-=======
   @Test
   public void deleteCart() {
 
@@ -55,7 +58,7 @@ public class ShoppinCartServiceTest {
   }
 
   @Test
-  //Perfect
+  // Perfect
   public void searchProduct() {
 
     List<Product> product = shoppinCartServiceIm.getAllProduct("681b61aa1e710924d1408dd6");

@@ -43,7 +43,7 @@ public class MenuServices implements IMenuServices {
      * @return The menu corresponding to the ID, or null if not found.
      */
     @Override
-    public Menu getMenuById(Integer id) {
+    public Menu getMenuById(String id) {
         Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isEmpty())
             throw new MenuExceptionSearch("menu not found");
@@ -81,8 +81,8 @@ public class MenuServices implements IMenuServices {
      * @param id The ID of the menu to delete.
      */
     @Override
-    public void deleteMenu(Integer id) {
-        menuRepository.deleteById(id);
+    public void deleteMenu(String id) {
+        menuRepository.deleteByid(id);
     }
 
     @Override

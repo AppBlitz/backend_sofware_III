@@ -1,23 +1,23 @@
 package com.restaurant.controller.Interface.recipe;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
 import com.restaurant.dto.recipe.MenuDtoAdd;
-import com.restaurant.dto.recipe.MenuDtoUpdate;
 import com.restaurant.model.document.Menu;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
 
 public interface MenuControllerInterface {
 
     ResponseEntity<Menu> createMenu(MenuDtoAdd menuDtoAdd);
 
-    ResponseEntity<Menu> getMenuById(Integer id);
+    ResponseEntity<Menu> getMenuById(String id);
 
     ResponseEntity<List<MenuALl>> getAllMenusNameAndDate();
 
-    ResponseEntity<Void> deleteMenu(Integer id);
+    ResponseEntity<Void> deleteMenu(String id);
 
     ResponseEntity<List<Menu>> listMenusDates(MenuDateDto menuDateDto) throws Exception;
 

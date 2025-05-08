@@ -1,10 +1,12 @@
 package com.restaurant.service.Interface.inventory;
 
+import java.util.List;
+
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
 import com.restaurant.dto.recipe.RecipePrice;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Recipe;
-import java.util.List;
+import com.restaurant.model.vo.Items;
 
 /**
  * Interface for the recipe management service.
@@ -65,4 +67,6 @@ public interface IRecipeServices {
     public void sumServings(String idRecipe, int restSrvings);
 
     public void restAmount(String idRecipe, int amount);
+
+    public List<Recipe> listAllRecipe(List<Items> productsOrArecipe);
 }
