@@ -17,7 +17,7 @@ import lombok.NonNull;
  * Provides methods for CRUD operations and custom queries.
  */
 @Repository
-public interface MenuRepository extends MongoRepository<Menu, Integer> {
+public interface MenuRepository extends MongoRepository<Menu, String> {
 
     /**
      * Finds a menu by its date.
@@ -30,5 +30,11 @@ public interface MenuRepository extends MongoRepository<Menu, Integer> {
 
     @Query("{ 'date' : ?0 }")
     List<Menu> findByDates(@NonNull LocalDate date);
+
+    @Query("{ '_id' }")
+    Optional<Menu> findById(String id);
+
+    @Query(" { '_id' : ?0 }")
+    void deleteByid(String id);
 
 }

@@ -3,8 +3,13 @@ package com.restaurant.service.Interface.inventory;
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
 import com.restaurant.exceptions.menu.normal.MenuExceptionGetAll;
+import com.restaurant.exceptions.recipe.normalException.RecipeExceptionAll;
 import com.restaurant.model.document.Menu;
+import com.restaurant.model.document.Recipe;
+
 import java.util.List;
+
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Interface for the menu management service.
@@ -26,7 +31,7 @@ public interface IMenuServices {
      * @param id The ID of the menu to retrieve.
      * @return The menu corresponding to the ID, or null if not found.
      */
-    Menu getMenuById(Integer id);
+    Menu getMenuById(String id);
 
     /**
      * Gets all menus.
@@ -49,7 +54,7 @@ public interface IMenuServices {
      *
      * @param id The ID of the menu to delete.
      */
-    void deleteMenu(Integer id);
+    void deleteMenu(String id);
 
     public List<Menu> getAllMenuForDate(MenuDateDto menuDateDto);
 

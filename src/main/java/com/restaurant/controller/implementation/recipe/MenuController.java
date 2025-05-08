@@ -37,7 +37,7 @@ public class MenuController implements MenuControllerInterface {
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Menu> getMenuById(@PathVariable Integer id) {
+    public ResponseEntity<Menu> getMenuById(@PathVariable String id) {
         Menu menu = menuServices.getMenuById(id);
         if (menu != null) {
             return ResponseEntity.ok(menu);
@@ -55,7 +55,7 @@ public class MenuController implements MenuControllerInterface {
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteMenu(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable("id") String id) {
         menuServices.deleteMenu(id);
         return ResponseEntity.noContent().build();
     }

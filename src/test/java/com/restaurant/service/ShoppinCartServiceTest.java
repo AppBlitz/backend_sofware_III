@@ -1,18 +1,23 @@
 package com.restaurant.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.restaurant.dto.cart.UpdateShopping;
+import com.restaurant.model.Enum.CategoriItem;
+import com.restaurant.model.document.Recipe;
+import com.restaurant.model.vo.Items;
+import com.restaurant.model.vo.MenuItem;
 import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.restaurant.service.implementation.inventory.RecipeServices;
-import com.restaurant.model.vo.*;
-import com.restaurant.dto.cart.UpdateShopping;
-import com.restaurant.model.Enum.*;
+import com.restaurant.model.document.Product;
 
 @SpringBootTest
 public class ShoppinCartServiceTest {
@@ -38,6 +43,26 @@ public class ShoppinCartServiceTest {
     datas.add(item);
     datas.add(item_dos);
     assertNotNull(shoppinCartServiceIm.addProducAnShopping(new UpdateShopping("681b61aa1e710924d1408dd6", datas)));
+
+  }
+
+  @Test
+  public void deleteCart() {
+
+    shoppinCartServiceIm.deleteShopping("681c12764c19f05068897aad");
+  }
+
+  @Test
+  public void searchCategory() {
+    List<Recipe> recipes = shoppinCartServiceIm.getAllRecipe("681b61aa1e710924d1408dd6");
+    assertTrue(recipes.size() > 0);
+  }
+
+  @Test
+  public void searchProduct() {
+
+    List<Product> product = shoppinCartServiceIm.getAllProduct("681b61aa1e710924d1408dd6");
+    assertTrue(product.size() > 0);
 
   }
 

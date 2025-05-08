@@ -14,6 +14,7 @@ import com.restaurant.exceptions.menu.runtime.MenuExceptionSearch;
 import com.restaurant.model.document.Menu;
 import com.restaurant.repository.MenuRepository;
 import com.restaurant.service.Interface.inventory.IMenuServices;
+import com.restaurant.validators.menu.ValidatorMenu;
 
 /**
  * Implementation of the menu management service.
@@ -43,7 +44,7 @@ public class MenuServices implements IMenuServices {
      * @return The menu corresponding to the ID, or null if not found.
      */
     @Override
-    public Menu getMenuById(Integer id) {
+    public Menu getMenuById(String id) {
         Optional<Menu> menu = menuRepository.findById(id);
         if (menu.isEmpty())
             throw new MenuExceptionSearch("menu not found");
@@ -80,10 +81,6 @@ public class MenuServices implements IMenuServices {
      *
      * @param id The ID of the menu to delete.
      */
-    @Override
-    public void deleteMenu(Integer id) {
-        menuRepository.deleteById(id);
-    }
 
     @Override
     public List<Menu> getAllMenuForDate(MenuDateDto menuDateDtoh) {
@@ -94,6 +91,11 @@ public class MenuServices implements IMenuServices {
     @Override
     public List<Menu> getAll() throws MenuExceptionGetAll {
         return menuRepository.findAll();
+    }
+
+    @Override
+    public void deleteMenu(String id) {
+        menuRepository.deleteById(id);
     }
 
 }

@@ -22,6 +22,7 @@ import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.Enum.MovementAction;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Supplier;
+import com.restaurant.model.vo.Items;
 import com.restaurant.model.vo.MovementProduct;
 import com.restaurant.repository.MovementRepository;
 import com.restaurant.repository.ProductRepository;
@@ -286,7 +287,6 @@ public class ProductService implements ProductServiceInterface {
 
   @Override
   public boolean productExists(String id) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'productExists'");
   }
 
@@ -312,6 +312,17 @@ public class ProductService implements ProductServiceInterface {
       throw new ExceptionUpdateProduct("the amount not acepted");
     }
     productRepository.save(product);
+  }
+
+  @Override
+  public List<Product> getAllProductShoppingCart(List<Items> items) {
+    List<Product> products = new ArrayList<>();
+    for (Items item : items) {
+      if (!item.getMenuItem().getProduct().isEmpty()) {
+        products.add(getProduct(item.getMenuItem().getProduct()));
+      }
+    }
+    return products;
   }
 
 }

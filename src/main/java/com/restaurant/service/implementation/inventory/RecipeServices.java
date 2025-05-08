@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
@@ -16,9 +17,11 @@ import com.restaurant.exceptions.recipe.runTime.RecipeExceptionUpdate;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.vo.HistoryRecipe;
+import com.restaurant.model.vo.Items;
 import com.restaurant.repository.HistoryRecipeRepository;
 import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.Interface.inventory.IRecipeServices;
+import com.restaurant.validators.menu.ValidatorRecipe;
 
 /**
  * Implementation of the recipe management service.
@@ -29,6 +32,10 @@ public class RecipeServices implements IRecipeServices {
 
     @Autowired
     private RecipeRepository recipeRepository;
+
+    @Autowired
+    @Lazy
+    private ValidatorRecipe vRecipe;
 
     @Autowired
     private HistoryRecipeRepository historyRecipeRepository;
@@ -204,6 +211,11 @@ public class RecipeServices implements IRecipeServices {
             throw new RecipeExceptionUpdate("The recipe not found");
         }
         recipeRepository.save(recipeUpdate);
+    }
+
+    @Override
+    public List<Recipe> listAllRecipe(List<Items> productsOrArecipe) {
+        return vRecipe.getAllRecipe(productsOrArecipe);
     }
 
 }

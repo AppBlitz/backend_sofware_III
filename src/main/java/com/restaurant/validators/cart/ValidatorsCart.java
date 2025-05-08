@@ -3,6 +3,7 @@ package com.restaurant.validators.cart;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.restaurant.model.vo.Items;
