@@ -3,7 +3,7 @@ package com.restaurant.util;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -15,7 +15,7 @@ import com.restaurant.dto.product.ProductExpiration;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
 
-@Service
+@Component
 public class PdfGenerator {
 
     public static byte[] generateOrderRecommendationPdf(OrderRecommendation recommendation) throws Exception {
@@ -35,28 +35,40 @@ public class PdfGenerator {
         // Create a table with recommended products
         float[] columnWidths = { 200f, 100f, 100f, 200f }; // Column sizes
         Table table = new Table(columnWidths); // Create the table
-        table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setBold())); // Create the first column
-        table.addHeaderCell(new Cell().add(new Paragraph("Current Stock").setBold())); // Create the second column
-        table.addHeaderCell(new Cell().add(new Paragraph("Recommended Quantity").setBold())); // Create the third column
-        table.addHeaderCell(new Cell().add(new Paragraph("Available Suppliers").setBold())); // Create the fourth column
 
         // Add recommended products
-        for (ProductRecommendation product : recommendation.getProducts()) { // Iterate through recommended products
-            table.addCell(new Cell().add(new Paragraph(product.getProductName()))); // Add the product name
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the current
-                                                                                                     // stock of the
-                                                                                                     // product
-            table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add the
-                                                                                                            // recommended
-                                                                                                            // quantity
-            // Load the product's suppliers
-            String suppliers = "";
-            for (String s : product.getSuppliersName()) {
-                suppliers += s + "\n";
-            }
-            table.addCell(new Cell().add(new Paragraph(suppliers))); // Add the product's suppliers
-        }
+        if (recommendation.getProducts().isEmpty()) {
+            table.addCell(new Cell().add(new Paragraph(("no hay recomendacion de pedido por fabricar"))));
+        } else {
+            table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setBold())); // Create the first column
+            table.addHeaderCell(new Cell().add(new Paragraph("Current Stock").setBold())); // Create the second column
+            table.addHeaderCell(new Cell().add(new Paragraph("Recommended Quantity").setBold())); // Create the third
+                                                                                                  // column
+            table.addHeaderCell(new Cell().add(new Paragraph("Available Suppliers").setBold())); // Create the fourth
+                                                                                                 // column
 
+            for (ProductRecommendation product : recommendation.getProducts()) { // Iterate through recommended products
+                table.addCell(new Cell().add(new Paragraph(product.getProductName()))); // Add the product name
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getCurrentStock())))); // Add the
+                                                                                                         // current
+                // stock of the
+                // product
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(product.getRecommendedQuantity())))); // Add
+                                                                                                                // the
+                // recommended
+                // quantity
+                // Load the product's suppliers
+                String suppliers = "";
+                if (product.getSuppliersName().isEmpty()) {
+                    suppliers = "no hay proveedores disponibles \n SE REQUIERE VERIFICAR ESTADO DE PRODUCTO";
+                } else {
+                    for (String s : product.getSuppliersName()) {
+                        suppliers += s + "\n";
+                    }
+                }
+                table.addCell(new Cell().add(new Paragraph(suppliers))); // Add the product's suppliers
+            }
+        }
         document.add(table); // Add the table to the PDF
         document.close(); // Close the document to finalize the content
 
@@ -65,7 +77,7 @@ public class PdfGenerator {
     }
 
     public static byte[] expirationProducts(ArrayList<ProductExpiration> products) throws Exception {
-        // Instancias necesarias para crear el PDF
+        // Instancias necesarias para com.crear el PDF
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(outputStream);
         PdfDocument pdf = new PdfDocument(writer);

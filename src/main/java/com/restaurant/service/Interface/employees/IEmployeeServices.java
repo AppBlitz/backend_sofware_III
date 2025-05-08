@@ -3,12 +3,8 @@ package com.restaurant.service.Interface.employees;
 
 // Import statements for DTOs and other required classes
 import com.restaurant.dto.employee.EmployeeDTO; // Data Transfer Object for Employee
-import com.restaurant.dto.employee.LoginDTO;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO; // DTO for Employee Permissions
 import com.restaurant.dto.employee.UserDTO; // DTO for User details
-import com.restaurant.exceptions.employees.DuplicateEmployeeException;
-import com.restaurant.exceptions.employees.NotCorrectPasswordException;
-import com.restaurant.exceptions.employees.NotFoundEmployeeException;
 import com.restaurant.model.document.Employee; // Employee document model
 
 import java.time.LocalDate; // For handling dates
@@ -40,7 +36,7 @@ public interface IEmployeeServices {
      * @param employeeDTO The EmployeeDTO containing the details of the new employee.
      * @return The created EmployeeDTO.
      */
-    EmployeeDTO create(EmployeeDTO employeeDTO) throws DuplicateEmployeeException;
+    EmployeeDTO create(EmployeeDTO employeeDTO);
 
     /**
      * Updates the details of an existing employee.
@@ -48,6 +44,15 @@ public interface IEmployeeServices {
      * @return The updated EmployeeDTO.
      */
     EmployeeDTO update(EmployeeDTO employeeDTO);
+
+    /**
+     * Adds permissions to a specific employee.
+     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing the permission details.
+     * @return The updated PermissionsEmployeeDTO with the applied permissions.
+     */
+    EmployeeDTO addPermissions(PermissionsEmployeeDTO permissionsEmployeeDTO);
+
+    EmployeeDTO removePermissions(PermissionsEmployeeDTO permissionsEmployeeDTO);
 
     /**
      * Updates the password of a user associated with an employee.
@@ -62,6 +67,4 @@ public interface IEmployeeServices {
      * @return A list of EmployeeDTOs representing active employees until the given date.
      */
     List<EmployeeDTO> getActiveEmployeesUntilDate(LocalDate date);
-
-    EmployeeDTO login(LoginDTO loginDTO) throws NotFoundEmployeeException, NotCorrectPasswordException;
 }

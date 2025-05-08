@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("supplier")
 public class SupplierController implements ISupplierController {
@@ -39,6 +38,7 @@ public class SupplierController implements ISupplierController {
         Supplier supplier = supplierService.getSupplier(id);
         return ResponseEntity.status(200).body(supplier);
     }
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @Override
     public ResponseEntity<List<Supplier>> getSuppliers() throws Exception {
