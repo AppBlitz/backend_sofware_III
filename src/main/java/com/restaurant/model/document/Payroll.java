@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 /**
  * The Payroll class represents the payroll information.
- * It includes information about the payment, update details, date of generation, and the month.
+ * It includes information about the payment, update details, date of
+ * generation, and the month.
  */
 @AllArgsConstructor
 @Document(collection = "payroll")
@@ -45,7 +46,7 @@ public class Payroll {
     private Month month;
 
     public enum Month {
-        ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO,SEPTIEMBRE,OCTUBRE,NOVIEMBRE,DICIEMBRE
+        ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE
     }
 
     /**

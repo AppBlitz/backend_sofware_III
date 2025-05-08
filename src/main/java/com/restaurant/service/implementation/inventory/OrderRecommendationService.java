@@ -3,17 +3,16 @@ package com.restaurant.service.implementation.inventory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.restaurant.model.Enum.Estate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Supplier;
 import com.restaurant.model.vo.OrderRecommendation;
 import com.restaurant.model.vo.ProductRecommendation;
 import com.restaurant.repository.ProductRepository;
-import com.restaurant.repository.SupplierRepository;
 import com.restaurant.service.Interface.inventory.IOrderRecommendationService;
 
 @Service
@@ -24,11 +23,14 @@ public class OrderRecommendationService implements IOrderRecommendationService {
 
     @Autowired
     SupplierServices supplierServices;
+
     /**
      * Generates an order recommendation for products with low stock.
      *
-     * @param stockThreshold The stock level threshold below which a product is considered low stock.
-     * @return An {@link OrderRecommendation} object containing recommended products and their suppliers.
+     * @param stockThreshold The stock level threshold below which a product is
+     *                       considered low stock.
+     * @return An {@link OrderRecommendation} object containing recommended products
+     *         and their suppliers.
      */
     public OrderRecommendation generateRecommendation(int stockThreshold) {
 
@@ -38,17 +40,18 @@ public class OrderRecommendationService implements IOrderRecommendationService {
 
         // Process each low-stock product to generate recommendations
         for (Product product : lowStockProducts) {
-            if(product.getEstate().equals(Estate.ACTIVE)){
+            if (product.getEstate().equals(Estate.ACTIVE)) {
                 ProductRecommendation recommendation = new ProductRecommendation();
                 recommendation.setProductName(product.getNameProduct());
                 recommendation.setCurrentStock(product.getStock());
-                recommendation.setRecommendedQuantity(( (product.getStock()+30) )); // Arbitrary recommended quantity
+                recommendation.setRecommendedQuantity(((product.getStock() + 30))); // Arbitrary recommended quantity
                 recommendation.setSuppliersName(new ArrayList<>());
                 // Retrieve supplier names for the product
                 for (String idSupplier : product.getSuppliers()) {
-                    Supplier supplier=supplierServices.getSupplier(idSupplier);
-                    if(supplier.getStateActivity().equals(Estate.ACTIVE)){
-                    recommendation.getSuppliersName().add(supplier.getNameSupplier());}
+                    Supplier supplier = supplierServices.getSupplier(idSupplier);
+                    if (supplier.getStateActivity().equals(Estate.ACTIVE)) {
+                        recommendation.getSuppliersName().add(supplier.getNameSupplier());
+                    }
                 }
 
                 recommendedProducts.add(recommendation);

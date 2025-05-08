@@ -2,14 +2,13 @@ package com.restaurant.controller.implementation.supplier;
 
 import com.restaurant.controller.Interface.supplier.IOrderController;
 import com.restaurant.model.vo.OrderRecommendation;
-import com.restaurant.service.implementation.EmailService;
+import com.restaurant.service.implementation.email.EmailService;
 import com.restaurant.service.implementation.inventory.OrderRecommendationService;
 import com.restaurant.util.PdfGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/orders")
 public class OrderController implements IOrderController {

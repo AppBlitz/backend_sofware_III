@@ -45,5 +45,5 @@ public class Recipe {
     @NotNull
     private Estate estate;
 
-    //200 ok
+    private double price;
 }

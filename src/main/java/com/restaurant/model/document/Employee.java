@@ -61,6 +61,9 @@ public class Employee implements IEmployee {
  //retirementDate can be null
  private LocalDate retirementDate;
 
+ @NotNull(message = "Retirement status cannot be null")
+ private Boolean isRetired;
+
  @Min(value = 0, message = "Base salary must be positive")
  private double baseSalary;
 

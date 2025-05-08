@@ -19,3 +19,6 @@ spring:
     mongodb:
       uri: ${data.url}
       database: ${data.database}
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
