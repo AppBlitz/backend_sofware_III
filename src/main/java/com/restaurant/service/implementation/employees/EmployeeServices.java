@@ -1,9 +1,9 @@
 package com.restaurant.service.implementation.employees;
 
-import com.restaurant.dto.employee.EmployeeDTO;
-import com.restaurant.dto.employee.PermissionsEmployeeDTO;
-import com.restaurant.dto.employee.RollDTO;
-import com.restaurant.dto.employee.UserDTO;
+import com.restaurant.dto.employee.*;
+import com.restaurant.exceptions.employees.DuplicateEmployeeException;
+import com.restaurant.exceptions.employees.NotCorrectPasswordException;
+import com.restaurant.exceptions.employees.NotFoundEmployeeException;
 import com.restaurant.mapping.EmployeeMapper;
 import com.restaurant.model.Enum.employees.RollEmployee;
 import com.restaurant.model.document.Employee;
@@ -67,14 +67,9 @@ public class EmployeeServices implements IEmployeeServices {
      * @return The created EmployeeDTO.
      */
     @Override
-    public EmployeeDTO create(EmployeeDTO employeeDTO) {
-        if(employeeDTO.roll() == null){
-            RollForEmployee roll = new RollForEmployee();
-            roll.setPermissions(new ArrayList<>());
-            roll.setRollEmployee(RollEmployee.DEFAULT);
-            Employee employee = mapper.employeeDTOToEmployee(employeeDTO);
-            employee.setRoll(roll);
-            return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
+    public EmployeeDTO create(EmployeeDTO employeeDTO) throws DuplicateEmployeeException {
+        if(employeeRepository.getByUser_Email(employeeDTO.email()) != null){
+            throw new DuplicateEmployeeException("El usuario ya existe");
         }
         return mapper.employeeToEmployeeDTO(employeeRepository.save(mapper.employeeDTOToEmployee(employeeDTO)));
     }
@@ -91,43 +86,8 @@ public class EmployeeServices implements IEmployeeServices {
     }
 
 
-    /**
-     * Adds permissions to a specific employee.
-     *
-     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing the permission details.
-     * @return The updated PermissionsEmployeeDTO with the applied permissions.
-     */
-    @Override
-    public EmployeeDTO addPermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
-        Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
-        for(Permissions permissions1 : employee.getRoll().getPermissions()){
-            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
-                permissions.getPermissions().addAll(permissions1.getPermissions());
-                int index = employee.getRoll().getPermissions().indexOf(permissions1);
-                employee.getRoll().getPermissions().set(index,permissions);
-                return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
-            }
-        }
-        employee.getRoll().getPermissions().add(permissions);
-        return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
-    }
 
-    @Override
-    public EmployeeDTO removePermissions(PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        Employee employee = employeeRepository.getById(permissionsEmployeeDTO.employeeID());
-        Permissions permissions = mapper.permissionsEmployeeDTOToPermissions(permissionsEmployeeDTO);
-        for(Permissions permissions1 : employee.getRoll().getPermissions()){
-            if(permissions1.getObjeto().equals(permissionsEmployeeDTO.objeto())){
-                permissions1.getPermissions().removeAll(permissions.getPermissions());
-                int index = employee.getRoll().getPermissions().indexOf(permissions1);
-                employee.getRoll().getPermissions().set(index,permissions1);
-                return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
-            }
-        }
-        employee.getRoll().getPermissions().add(permissions);
-        return mapper.employeeToEmployeeDTO(employeeRepository.save(employee));
-    }
+
     /**
      * Updates the password of a user associated with an employee.
      *
@@ -153,9 +113,18 @@ public class EmployeeServices implements IEmployeeServices {
         return convertList(employeeRepository.getAllByRetirementDateIsNullOrRetirementDateAfter(date));
     }
 
-    public EmployeeDTO updateRoll(RollDTO rollDTO){
-        Employee employee = employeeRepository.getById(rollDTO.id());
-        employee.getRoll().setRollEmployee(rollDTO.rollEmployee());
-        return mapper.employeeToEmployeeDTO(employee);
+    /**
+     * @param loginDTO
+     * @return
+     */
+    @Override
+    public EmployeeDTO login(LoginDTO loginDTO) throws NotFoundEmployeeException, NotCorrectPasswordException {
+        Employee employee = employeeRepository.getByUser_Email(loginDTO.email());
+        if(employee == null) {
+            throw new NotFoundEmployeeException("No se encontró el empleado por el email");
+        }if (employee.getUser().getPassword().equals(loginDTO.password())) {
+            return mapper.employeeToEmployeeDTO(employee);
+        }else
+            throw new NotCorrectPasswordException("La contraseña es incorrecta, login no permitido");
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 
 @AllArgsConstructor
@@ -23,24 +24,7 @@ import java.time.LocalDate;
  * It includes information about the employee's ID, DNI, name, schedule, charge, base salary, email, password, permissions, and role.
  */
 public class Employee implements IEmployee {
- public enum EPS {
-  SALUD_TOTAL, NUEVA_EPS, SURA, SANITAS
- }
- public enum ARL {
-  SURA, POSITIVA, SEGUROS_BOLIVAR
- }
- public enum CCF {
-  COMFENALCO_QUINDIO, COMFENALCO_ANTIOQUIA, COMFAMA, CAFAM
- }
- public enum RiskLevel {
-  LEVEL_I, LEVEL_II, LEVEL_III, LEVEL_IV, LEVEL_V
- }
- public enum Cesantias {
-  PORVENIR, COLFONDOS, FNA, PROTECCION
- }
- public enum Pension {
-  COLPENSIONES, PORVENIR, PROTECCION
- }
+
  @Data
  @AllArgsConstructor
  @NoArgsConstructor
@@ -53,9 +37,6 @@ public class Employee implements IEmployee {
   @NotBlank
   @Size(min = 8, message = "Password must be at least 8 characters long")
   private String password;
- }
- public enum Area {
-  KITCHEN, WAREHOUSE, SALES
  }
 
  @Id
@@ -80,37 +61,30 @@ public class Employee implements IEmployee {
  //retirementDate can be null
  private LocalDate retirementDate;
 
- @NotNull(message = "Retirement status cannot be null")
- private Boolean isRetired;
-
  @Min(value = 0, message = "Base salary must be positive")
  private double baseSalary;
 
  @NotNull(message = "Role cannot be null")
- private RollForEmployee roll;
+ private RollEmployee roll;
 
  @NotNull(message = "User cannot be null")
  private User user;
 
- // Attributes from enums
- @NotNull(message = "EPS cannot be null")
- private EPS eps;
+ @NotNull
+ private HashMap<Day,Hours> schedule;
 
- @NotNull(message = "ARL cannot be null")
- private ARL arl;
-
- @NotNull(message = "CCF cannot be null")
- private CCF ccf;
-
- @NotNull(message = "Risk level cannot be null")
- private RiskLevel riskLevel;
-
- @NotNull(message = "Cesantias cannot be null")
- private Cesantias cesantias;
-
- @NotNull(message = "Pension cannot be null")
- private Pension pension;
-
- @NotNull(message = "Area cannot be null")
- private Area area;
+ @Data
+ @ToString
+ @Builder
+ @AllArgsConstructor
+ @NoArgsConstructor
+ public static class Hours{
+  @NotNull
+  Integer HourStart;
+  @NotNull
+  Integer HourEnd;
+ }
+ public enum Day {
+  LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
+ }
 }
