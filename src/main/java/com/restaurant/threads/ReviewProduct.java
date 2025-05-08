@@ -3,6 +3,7 @@ package com.restaurant.threads;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,7 +13,9 @@ import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.service.implementation.EmailService;
 import com.restaurant.util.PdfGenerator;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReviewProduct extends Thread {
 
   @Autowired
@@ -24,19 +27,23 @@ public class ReviewProduct extends Thread {
   @Autowired(required = true)
   PdfGenerator pdfGenerator;
 
-  @Scheduled(cron = "0 8 * * DE LUNES A DOMINGO")
-  public void sendMessage() {
+  @Scheduled(cron = "0 34 4 * * *")
+  public void sendMessage() throws Exception {
     // Send email
+    foundProduct();
   }
 
   public void sendMessageDateExpirationProduct(ArrayList<ProductExpiration> productExpirations) throws Exception {
-    emailService.sendOrderRecommendationEmail("", pdfGenerator.expirationProducts(productExpirations));
+    emailService.sendOrderRecommendationEmail("equiporoblox520@gmail.com", pdfGenerator.expirationProducts(productExpirations));
   }
 
-  public void foundProduct(ArrayList<Product> products) throws Exception {
+  public void foundProduct() throws Exception {
     ArrayList<ProductExpiration> productsExpiration = new ArrayList<>();
+
     LocalDate how = LocalDate.now();
-    for (Product producto : products) {
+    LocalDate nowPlusSevenDays= how.plusDays(7);
+    List<Product> productList = productRepository.findProductsExpiring(how,nowPlusSevenDays);
+    for (Product producto : productList) {
       if (calcularDate(how, producto.getDateExpiration().get(0))) {
         productsExpiration.add(createStructureProductExpiration(producto));
       }

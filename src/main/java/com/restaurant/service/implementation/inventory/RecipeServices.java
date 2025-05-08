@@ -1,11 +1,17 @@
 package com.restaurant.service.implementation.inventory;
 
+import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.document.Recipe;
+import com.restaurant.model.vo.HistoryRecipe;
+import com.restaurant.model.vo.MovementProduct;
+import com.restaurant.repository.HistoryRecipeRepository;
 import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.Interface.inventory.IRecipeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +25,9 @@ public class RecipeServices implements IRecipeServices {
     @Autowired
     private RecipeRepository recipeRepository;
 
+    @Autowired
+    private HistoryRecipeRepository historyRecipeRepository;
+
     /**
      * Creates a new recipe.
      *
@@ -27,6 +36,9 @@ public class RecipeServices implements IRecipeServices {
      */
     @Override
     public Recipe createRecipe(Recipe recipe) {
+        HistoryRecipe historyRecipe = new HistoryRecipe("CREACION",LocalDateTime.now(),
+                "se registra la creacion de una nueva receta en el sistema llamada: "+recipe.getName());
+        historyRecipeRepository.save(historyRecipe);
         return recipeRepository.save(recipe);
     }
 
@@ -64,6 +76,10 @@ public class RecipeServices implements IRecipeServices {
     public Recipe updateRecipe(String id, Recipe recipe) {
         if (recipeRepository.existsById(id)) {
             recipe.setId(id);
+            HistoryRecipe historyRecipe = new HistoryRecipe("EDICION",LocalDateTime.now(),
+                    "se registra la edicion de una receta en el sistema identificada con el id:"+recipe.getId()+
+                            " y llamada: "+recipe.getName());
+            historyRecipeRepository.save(historyRecipe);
             return recipeRepository.save(recipe);
         }
         return null;
@@ -76,6 +92,27 @@ public class RecipeServices implements IRecipeServices {
      */
     @Override
     public void deleteRecipe(String id) {
-        recipeRepository.deleteById(id);
+        //recipeRepository.deleteById(id);
+        Recipe recipe=getRecipeById(id);
+        recipe.setEstate(Estate.INACTIVE);
+        HistoryRecipe historyRecipe = new HistoryRecipe("ELIMINACION",LocalDateTime.now(),
+                "se registra la desactivacion de una receta en el sistema llamada: "+recipe.getName());
+        historyRecipeRepository.save(historyRecipe);
+        recipeRepository.save(recipe);
     }
+
+    public List<HistoryRecipe> consult_movementsByDate(LocalDate date){
+        LocalDateTime start = date.atStartOfDay();
+        LocalDateTime end = date.plusDays(1).atStartOfDay();
+        return historyRecipeRepository.findByTimestampBetween(start, end);
+
+    }
+
+    public List<HistoryRecipe> consult_movementsByHour(LocalDate date, int startHour,int endHour){
+        LocalDateTime start = date.atTime(startHour, 0);
+        LocalDateTime end = date.atTime(endHour, 0);
+        return historyRecipeRepository.findByTimestampBetween(start, end);
+    }
+
+
 }

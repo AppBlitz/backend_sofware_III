@@ -1,6 +1,6 @@
 package com.restaurant.model.document;
 
-import com.restaurant.model.Enum.StateEnum;
+import com.restaurant.model.Enum.Estate;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -33,5 +33,5 @@ public class Supplier {
     private List<String> offeredProducts; // list of products offered by the supplier
 
     @NonNull // marks that the field cannot be empty
-    private StateEnum stateActivity; // status to indicate whether the provider is active or not
+    private Estate stateActivity; // status to indicate whether the provider is active or not
 }
