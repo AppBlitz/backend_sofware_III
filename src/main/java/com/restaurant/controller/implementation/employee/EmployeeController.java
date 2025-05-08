@@ -3,6 +3,7 @@ package com.restaurant.controller.implementation.employee;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ import com.restaurant.service.implementation.employees.EmployeeServices;
 @RequestMapping("/employees")
 public class EmployeeController {
 
+    @Autowired
     private final EmployeeServices employeeServices;
 
     /**
@@ -116,17 +118,7 @@ public class EmployeeController {
      *                               permissions details.
      * @return The EmployeeDTO with updated permissions.
      */
-    @PostMapping("/permissions")
-    public ResponseEntity<EmployeeDTO> addPermissions(@RequestBody PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        EmployeeDTO updatedEmployee = employeeServices.addPermissions(permissionsEmployeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
 
-    @DeleteMapping("/permissions")
-    public ResponseEntity<EmployeeDTO> removePermissions(@RequestBody PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        EmployeeDTO updatedEmployee = employeeServices.removePermissions(permissionsEmployeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
 
     /**
      * Updates the user information (e.g., password) for an employee.
@@ -140,9 +132,4 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PutMapping("/roll")
-    public ResponseEntity<EmployeeDTO> updateRoll(@RequestBody RollDTO rollDTO) {
-        return ResponseEntity.ok(employeeServices.updateRoll(rollDTO));
-
-    }
 }

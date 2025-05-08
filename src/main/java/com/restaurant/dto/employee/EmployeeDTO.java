@@ -2,6 +2,7 @@ package com.restaurant.dto.employee;
 
 import java.time.LocalDate;
 
+import com.restaurant.model.Enum.employees.RollEmployee;
 import org.springframework.data.annotation.Id;
 
 import com.restaurant.model.document.Employee;
@@ -27,19 +28,10 @@ public record EmployeeDTO(
                 @NotBlank(message = "Entry date cannot be null") LocalDate entryDate,
                 // retirementDate can be null
                 LocalDate retirementDate,
-                @NotNull(message = "Retirement status cannot be null") Boolean isRetired,
                 @Min(value = 0, message = "Base salary must be positive") double baseSalary,
-                RollForEmployee roll,
+                RollEmployee roll,
                 @Email @NotBlank String email,
                 @NotBlank @Size(min = 8, message = "Password must be at least 8 characters long") String password,
-                // Attributes from enums
-                @NotNull(message = "EPS cannot be null") Employee.EPS eps,
-                @NotNull(message = "ARL cannot be null") Employee.ARL arl,
-                @NotNull(message = "CCF cannot be null") Employee.CCF ccf,
-                @NotNull(message = "Risk level cannot be null") Employee.RiskLevel riskLevel,
-                @NotNull(message = "Cesantias cannot be null") Employee.Cesantias cesantias,
-                @NotNull(message = "Pension cannot be null") Employee.Pension pension,
-                @NotNull(message = "Area cannot be null") Employee.Area area,
                 @NotNull HashMap<Employee.Day, Employee.Hours> schedule) {
 }
 
