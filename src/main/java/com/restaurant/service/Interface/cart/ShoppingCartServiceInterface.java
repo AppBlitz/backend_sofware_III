@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.restaurant.dto.cart.UpdateShopping;
+import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.document.ShoppingCart;
@@ -25,4 +26,5 @@ public interface ShoppingCartServiceInterface {
   public List<Product> getAllProduct(@NonNull String id);
 
   public List<ShoppingCart> getDateCreation(@NonNull LocalDate dateCreation);
+
 }
