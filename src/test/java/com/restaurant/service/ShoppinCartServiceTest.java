@@ -41,4 +41,26 @@ public class ShoppinCartServiceTest {
 
   }
 
+=======
+  @Test
+  public void deleteCart() {
+
+    shoppinCartServiceIm.deleteShopping("681c12764c19f05068897aad");
+  }
+
+  @Test
+  public void searchCategory() {
+    List<Recipe> recipes = shoppinCartServiceIm.getAllRecipe("681b61aa1e710924d1408dd6");
+    assertTrue(recipes.size() > 0);
+  }
+
+  @Test
+  //Perfect
+  public void searchProduct() {
+
+    List<Product> product = shoppinCartServiceIm.getAllProduct("681b61aa1e710924d1408dd6");
+    assertTrue(product.size() > 0);
+
+  }
+
 }
