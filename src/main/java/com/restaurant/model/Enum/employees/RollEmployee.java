@@ -4,5 +4,7 @@ public enum RollEmployee {
     KitchenEmployee,
     CashierEmployee,
     WarehouseEmployee,
-    DEFAULT
+    waiterEmployee,
+    DEFAULT,
+    ADMIN
 }

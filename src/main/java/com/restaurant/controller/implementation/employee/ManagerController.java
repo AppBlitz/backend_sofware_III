@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * REST controller for managing Manager operations.
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {

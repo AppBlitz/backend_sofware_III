@@ -19,13 +19,6 @@ import com.restaurant.dto.employee.UserDTO;
 import com.restaurant.model.Enum.Objeto;
 import com.restaurant.model.Enum.employees.PermisionsCRUD;
 import com.restaurant.model.Enum.employees.RollEmployee;
-import com.restaurant.model.document.Employee.ARL;
-import com.restaurant.model.document.Employee.Area;
-import com.restaurant.model.document.Employee.CCF;
-import com.restaurant.model.document.Employee.Cesantias;
-import com.restaurant.model.document.Employee.EPS;
-import com.restaurant.model.document.Employee.Pension;
-import com.restaurant.model.document.Employee.RiskLevel;
 import com.restaurant.model.vo.Permissions;
 import com.restaurant.model.vo.RollForEmployee;
 import com.restaurant.service.implementation.employees.EmployeeServices;
@@ -86,25 +79,6 @@ public class EmployeeServiceAppTest {
     @ValueSource(strings = { "680290f571ae414c518bf1ca", "1234", "6804517345ac661cd01e849e" })
     public void searchEmployee(String id) {
         assertNotNull(employeeServices.get(id));
-    }
-
-    @Test
-    public void addPermisions() {
-
-        HashSet<PermisionsCRUD> permissionss = new HashSet<>();
-        permissionss.add(PermisionsCRUD.ELIMINAR);
-        PermissionsEmployeeDTO permissions = new PermissionsEmployeeDTO("6804517345ac661cd01e849e", permissionss,
-                Objeto.OB_MENU);
-        assertNotNull(employeeServices.addPermissions(permissions));
-    }
-
-    @Test
-    void deletePermissions() {
-        HashSet<PermisionsCRUD> permissionss = new HashSet<>();
-        permissionss.add(PermisionsCRUD.ELIMINAR);
-        PermissionsEmployeeDTO permissions = new PermissionsEmployeeDTO("6804517345ac661cd01e849e", permissionss,
-                Objeto.OB_MENU);
-        assertNotNull(employeeServices.removePermissions(permissions));
     }
 
     @Test

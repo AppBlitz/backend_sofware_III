@@ -1,22 +1,23 @@
 package com.restaurant.service.implementation.employees;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.restaurant.dto.employee.ManagerDTO;
 import com.restaurant.dto.employee.PermissionsManagerDTO;
+
 import com.restaurant.mapping.ManagerMapper;
+import com.restaurant.model.Enum.employees.PermisionsCRUD;
 import com.restaurant.model.document.Manager;
 import com.restaurant.model.vo.Permissions;
 import com.restaurant.repository.ManagerRepository;
 import com.restaurant.service.Interface.employees.IManagerServices;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ManagerServices implements IManagerServices {

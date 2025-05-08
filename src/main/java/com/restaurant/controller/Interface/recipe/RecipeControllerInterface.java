@@ -1,8 +1,6 @@
 package com.restaurant.controller.Interface.recipe;
-
 import com.restaurant.dto.recipe.RecipeDtoAdd;
 import com.restaurant.dto.recipe.RecipeDtoUpdate;
-import com.restaurant.dto.recipe.RecipePrice;
 import com.restaurant.model.document.Recipe;
 import org.springframework.http.ResponseEntity;
 
@@ -19,6 +17,4 @@ public interface RecipeControllerInterface {
     ResponseEntity<Recipe> updateRecipe(String id, RecipeDtoUpdate recipeDtoUpdate);
 
     ResponseEntity<Void> deleteRecipe(String id);
-
-    ResponseEntity<List<RecipePrice>> getAllRecipeActivate();
 }

@@ -3,19 +3,16 @@ package com.restaurant.threads;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.product.ProductExpiration;
 import com.restaurant.model.document.Product;
 import com.restaurant.repository.ProductRepository;
-import com.restaurant.service.implementation.email.EmailService;
+import com.restaurant.service.implementation.EmailService;
 import com.restaurant.util.PdfGenerator;
 
-@Service
 public class ReviewProduct extends Thread {
 
   @Autowired
@@ -27,24 +24,19 @@ public class ReviewProduct extends Thread {
   @Autowired(required = true)
   PdfGenerator pdfGenerator;
 
-  @Scheduled(cron = "0 0 8 * * *")
-  public void sendMessage() throws Exception {
+  @Scheduled(cron = "0 8 * * DE LUNES A DOMINGO")
+  public void sendMessage() {
     // Send email
-    foundProduct();
   }
 
   public void sendMessageDateExpirationProduct(ArrayList<ProductExpiration> productExpirations) throws Exception {
-    emailService.sendOrderRecommendationEmail("equiporoblox520@gmail.com",
-        pdfGenerator.expirationProducts(productExpirations));
+    emailService.sendOrderRecommendationEmail("", pdfGenerator.expirationProducts(productExpirations));
   }
 
-  public void foundProduct() throws Exception {
+  public void foundProduct(ArrayList<Product> products) throws Exception {
     ArrayList<ProductExpiration> productsExpiration = new ArrayList<>();
-
     LocalDate how = LocalDate.now();
-    LocalDate nowPlusSevenDays = how.plusDays(7);
-    List<Product> productList = productRepository.findProductsExpiring(how, nowPlusSevenDays);
-    for (Product producto : productList) {
+    for (Product producto : products) {
       if (calcularDate(how, producto.getDateExpiration().get(0))) {
         productsExpiration.add(createStructureProductExpiration(producto));
       }
@@ -61,8 +53,7 @@ public class ReviewProduct extends Thread {
   }
 
   public ProductExpiration createStructureProductExpiration(Product product) {
-    ProductExpiration productExpiration = new ProductExpiration(product.getNameProduct(),
-        product.getDateExpiration().get(0));
+    ProductExpiration productExpiration = new ProductExpiration(product.getNameProduct(), product.getDateExpiration().get(0));
     return productExpiration;
 
   }
