@@ -30,5 +30,5 @@ public interface ShoppingCartInter {
 
   public ResponseEntity<List<ShoppingCart>> searchDateCreation(@RequestBody SearchDateCreation dateCreation);
 
-  public <ResponseEntity<List<ShoppingCart>> searchStateCart(@RequestBody SearchCartCategory category);
+  public ResponseEntity<List<ShoppingCart>> searchStateCart(@RequestBody SearchCartCategory category);
 }
