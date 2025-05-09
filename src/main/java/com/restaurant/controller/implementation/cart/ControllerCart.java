@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.restaurant.model.document.*;
 import com.restaurant.model.vo.Items;
 import com.restaurant.controller.Interface.cart.ShoppingCartInter;
+import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.SearchDateCreation;
 import com.restaurant.dto.cart.SearchShoppingCartCategory;
 import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
@@ -64,6 +65,12 @@ public class ControllerCart implements ShoppingCartInter {
   @RequestMapping(value = "/search/date", method = RequestMethod.POST)
   public ResponseEntity<List<ShoppingCart>> searchDateCreation(@RequestBody SearchDateCreation dateCreation) {
     return ResponseEntity.ok(shoppinService.getDateCreation(dateCreation.dateCreation()));
+  }
+
+  @Override
+  @RequestMapping(value = "/search/category", method = RequestMethod.POST)
+  public ResponseEntity<List<ShoppingCart>> searchStateCart(SearchCartCategory category) {
+    return ResponseEntity.ok(shoppinService.searchCategory(category));
   }
 
 }

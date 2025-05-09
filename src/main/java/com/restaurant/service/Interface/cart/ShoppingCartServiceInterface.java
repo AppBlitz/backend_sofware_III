@@ -3,6 +3,7 @@ package com.restaurant.service.Interface.cart;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.UpdateShopping;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
@@ -25,4 +26,6 @@ public interface ShoppingCartServiceInterface {
   public List<Product> getAllProduct(@NonNull String id);
 
   public List<ShoppingCart> getDateCreation(@NonNull LocalDate dateCreation);
+
+  public List<ShoppingCart> searchCategory(SearchCartCategory category);
 }

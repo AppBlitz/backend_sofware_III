@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.SearchDateCreation;
 import com.restaurant.dto.cart.SearchShoppingCartCategory;
 import com.restaurant.model.document.Product;
@@ -28,4 +29,6 @@ public interface ShoppingCartInter {
   public ResponseEntity<List<Product>> searchProductShopping(@PathVariable String id);
 
   public ResponseEntity<List<ShoppingCart>> searchDateCreation(@RequestBody SearchDateCreation dateCreation);
+
+  public <ResponseEntity<List<ShoppingCart>> searchStateCart(@RequestBody SearchCartCategory category);
 }

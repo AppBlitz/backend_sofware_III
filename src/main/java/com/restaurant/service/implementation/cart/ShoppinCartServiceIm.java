@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.UpdateShopping;
 import com.restaurant.exceptions.cart.SearchCartException;
 import com.restaurant.model.Enum.cart.StateCart;
@@ -80,5 +81,10 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
   @Override
   public List<ShoppingCart> getDateCreation(@NonNull LocalDate dateCreation) {
     return shoppingCartRespository.findByDateCreation(dateCreation);
+  }
+
+  @Override
+  public List<ShoppingCart> searchCategory(SearchCartCategory category) {
+    return shoppingCartRespository.findByStateCart(category.stateCart());
   }
 }
