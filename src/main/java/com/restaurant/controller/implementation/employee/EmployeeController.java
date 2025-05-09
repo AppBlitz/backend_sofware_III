@@ -1,36 +1,28 @@
 package com.restaurant.controller.implementation.employee;
 
-import java.time.LocalDate;
-import java.util.List;
-
+import com.restaurant.dto.employee.*;
+import com.restaurant.exceptions.employees.DuplicateEmployeeException;
+import com.restaurant.exceptions.employees.NotCorrectPasswordException;
+import com.restaurant.exceptions.employees.NotFoundEmployeeException;
+import com.restaurant.model.vo.RollForEmployee;
+import com.restaurant.service.implementation.employees.EmployeeServices;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.restaurant.dto.employee.EmployeeDTO;
-import com.restaurant.dto.employee.PermissionsEmployeeDTO;
-import com.restaurant.dto.employee.RollDTO;
-import com.restaurant.dto.employee.UserDTO;
-import com.restaurant.service.implementation.employees.EmployeeServices;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * REST controller for handling Employee operations.
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
 
     private final EmployeeServices employeeServices;
-
     /**
      * Constructor-based dependency injection for EmployeeServices.
      *
@@ -41,8 +33,7 @@ public class EmployeeController {
     }
 
     /**
-     * Retrieves all employees currently active (not retired or retired after
-     * today).
+     * Retrieves all employees currently active (not retired or retired after today).
      *
      * @return A list of EmployeeDTO objects.
      */
@@ -88,14 +79,16 @@ public class EmployeeController {
      * @param employeeDTO The EmployeeDTO containing the employee's details.
      * @return The created EmployeeDTO.
      */
-    @PostMapping("/add")
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        if (employeeDTO.roll() == null) {
-
+    @PostMapping
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        try {
+            EmployeeDTO createdEmployee = employeeServices.create(employeeDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
+        } catch (DuplicateEmployeeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse("El empleado no pudo ser creado", e.getMessage()));
         }
-        EmployeeDTO createdEmployee = employeeServices.create(employeeDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
+    public record ErrorResponse(String error, String details) {}
 
     /**
      * Updates the details of an existing employee.
@@ -106,25 +99,6 @@ public class EmployeeController {
     @PutMapping
     public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO updatedEmployee = employeeServices.update(employeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
-
-    /**
-     * Adds permissions to a specific employee.
-     *
-     * @param permissionsEmployeeDTO The PermissionsEmployeeDTO containing
-     *                               permissions details.
-     * @return The EmployeeDTO with updated permissions.
-     */
-    @PostMapping("/permissions")
-    public ResponseEntity<EmployeeDTO> addPermissions(@RequestBody PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        EmployeeDTO updatedEmployee = employeeServices.addPermissions(permissionsEmployeeDTO);
-        return ResponseEntity.ok(updatedEmployee);
-    }
-
-    @DeleteMapping("/permissions")
-    public ResponseEntity<EmployeeDTO> removePermissions(@RequestBody PermissionsEmployeeDTO permissionsEmployeeDTO) {
-        EmployeeDTO updatedEmployee = employeeServices.removePermissions(permissionsEmployeeDTO);
         return ResponseEntity.ok(updatedEmployee);
     }
 
@@ -140,9 +114,14 @@ public class EmployeeController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PutMapping("/roll")
-    public ResponseEntity<EmployeeDTO> updateRoll(@RequestBody RollDTO rollDTO) {
-        return ResponseEntity.ok(employeeServices.updateRoll(rollDTO));
-
+    @PostMapping("/user/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
+        try {
+            return ResponseEntity.ok(employeeServices.login(loginDTO));
+        } catch (NotFoundEmployeeException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse("El empleado no existe", e.getMessage()));
+        } catch (NotCorrectPasswordException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse("La contraseña es incorrecta", e.getMessage()));
+        }
     }
 }
