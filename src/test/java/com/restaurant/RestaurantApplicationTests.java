@@ -17,8 +17,9 @@ class RestaurantApplicationTests {
 	}
 
 	@Test
-	void contextLoads() {
-		wDriver.get("https://github.com/naveenchr/SpringBoot-SeleniumFramework");
+	void contextLoads() throws InterruptedException {
+		wDriver.get("http://localhost:5173/");
+		wDriver.wait(930000000);
 
 		wDriver.close();
 	}
