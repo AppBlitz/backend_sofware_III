@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.restaurant.dto.employee.PermissionsManagerDTO;
+import com.restaurant.service.implementation.employees.ManagerServices;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,6 +37,9 @@ public class EmployeeServiceAppTest {
 
     @Autowired
     EmployeeServices employeeServices;
+
+    @Autowired
+    ManagerServices managerservices;
 
     /*
      * Test to see if it brings the full list of users in case there are any,
@@ -93,18 +98,18 @@ public class EmployeeServiceAppTest {
 
         HashSet<PermisionsCRUD> permissionss = new HashSet<>();
         permissionss.add(PermisionsCRUD.ELIMINAR);
-        PermissionsEmployeeDTO permissions = new PermissionsEmployeeDTO("6804517345ac661cd01e849e", permissionss,
+        PermissionsManagerDTO permissions = new PermissionsManagerDTO("6804517345ac661cd01e849e", permissionss,
                 Objeto.OB_MENU);
-        assertNotNull(employeeServices.addPermissions(permissions));
+        assertNotNull(managerservices.addPermissions(permissions));
     }
 
     @Test
     void deletePermissions() {
         HashSet<PermisionsCRUD> permissionss = new HashSet<>();
         permissionss.add(PermisionsCRUD.ELIMINAR);
-        PermissionsEmployeeDTO permissions = new PermissionsEmployeeDTO("6804517345ac661cd01e849e", permissionss,
+        PermissionsManagerDTO permissions = new PermissionsManagerDTO("6804517345ac661cd01e849e", permissionss,
                 Objeto.OB_MENU);
-        assertNotNull(employeeServices.removePermissions(permissions));
+        assertNotNull(managerservices.removePermissions(permissions));
     }
 
     @Test
