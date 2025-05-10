@@ -1,15 +1,13 @@
 package com.restaurant.model.document;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import com.restaurant.model.Enum.employees.RollManager;
 import com.restaurant.model.interfaces.IEmployee;
 import com.restaurant.model.vo.RollForManager;
-
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @AllArgsConstructor
 @Document(collection = "manager")
