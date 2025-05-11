@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restaurant.controller.Interface.recipe.MenuControllerInterface;
+import com.restaurant.dto.menu.CreateMenuDto;
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
-import com.restaurant.dto.recipe.MenuDtoAdd;
 import com.restaurant.model.document.Menu;
 import com.restaurant.service.implementation.inventory.MenuServices;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/menus")
@@ -25,15 +23,6 @@ public class MenuController implements MenuControllerInterface {
 
     @Autowired
     private MenuServices menuServices;
-
-    @Override
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity<Menu> createMenu(@Valid @RequestBody MenuDtoAdd menuDtoAdd) {
-        Menu menu = new Menu();
-        menu.setDate(menuDtoAdd.date());
-        Menu newMenu = menuServices.createMenu(menu);
-        return ResponseEntity.status(200).body(newMenu);
-    }
 
     @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -69,5 +58,10 @@ public class MenuController implements MenuControllerInterface {
     @Override
     public ResponseEntity<List<Menu>> getAll() throws Exception {
         return ResponseEntity.ok(menuServices.getAll());
+    }
+
+    @Override
+    public ResponseEntity<Menu> createMenu(CreateMenuDto menuDto) {
+        return ResponseEntity.status(200).body(menuServices.createMenu(menuDto));
     }
 }

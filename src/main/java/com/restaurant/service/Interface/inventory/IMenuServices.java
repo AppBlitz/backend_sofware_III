@@ -1,5 +1,6 @@
 package com.restaurant.service.Interface.inventory;
 
+import com.restaurant.dto.menu.CreateMenuDto;
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
 import com.restaurant.exceptions.menu.normal.MenuExceptionGetAll;
@@ -18,7 +19,7 @@ public interface IMenuServices {
      * @param menu The menu to create.
      * @return The created menu.
      */
-    Menu createMenu(Menu menu);
+    Menu createMenu(CreateMenuDto menuDto);
 
     /**
      * Gets a menu by its ID.

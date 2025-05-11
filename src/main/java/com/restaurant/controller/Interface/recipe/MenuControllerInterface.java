@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.restaurant.dto.menu.CreateMenuDto;
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
-import com.restaurant.dto.recipe.MenuDtoAdd;
 import com.restaurant.model.document.Menu;
 
 public interface MenuControllerInterface {
 
-    ResponseEntity<Menu> createMenu(MenuDtoAdd menuDtoAdd);
+    ResponseEntity<Menu> createMenu(CreateMenuDto menuDto);
 
     ResponseEntity<Menu> getMenuById(String id);
 

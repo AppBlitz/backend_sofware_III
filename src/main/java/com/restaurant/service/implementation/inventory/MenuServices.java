@@ -1,5 +1,6 @@
 package com.restaurant.service.implementation.inventory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.restaurant.dto.menu.CreateMenuDto;
 import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
 import com.restaurant.exceptions.menu.normal.MenuExceptionGetAll;
@@ -31,10 +33,6 @@ public class MenuServices implements IMenuServices {
      * @param menu The menu to create.
      * @return The created menu.
      */
-    @Override
-    public Menu createMenu(Menu menu) {
-        return menuRepository.save(menu);
-    }
 
     /**
      * Gets a menu by its ID.
@@ -94,6 +92,17 @@ public class MenuServices implements IMenuServices {
     @Override
     public List<Menu> getAll() throws MenuExceptionGetAll {
         return menuRepository.findAll();
+    }
+
+    @Override
+    public Menu createMenu(CreateMenuDto menuDto) {
+        Menu menu = Menu.builder()
+                .name(menuDto.name())
+                .items(menuDto.items())
+                .date(LocalDate.now())
+                .description(menuDto.description())
+                .build();
+        return menuRepository.save(menu);
     }
 
 }
