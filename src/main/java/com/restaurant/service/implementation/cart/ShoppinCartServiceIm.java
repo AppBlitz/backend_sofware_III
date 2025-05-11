@@ -17,7 +17,7 @@ import com.restaurant.repository.ShoppingCartRespository;
 import com.restaurant.service.Interface.cart.ShoppingCartServiceInterface;
 import com.restaurant.service.implementation.inventory.ProductService;
 import com.restaurant.service.implementation.inventory.RecipeServices;
-import com.restaurant.validators.cart.ValidatorsCart;
+import com.restaurant.validators.implementation.cart.ValidatorsCart;
 
 import lombok.*;
 
