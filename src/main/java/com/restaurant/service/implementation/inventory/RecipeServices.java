@@ -21,7 +21,7 @@ import com.restaurant.model.vo.Items;
 import com.restaurant.repository.HistoryRecipeRepository;
 import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.Interface.inventory.IRecipeServices;
-import com.restaurant.validators.menu.ValidatorRecipe;
+import com.restaurant.validators.implementation.menu.ValidatorRecipe;
 
 /**
  * Implementation of the recipe management service.

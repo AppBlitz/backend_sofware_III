@@ -27,7 +27,7 @@ import com.restaurant.model.vo.MovementProduct;
 import com.restaurant.repository.MovementRepository;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.service.Interface.inventory.ProductServiceInterface;
-import com.restaurant.validators.product.ProductValidators;
+import com.restaurant.validators.implementation.product.ProductValidators;
 
 @Service
 public class ProductService implements ProductServiceInterface {

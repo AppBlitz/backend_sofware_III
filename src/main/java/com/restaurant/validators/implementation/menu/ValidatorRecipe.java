@@ -1,4 +1,4 @@
-package com.restaurant.validators.menu;
+package com.restaurant.validators.implementation.menu;
 
 import java.util.ArrayList;
 import java.util.List;
