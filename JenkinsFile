@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -17,7 +18,11 @@ pipeline {
                 sh './gradlew test'
             }
         }
-
+        stage('install testRail') {
+            steps {
+                sh 'pip install trcli'
+            }
+        }
         stage('Subir resultados a TestRail') {
             steps {
                 sh '''
@@ -34,4 +39,3 @@ pipeline {
         }
     }
 }
-
