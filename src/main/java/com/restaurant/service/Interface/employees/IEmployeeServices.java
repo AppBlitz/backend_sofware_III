@@ -2,13 +2,10 @@
 package com.restaurant.service.Interface.employees;
 
 // Import statements for DTOs and other required classes
-import com.restaurant.dto.employee.EmployeeDTO; // Data Transfer Object for Employee
-import com.restaurant.dto.employee.LoginDTO;
+import com.restaurant.dto.employee.*;
 import com.restaurant.dto.employee.PermissionsEmployeeDTO; // DTO for Employee Permissions
 import com.restaurant.dto.employee.UserDTO; // DTO for User details
-import com.restaurant.exceptions.employees.DuplicateEmployeeException;
-import com.restaurant.exceptions.employees.NotCorrectPasswordException;
-import com.restaurant.exceptions.employees.NotFoundEmployeeException;
+import com.restaurant.exceptions.employees.*;
 import com.restaurant.model.document.Employee; // Employee document model
 
 import java.time.LocalDate; // For handling dates
