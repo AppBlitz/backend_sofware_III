@@ -17,5 +17,20 @@ pipeline {
                 sh './gradlew test'
             }
         }
+
+        stage(''){
+            steps{
+                sh ```
+                trcli -y \
+                 -h "${HOST}" \
+                  --project "${PROJECT}" \
+                  --username "${USERNAME}" \
+                  --password "${PASSWORD}" \
+                  parse_junit \
+                  --title "JUnit5 Automated Test Run" \
+                  -f "${DIRECTORY}"
+                ```
+            }
+        }
     }
 } 
