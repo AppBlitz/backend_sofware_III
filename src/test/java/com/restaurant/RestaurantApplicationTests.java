@@ -19,7 +19,7 @@ class RestaurantApplicationTests {
 
 	@Test
 	void contextLoads() throws InterruptedException {
-		wDriver.get("http://localhost:5173/sale/login");
+		wDriver.get("http://localhost:5173/");
 		wDriver.findElement(By.id("email")).sendKeys("a@gmail.com");
 		wDriver.findElement(By.id("password")).sendKeys("123456789");
 		wDriver.findElement(By.id("login")).click();

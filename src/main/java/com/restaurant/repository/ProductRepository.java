@@ -16,7 +16,7 @@ import lombok.NonNull;
 @Repository
 public interface ProductRepository extends MongoRepository<Product, String> {
 
-  @Query("{ 'quantity' : { $lt: ?0 } }")
+  @Query("{ 'stock' : { $gt: ?0 } }")
   List<Product> findByStockGreaterThan(int stock);
 
   Optional<Product> findByNameProduct(String productName);
