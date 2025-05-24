@@ -30,52 +30,48 @@ public class PaymentService {
     @Value("${mercado_pago_sample_access_token}")
     String PROD_ACCESS_TOKEN;
 
-    ProductRepository productRepository;
-
     ProductService productService;
-
-    RecipeRepository recipeRepository;
 
     RecipeServices recipeServices;
 
-public Preference createPayment(Items item) throws MPException, MPApiException {
-
-
+public Preference createPayment(List<Items> itemspay) throws MPException, MPApiException {
 
     MercadoPagoConfig.setAccessToken(PROD_ACCESS_TOKEN);
 
     PreferenceItemRequest itemRequest;
-
-    if (!item.getMenuItem().getProduct().isEmpty()) {
-
-        Product producto = productService.getProduct(item.getMenuItem().getProduct());
-
-        itemRequest = PreferenceItemRequest.builder()
-                .id(UUID.randomUUID()+"")
-                .title(producto.getNameProduct())
-                .description(" ")
-                .pictureUrl("")
-                .categoryId(item.getMenuItem().getCategoriItem()+"")
-                .quantity(item.getAmountServings())
-                .currencyId("COP")
-                .unitPrice(BigDecimal.valueOf(producto.getPriceProduct()))
-                .build();
-    } else {
-       Recipe recipe= recipeServices.getRecipeById(item.getMenuItem().getRecipe());
-         itemRequest = PreferenceItemRequest.builder()
-                 .id(UUID.randomUUID()+"")
-                .title(recipe.getName())
-                .description(recipe.getInstructions())
-                .pictureUrl("")
-                .categoryId(item.getMenuItem().getCategoriItem()+"")
-                .quantity(item.getAmountServings())
-                .currencyId("COP")
-                .unitPrice(BigDecimal.valueOf(recipe.getPrice()))
-                .build();
-    }
     List<PreferenceItemRequest> items = new ArrayList<>();
-    items.add(itemRequest);
 
+    for (Items item: itemspay) {
+
+        if (!item.getMenuItem().getProduct().isEmpty()) {
+
+            Product producto = productService.getProduct(item.getMenuItem().getProduct());
+
+            itemRequest = PreferenceItemRequest.builder()
+                    .id(UUID.randomUUID() + "")
+                    .title(producto.getNameProduct())
+                    .description(" ")
+                    .pictureUrl("")
+                    .categoryId(item.getMenuItem().getCategoriItem() + "")
+                    .quantity(item.getAmountServings())
+                    .currencyId("COP")
+                    .unitPrice(BigDecimal.valueOf(producto.getPriceProduct()))
+                    .build();
+        } else {
+            Recipe recipe = recipeServices.getRecipeById(item.getMenuItem().getRecipe());
+            itemRequest = PreferenceItemRequest.builder()
+                    .id(UUID.randomUUID() + "")
+                    .title(recipe.getName())
+                    .description(recipe.getInstructions())
+                    .pictureUrl("")
+                    .categoryId(item.getMenuItem().getCategoriItem() + "")
+                    .quantity(item.getAmountServings())
+                    .currencyId("COP")
+                    .unitPrice(BigDecimal.valueOf(recipe.getPrice()))
+                    .build();
+        }
+        items.add(itemRequest);
+    }
 
     PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
                     .success("https://ilios-application-web.netlify.app/home")
@@ -89,8 +85,6 @@ public Preference createPayment(Items item) throws MPException, MPApiException {
             .items(items).build();
     PreferenceClient client = new PreferenceClient();
     Preference preference = client.create(preferenceRequest);
-
-
 
     return preference;
 }
