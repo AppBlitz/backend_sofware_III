@@ -1,22 +1,22 @@
-pipeline {
 
+pipeline {
     agent any
 
     triggers {
         githubPush()
     }
 
-       stages {
-
-            stage('Compilar aplicación') {
-                steps {
-                    sh './gradlew bootJar'
-                }
+    stages {
+        stage('Compilar aplicación') {
+            steps {
+                sh './gradlew bootJar'
             }
+        }
 
-            stage('Ejecutar pruebas') {
-                steps {
-                    sh './gradlew test'
-                }
+        stage('Ejecutar pruebas') {
+            steps {
+                sh './gradlew test'
             }
-}
+        }
+    }
+} 

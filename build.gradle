@@ -43,12 +43,12 @@ dependencies {
     implementation 'javax.activation:activation:1.1.1'
     implementation 'org.simplejavamail:simple-java-mail:8.11.2'
     implementation 'org.simplejavamail:batch-module:8.10.1'
-    implementation('org.seleniumhq.selenium:selenium-java:4.25.0')
     implementation('com.aventstack:extentreports:5.1.1')
     implementation('com.mercadopago:sdk-java:2.4.0') {
         exclude group: 'com.google.collections', module: 'google-collections'
     }
     implementation 'com.google.guava:guava:33.3.0-jre'
+    testImplementation('com.testrail:testrail-junit-extensions:0.2.1')
 
     // Forzar la versión de Guava requerida por Selenium
     implementation 'com.google.guava:guava:33.3.0-jre'
