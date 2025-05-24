@@ -18,9 +18,9 @@ pipeline {
             }
         }
 
-        stage(''){
-            steps{
-                sh ```
+        stage('Subir resultados a TestRail') {
+            steps {
+                sh '''
                 trcli -y \
                  -h "${HOST}" \
                   --project "${PROJECT}" \
@@ -29,8 +29,9 @@ pipeline {
                   parse_junit \
                   --title "JUnit5 Automated Test Run" \
                   -f "${DIRECTORY}"
-                ```
+                '''
             }
         }
     }
-} 
+}
+
