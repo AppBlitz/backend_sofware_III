@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.restaurant.exceptions.product.ProductFetchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class ProductController implements ProductControllerInterface {
   }
 
   @RequestMapping(value = "/available", method = RequestMethod.GET)
-  public ResponseEntity<List<Product>> getAvailableProducts() throws Exception {
+  public ResponseEntity<List<Product>> getAvailableProducts() throws ProductFetchException {
     List<Product> products = productService.getAvailableProducts();
     if (products.isEmpty()) {
       return ResponseEntity.status(204).build(); // No Content

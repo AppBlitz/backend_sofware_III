@@ -56,11 +56,13 @@ public class MenuController implements MenuControllerInterface {
     }
 
     @Override
+    @RequestMapping(value = "/getAllMenu", method = RequestMethod.GET)
     public ResponseEntity<List<Menu>> getAll() throws Exception {
         return ResponseEntity.ok(menuServices.getAll());
     }
 
     @Override
+    @RequestMapping(value = "/createMenu", method = RequestMethod.POST)
     public ResponseEntity<Menu> createMenu(CreateMenuDto menuDto) {
         return ResponseEntity.status(200).body(menuServices.createMenu(menuDto));
     }
