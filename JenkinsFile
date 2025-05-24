@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Compilar aplicación') {
             steps {
-                sh './gradlew bootJar'
+                sh "${CNS}"
             }
         }
 
