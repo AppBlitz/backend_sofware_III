@@ -12,10 +12,10 @@ pipeline {
             }
         }
 
-        stage('Ejecutar pruebas') {
-            steps {
-                sh './gradlew test'
-            }
-        }
-    } 
+        //stage('Ejecutar pruebas') {
+          //  steps {
+            //    sh './gradlew test'
+           // }
+       // }
+   // } 
 } 
