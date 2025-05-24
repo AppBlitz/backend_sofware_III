@@ -26,6 +26,7 @@ pipeline {
         stage('Subir resultados a TestRail') {
             steps {
                 sh '''
+                export PATH=$PATH:/var/lib/jenkins/.local/bin
                 trcli -y \
                  -h "${HOST}" \
                   --project "${PROJECT}" \
