@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeServices employeeServices;
+    protected final EmployeeServices employeeServices;
     /**
      * Constructor-based dependency injection for EmployeeServices.
      *
@@ -114,7 +114,8 @@ public class EmployeeController {
     @PostMapping("/user/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
         try {
-            return ResponseEntity.ok(employeeServices.login(loginDTO));
+            ResponseEntity<EmployeeDTO> ok = ResponseEntity.ok(employeeServices.login(loginDTO));
+            return ok;
         } catch (NotFoundEmployeeException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorResponse("El empleado no existe", e.getMessage()));
         } catch (NotCorrectPasswordException e) {
