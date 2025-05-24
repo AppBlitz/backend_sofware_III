@@ -41,6 +41,7 @@ public class RecipeController implements RecipeControllerInterface {
     private EmployeeServices employeeServices;
 
     @Override
+    @RequestMapping(value = "/get/actives", method = RequestMethod.POST)
     public ResponseEntity<List<RecipePrice>> getAllRecipeActivate() {
         // TODO Auto-generated method stub
         return null;
