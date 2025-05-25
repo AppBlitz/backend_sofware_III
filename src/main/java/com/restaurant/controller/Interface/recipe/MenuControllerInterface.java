@@ -23,4 +23,6 @@ public interface MenuControllerInterface {
 
     ResponseEntity<List<Menu>> getAll() throws Exception;
 
+    ResponseEntity<List<Menu>> getMenuState();
+
 }
