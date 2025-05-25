@@ -3,6 +3,7 @@ package com.restaurant.model.document;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -39,6 +40,7 @@ public class Menu {
     /**
      * A map of recipes and their respective prices in the menu.
      */
+    @JsonIgnore
     @Builder.Default
     ArrayList<MenuItem> items = new ArrayList<>();
 

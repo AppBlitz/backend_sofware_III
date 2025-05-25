@@ -12,6 +12,7 @@ import com.mercadopago.resources.preference.Preference;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.vo.Items;
+import com.restaurant.model.vo.MenuItem;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.implementation.inventory.ProductService;
@@ -34,60 +35,70 @@ public class PaymentService {
 
     RecipeServices recipeServices;
 
-public Preference createPayment(List<Items> itemspay) throws MPException, MPApiException {
+    public Preference createPayment(List<Items> itemspay) throws MPException, MPApiException {
+        MercadoPagoConfig.setAccessToken(PROD_ACCESS_TOKEN);
 
-    MercadoPagoConfig.setAccessToken(PROD_ACCESS_TOKEN);
+        List<PreferenceItemRequest> items = new ArrayList<>();
 
-    PreferenceItemRequest itemRequest;
-    List<PreferenceItemRequest> items = new ArrayList<>();
+        for (Items item : itemspay) {
+            MenuItem menuItem = item.getMenuItem();
 
-    for (Items item: itemspay) {
+            boolean hasRecipe = menuItem.getRecipe() != null && !menuItem.getRecipe().isBlank();
+            boolean hasProduct = menuItem.getProduct() != null && !menuItem.getProduct().isBlank();
 
-        if (!item.getMenuItem().getProduct().isEmpty()) {
+            // Validación de campos mutuamente excluyentes
+            if (hasRecipe == hasProduct) {
+                throw new IllegalArgumentException("Cada MenuItem debe tener solo 'recipe' o 'product', no ambos ni ninguno.");
+            }
 
-            Product producto = productService.getProduct(item.getMenuItem().getProduct());
+            PreferenceItemRequest itemRequest;
 
-            itemRequest = PreferenceItemRequest.builder()
-                    .id(UUID.randomUUID() + "")
-                    .title(producto.getNameProduct())
-                    .description(" ")
-                    .pictureUrl("")
-                    .categoryId(item.getMenuItem().getCategoriItem() + "")
-                    .quantity(item.getAmountServings())
-                    .currencyId("COP")
-                    .unitPrice(BigDecimal.valueOf(producto.getPriceProduct()))
-                    .build();
-        } else {
-            Recipe recipe = recipeServices.getRecipeById(item.getMenuItem().getRecipe());
-            itemRequest = PreferenceItemRequest.builder()
-                    .id(UUID.randomUUID() + "")
-                    .title(recipe.getName())
-                    .description(recipe.getInstructions())
-                    .pictureUrl("")
-                    .categoryId(item.getMenuItem().getCategoriItem() + "")
-                    .quantity(item.getAmountServings())
-                    .currencyId("COP")
-                    .unitPrice(BigDecimal.valueOf(recipe.getPrice()))
-                    .build();
+            if (hasProduct) {
+                Product producto = productService.getProduct(menuItem.getProduct());
+
+                itemRequest = PreferenceItemRequest.builder()
+                        .id(UUID.randomUUID().toString())
+                        .title(producto.getNameProduct())
+                        .description(" ")
+                        .pictureUrl("") // podrías cargar aquí una URL si tienes imagen
+                        .categoryId(menuItem.getCategoriItem().toString())
+                        .quantity(item.getAmountServings())
+                        .currencyId("COP")
+                        .unitPrice(BigDecimal.valueOf(producto.getPriceProduct()))
+                        .build();
+
+            } else {
+                Recipe recipe = recipeServices.getRecipeById(menuItem.getRecipe());
+
+                itemRequest = PreferenceItemRequest.builder()
+                        .id(UUID.randomUUID().toString())
+                        .title(recipe.getName())
+                        .description(recipe.getInstructions())
+                        .pictureUrl("")
+                        .categoryId(menuItem.getCategoriItem().toString())
+                        .quantity(item.getAmountServings())
+                        .currencyId("COP")
+                        .unitPrice(BigDecimal.valueOf(recipe.getPrice()))
+                        .build();
+            }
+
+            items.add(itemRequest);
         }
-        items.add(itemRequest);
+
+        PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
+                .success("https://ilios-application-web.netlify.app/home")
+                .pending("https://ilios-application-web.netlify.app/")
+                .failure("https://ilios-application-web.netlify.app/")
+                .build();
+
+        PreferenceRequest preferenceRequest = PreferenceRequest.builder()
+                .backUrls(backUrls)
+                .items(items)
+                .build();
+
+        return new PreferenceClient().create(preferenceRequest);
     }
 
-    PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                    .success("https://ilios-application-web.netlify.app/home")
-                    .pending("https://ilios-application-web.netlify.app/")
-                    .failure("https://ilios-application-web.netlify.app/")
-                    .build();
-
-
-    PreferenceRequest preferenceRequest = PreferenceRequest.builder()
-            .backUrls(backUrls)
-            .items(items).build();
-    PreferenceClient client = new PreferenceClient();
-    Preference preference = client.create(preferenceRequest);
-
-    return preference;
-}
 
 
 
