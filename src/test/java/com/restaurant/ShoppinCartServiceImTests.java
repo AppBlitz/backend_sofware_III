@@ -11,7 +11,7 @@ import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.testrail.junit.customjunitxml.annotations.TestRail;
 
 @SpringBootTest
-public class ShoppinCartServiceTests {
+public class ShoppinCartServiceImTests {
   @Autowired
   ShoppinCartServiceIm sService;
 
