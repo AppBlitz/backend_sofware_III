@@ -77,6 +77,7 @@ public class ProductService implements ProductServiceInterface {
   }
 
   @Override
+  //WARNING: modification
   public Product updateProductListsSUpplier(String nameProduct, String supplier, int amount) {
     return null;
   }
@@ -222,7 +223,7 @@ public class ProductService implements ProductServiceInterface {
       if (p.getControldateExpiration().get(i) - amount <= 0) {
         p.getControldateExpiration().remove(i);
         p.getDateExpiration().remove(i);
-        i=i-1;
+        i = i - 1;
       } else {
         p.getControldateExpiration().set(i, p.getControldateExpiration().get(i) - amount);
       }

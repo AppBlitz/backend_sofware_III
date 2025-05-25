@@ -73,4 +73,5 @@ public class ControllerCart implements ShoppingCartInter {
     return ResponseEntity.ok(shoppinService.searchCategory(category));
   }
 
-}
+} // .stock(productDtoAdd.amount())
+  // .dateExpiration.add(productDtoAdd.dateExpiration())
