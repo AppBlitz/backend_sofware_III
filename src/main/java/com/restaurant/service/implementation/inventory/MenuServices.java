@@ -98,6 +98,7 @@ public class MenuServices implements IMenuServices {
     public Menu createMenu(CreateMenuDto menuDto) {
         Menu menu = Menu.builder()
                 .name(menuDto.name())
+                .idemployeeKitchen(menuDto.idkitchenEmployee())
                 .items(menuDto.items())
                 .date(LocalDate.now())
                 .description(menuDto.description())

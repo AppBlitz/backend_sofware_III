@@ -17,6 +17,7 @@ import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.RecipeRepository;
 import com.restaurant.service.implementation.inventory.ProductService;
 import com.restaurant.service.implementation.inventory.RecipeServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,10 @@ public class PaymentService {
     @Value("${mercado_pago_sample_access_token}")
     String PROD_ACCESS_TOKEN;
 
+    @Autowired
     ProductService productService;
 
+    @Autowired
     RecipeServices recipeServices;
 
     public Preference createPayment(List<Items> itemspay) throws MPException, MPApiException {
@@ -64,7 +67,7 @@ public class PaymentService {
                         .categoryId(menuItem.getCategoriItem().toString())
                         .quantity(item.getAmountServings())
                         .currencyId("COP")
-                        .unitPrice(BigDecimal.valueOf(producto.getPriceProduct()))
+                        .unitPrice(BigDecimal.valueOf((long)producto.getPriceProduct()))
                         .build();
 
             } else {
@@ -78,7 +81,7 @@ public class PaymentService {
                         .categoryId(menuItem.getCategoriItem().toString())
                         .quantity(item.getAmountServings())
                         .currencyId("COP")
-                        .unitPrice(BigDecimal.valueOf(recipe.getPrice()))
+                        .unitPrice(BigDecimal.valueOf((long)recipe.getPrice()))
                         .build();
             }
 
@@ -96,7 +99,16 @@ public class PaymentService {
                 .items(items)
                 .build();
 
-        return new PreferenceClient().create(preferenceRequest);
+        try {
+            Preference preference = new PreferenceClient().create(preferenceRequest);
+            return preference;
+        }catch(MPApiException e){
+            System.out.println("Status: " + e.getApiResponse().getStatusCode());
+            System.out.println("Response: " + e.getApiResponse().getContent());
+            throw e;
+        }
+
+        //return preference;
     }
 
 
