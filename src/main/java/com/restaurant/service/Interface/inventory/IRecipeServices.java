@@ -69,4 +69,6 @@ public interface IRecipeServices {
     public void restAmount(String idRecipe, int amount);
 
     public List<Recipe> listAllRecipe(List<Items> productsOrArecipe);
+
+    public List<RecipePrice> getAllRecipePrice();
 }

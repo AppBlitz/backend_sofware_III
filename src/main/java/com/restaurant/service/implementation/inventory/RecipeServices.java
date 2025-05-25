@@ -218,4 +218,14 @@ public class RecipeServices implements IRecipeServices {
         return vRecipe.getAllRecipe(productsOrArecipe);
     }
 
+    @Override
+    public List<RecipePrice> getAllRecipePrice() {
+        List<Recipe> recipes = recipeRepository.findByRecipes(Estate.ACTIVE);
+        List<RecipePrice> recipe = new ArrayList<>();
+        for (Recipe reci : recipes) {
+            recipe.add(new RecipePrice(reci.getId(), reci.getName(), reci.getServings(), reci.getPrice()));
+        }
+        return recipe;
+    }
+
 }
