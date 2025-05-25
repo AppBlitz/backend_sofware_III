@@ -23,6 +23,9 @@ public class ShoppingCart {
   String id;
 
   @NonNull
+  String idwaiteremployee;
+
+  @NonNull
   LocalDate dateCreation;
 
   @Builder.Default

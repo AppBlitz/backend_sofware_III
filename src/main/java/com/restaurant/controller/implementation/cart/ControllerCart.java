@@ -1,7 +1,10 @@
 package com.restaurant.controller.implementation.cart;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.restaurant.dto.pay.ItemPayDto;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +28,17 @@ public class ControllerCart implements ShoppingCartInter {
   ShoppinCartServiceIm shoppinService;
 
   @Override
-  @RequestMapping(value = "/create", method = RequestMethod.POST)
-  public ResponseEntity<ShoppingCart> createShoppingCart() {
-    return ResponseEntity.ok(shoppinService.createShoppingCart());
+  @RequestMapping(value = "/create/{idwaiteremployee}", method = RequestMethod.POST)
+  public ResponseEntity<ShoppingCart> createShoppingCart(@Valid @RequestBody List<ItemPayDto> itemsDto,@PathVariable String idwaiteremployee) {
+    List<Items> items1 = new ArrayList<>();
+    Items item= new Items();
+    for(ItemPayDto it: itemsDto){
+      item.setMenuItem(it.menuItem());
+      item.setAmountServings(it.amountServings());
+      item.setRestServings(it.restServings());
+      items1.add(item);
+    }
+    return ResponseEntity.ok(shoppinService.createShoppingCart(items1,idwaiteremployee));
   }
 
   @Override

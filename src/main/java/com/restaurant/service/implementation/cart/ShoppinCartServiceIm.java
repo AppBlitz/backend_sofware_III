@@ -3,6 +3,7 @@ package com.restaurant.service.implementation.cart;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.restaurant.model.vo.Items;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +38,10 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
   private ProductService pServices;
 
   @Override
-  public ShoppingCart createShoppingCart() {
+  public ShoppingCart createShoppingCart(List<Items> it,String idwaiteremployee) {
     ShoppingCart cart = ShoppingCart.builder()
+            .idwaiteremployee(idwaiteremployee)
+            .items(it)
         .dateCreation(LocalDate.now())
         .stateCart(StateCart.PENDING)
         .build();
