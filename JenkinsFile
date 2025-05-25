@@ -12,7 +12,6 @@ pipeline {
                 sh "${CNS}"
             }
         }
-
         stage('Ejecutar pruebas') {
             steps {
                 sh './gradlew test'
