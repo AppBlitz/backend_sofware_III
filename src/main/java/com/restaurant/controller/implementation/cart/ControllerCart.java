@@ -31,11 +31,13 @@ public class ControllerCart implements ShoppingCartInter {
   @RequestMapping(value = "/create/{idwaiteremployee}", method = RequestMethod.POST)
   public ResponseEntity<ShoppingCart> createShoppingCart(@Valid @RequestBody List<ItemPayDto> itemsDto,@PathVariable String idwaiteremployee) {
     List<Items> items1 = new ArrayList<>();
-    Items item= new Items();
+
     for(ItemPayDto it: itemsDto){
+      Items item= new Items();
       item.setMenuItem(it.menuItem());
       item.setAmountServings(it.amountServings());
       item.setRestServings(it.restServings());
+
       items1.add(item);
     }
     return ResponseEntity.ok(shoppinService.createShoppingCart(items1,idwaiteremployee));
