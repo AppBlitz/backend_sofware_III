@@ -12,6 +12,7 @@ import com.restaurant.dto.recipe.MenuALl;
 import com.restaurant.dto.recipe.MenuDateDto;
 import com.restaurant.model.document.Menu;
 import com.restaurant.service.implementation.inventory.MenuServices;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/menus")
@@ -61,5 +62,11 @@ public class MenuController implements MenuControllerInterface {
     @RequestMapping(value = "/createMenu", method = RequestMethod.POST)
     public ResponseEntity<Menu> createMenu(@RequestBody CreateMenuDto menuDto) {
         return ResponseEntity.status(200).body(menuServices.createMenu(menuDto));
+    }
+
+    @Override
+    public ResponseEntity<List<Menu>> getMenuState() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMenuState'");
     }
 }

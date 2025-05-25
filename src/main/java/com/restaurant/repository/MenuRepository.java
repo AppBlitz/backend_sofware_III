@@ -30,7 +30,7 @@ public interface MenuRepository extends MongoRepository<Menu, String> {
     @Query("{ 'date' : ?0 }")
     List<Menu> findByDates(@NonNull LocalDate date);
 
-    @Query("{ '_id' }")
+    @Query("{ '_id' : ?0 }")
     Optional<Menu> findById(String id);
 
     @Query(" { '_id' : ?0 }")
