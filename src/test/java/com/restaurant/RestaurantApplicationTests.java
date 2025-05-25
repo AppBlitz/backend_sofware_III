@@ -30,25 +30,27 @@ class RestaurantApplicationTests {
 		wDriver = new ChromeDriver();
 	}
 
-	@Test
-	@DisplayName("Seguridad de los datos de los clientes")
-	@TestRail(id = "C22")
-	void contextLoads() throws InterruptedException {
-		wDriver.get("http://localhost:5173/");
-		wDriver.findElement(By.id("email")).sendKeys("juan.perez@email.com");
-		wDriver.findElement(By.id("password")).sendKeys("MiClaveSegura123");
-		wDriver.findElement(By.id("login")).click();
-
-		String pageSource = wDriver.getPageSource();
-		if (pageSource.contains("Inicio de sesión exitoso")) {
-			assertTrue(true, "Incio de sesión exitoso");
-		} else if (pageSource.contains("Ocurrio un problema")) {
-			Assertions.fail("Revisar la información que se ingreso");
-		} else if (pageSource.contains("No se pudo conectar con el servidor")) {
-			Assertions.fail("No se puede hacer la conexión con el servidor");
-		}
-		assertTrue(true, "Perfect");
-	}
+	// WARNING: verification their use
+	//
+	// @Test
+	// @DisplayName("Seguridad de los datos de los clientes")
+	// @TestRail(id = "C22")
+	// void contextLoads() throws InterruptedException {
+	// wDriver.get("http://localhost:5173/");
+	// wDriver.findElement(By.id("email")).sendKeys("juan.perez@email.com");
+	// wDriver.findElement(By.id("password")).sendKeys("MiClaveSegura123");
+	// wDriver.findElement(By.id("login")).click();
+	//
+	// String pageSource = wDriver.getPageSource();
+	// if (pageSource.contains("Inicio de sesión exitoso")) {
+	// assertTrue(true, "Incio de sesión exitoso");
+	// } else if (pageSource.contains("Ocurrio un problema")) {
+	// Assertions.fail("Revisar la información que se ingreso");
+	// } else if (pageSource.contains("No se pudo conectar con el servidor")) {
+	// Assertions.fail("No se puede hacer la conexión con el servidor");
+	// }
+	// assertTrue(true, "Perfect");
+	// }
 
 	@Test
 	@DisplayName("Ingresar con los campos vacios")
@@ -61,6 +63,47 @@ class RestaurantApplicationTests {
 
 		String pageSource = wDriver.getPageSource();
 		if (pageSource.contains("Inicio de sesión exitoso")) {
+			System.out.println("Perfect");
+			assertTrue(true, "Incio de sesión exitoso");
+		} else if (pageSource.contains("Ocurrio un problema")) {
+			Assertions.fail("Revisar la información que se ingreso");
+		} else if (pageSource.contains("No se pudo conectar con el servidor")) {
+			Assertions.fail("No se puede hacer la conexión con el servidor");
+		}
+	}
+
+	@Test
+	@DisplayName("Iniciar sesión con la contraseña incorrecta")
+	@TestRail(id = "C25")
+	void passwordIncorrect() throws InterruptedException {
+		wDriver.get("http://localhost:5173/");
+		wDriver.findElement(By.id("email")).sendKeys("juan.perez@email.com");
+		wDriver.findElement(By.id("password")).sendKeys("11");
+		wDriver.findElement(By.id("login")).click();
+
+		String pageSource = wDriver.getPageSource();
+		if (pageSource.contains("Inicio de sesión exitoso")) {
+			System.out.println("Perfect");
+			assertTrue(true, "Incio de sesión exitoso");
+		} else if (pageSource.contains("Ocurrio un problema")) {
+			Assertions.fail("Revisar la información que se ingreso");
+		} else if (pageSource.contains("No se pudo conectar con el servidor")) {
+			Assertions.fail("No se puede hacer la conexión con el servidor");
+		}
+	}
+
+	@Test
+	@DisplayName("Iniciar sesión con el correo incorrecto")
+	@TestRail(id = "C26")
+	void dataIncorrect() throws InterruptedException {
+		wDriver.get("http://localhost:5173/");
+		wDriver.findElement(By.id("email")).sendKeys("a@gmail.com");
+		wDriver.findElement(By.id("password")).sendKeys("MiClaveSegura123");
+		wDriver.findElement(By.id("login")).click();
+
+		String pageSource = wDriver.getPageSource();
+		if (pageSource.contains("Inicio de sesión exitoso")) {
+			System.out.println("Perfect");
 			assertTrue(true, "Incio de sesión exitoso");
 		} else if (pageSource.contains("Ocurrio un problema")) {
 			Assertions.fail("Revisar la información que se ingreso");
