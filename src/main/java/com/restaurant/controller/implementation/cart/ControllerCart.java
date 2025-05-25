@@ -86,5 +86,12 @@ public class ControllerCart implements ShoppingCartInter {
     return ResponseEntity.ok(shoppinService.searchCategory(category));
   }
 
+  @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+  public ResponseEntity<List<ShoppingCart>> searchAll() {
+    return ResponseEntity.ok(shoppinService.searchAll());
+  }
+
+
+
 } // .stock(productDtoAdd.amount())
   // .dateExpiration.add(productDtoAdd.dateExpiration())

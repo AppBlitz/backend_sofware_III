@@ -90,4 +90,10 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
   public List<ShoppingCart> searchCategory(SearchCartCategory category) {
     return shoppingCartRespository.findByStateCart(category.stateCart());
   }
+
+
+
+  public List<ShoppingCart> searchAll() {
+    return shoppingCartRespository.findAll();
+  }
 }
