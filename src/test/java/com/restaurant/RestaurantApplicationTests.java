@@ -14,22 +14,21 @@ import com.testrail.junit.customjunitxml.annotations.TestRail;
 @SpringBootTest
 class RestaurantApplicationTests {
 
-
 	@Test
 	void contextLoads() throws InterruptedException {
 	}
 
 	@Nested
-	class CartTests{
+	public class CartTests {
 
-	@Autowired
-	ShoppinCartServiceIm sService;
+		@Autowired
+		ShoppinCartServiceIm sService;
 
-	@Test
-	@DisplayName("Buscar carrito de compras por id")
-	@TestRail(id = "C35")
-	public void searchCartForId() {
-		assertNotNull(sService.searchShoppingCartId("681b61aa1e710924d1408dd6"));
-	}
+		@Test
+		@DisplayName("Buscar carrito de compras por id")
+		@TestRail(id = "C35")
+		public void searchCartForId() {
+			assertNotNull(sService.searchShoppingCartId("681b61aa1e710924d1408dd6"));
+		}
 	}
 }

@@ -12,6 +12,11 @@ pipeline {
                 sh "${CNS}"
             }
         }
+        stage('Run Tests') {
+            steps {
+                sh './gradlew clean test'
+            }
+        }
         stage('Ejecutar pruebas') {
             steps {
                 sh './gradlew test'
