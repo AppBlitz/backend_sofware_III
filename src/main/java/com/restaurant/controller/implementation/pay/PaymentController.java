@@ -23,9 +23,9 @@ public class PaymentController {
     @RequestMapping(value = "/realizarPago", method = RequestMethod.POST)
     public ResponseEntity<Preference> realizatePay(@Valid @RequestBody List<ItemPayDto> itemsDto) throws Exception {
         List<Items> items = new ArrayList<>();
-        Items item= new Items();
         for(ItemPayDto it: itemsDto){
-        item.setMenuItem(it.menuItem());
+            Items item= new Items();
+            item.setMenuItem(it.menuItem());
         item.setAmountServings(it.amountServings());
         item.setRestServings(it.restServings());
         items.add(item);
