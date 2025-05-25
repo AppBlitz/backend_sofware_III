@@ -6,7 +6,6 @@ import lombok.NonNull;
 
 public record ItemPayDto(
         @NonNull MenuItem menuItem,
-        Integer restServings,// si es product, recipe debe ser vacío
-        @NonNull Integer amountServings,
-        @NonNull CategoriItem categoriItem) {
+        Integer restServings,
+        @NonNull Integer amountServings) {
 }

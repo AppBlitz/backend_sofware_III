@@ -36,6 +36,9 @@ public class Menu {
     String id;
 
     @NonNull
+    String idemployeeKitchen;
+
+    @NonNull
     String name;
     /**
      * A map of recipes and their respective prices in the menu.
