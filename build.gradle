@@ -48,7 +48,6 @@ dependencies {
         exclude group: 'com.google.collections', module: 'google-collections'
     }
     implementation 'com.google.guava:guava:33.3.0-jre'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.12.2'
     testImplementation('com.testrail:testrail-junit-extensions:0.2.1')
 
     // Forzar la versión de Guava requerida por Selenium
