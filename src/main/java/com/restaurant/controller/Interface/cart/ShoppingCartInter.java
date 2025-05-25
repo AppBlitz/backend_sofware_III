@@ -2,6 +2,8 @@ package com.restaurant.controller.Interface.cart;
 
 import java.util.List;
 
+import com.restaurant.dto.pay.ItemPayDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +18,7 @@ import com.restaurant.model.vo.Items;
 
 public interface ShoppingCartInter {
 
-  public ResponseEntity<ShoppingCart> createShoppingCart();
+  public ResponseEntity<ShoppingCart> createShoppingCart(@Valid @RequestBody List<ItemPayDto> itemsDto,@PathVariable String idwaiteremployee);
 
   public ResponseEntity<ShoppingCart> searchId(@PathVariable String idShopping);
 

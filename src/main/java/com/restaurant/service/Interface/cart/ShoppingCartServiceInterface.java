@@ -9,11 +9,12 @@ import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.document.ShoppingCart;
 
+import com.restaurant.model.vo.Items;
 import lombok.NonNull;
 
 public interface ShoppingCartServiceInterface {
 
-  public ShoppingCart createShoppingCart();
+  public ShoppingCart createShoppingCart(List<Items> it,String idwaiteremployee);
 
   public ShoppingCart searchShoppingCartId(String id);
 
