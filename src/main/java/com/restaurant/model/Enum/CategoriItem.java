@@ -3,7 +3,7 @@ package com.restaurant.model.Enum;
 public enum CategoriItem {
   DRINK,
   BREAKFAST,
-  LUCH,
+  LUNCH,
   FOOD,
   DINNER,
 
