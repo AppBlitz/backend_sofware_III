@@ -22,7 +22,7 @@ public class ShoppingCart {
   @Id
   String id;
 
-  @NonNull
+
   String idwaiteremployee;
 
   @NonNull
