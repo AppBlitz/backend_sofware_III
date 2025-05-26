@@ -11,10 +11,12 @@ import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
+import com.restaurant.model.document.ShoppingCart;
 import com.restaurant.model.vo.Items;
 import com.restaurant.model.vo.MenuItem;
 import com.restaurant.repository.ProductRepository;
 import com.restaurant.repository.RecipeRepository;
+import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.restaurant.service.implementation.inventory.ProductService;
 import com.restaurant.service.implementation.inventory.RecipeServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class PaymentService {
 
     @Autowired
     RecipeServices recipeServices;
+
+    @Autowired
+    ShoppinCartServiceIm shoppinCartServiceIm;
 
     public Preference createPayment(List<Items> itemspay) throws MPException, MPApiException {
         MercadoPagoConfig.setAccessToken(PROD_ACCESS_TOKEN);
@@ -110,6 +115,25 @@ public class PaymentService {
 
         //return preference;
     }
+
+    public double calculateprice(String id){
+        ShoppingCart sc= shoppinCartServiceIm.searchShoppingCartId(id);
+        double price=0;
+        for(Items it: sc.getItems()){
+            MenuItem mi=it.getMenuItem();
+
+           boolean hasProduct = mi.getProduct() != null && !mi.getProduct().isBlank();
+
+            if(hasProduct){
+                Product producto = productService.getProduct(mi.getProduct());
+               price= price + it.getAmountServings()*producto.getPriceProduct();
+            }else{
+                Recipe recipe = recipeServices.getRecipeById(mi.getRecipe());
+
+                price= price + it.getAmountServings()*recipe.getPrice();
+            }
+        }
+    return price;}
 
 
 

@@ -23,16 +23,22 @@ public class PaymentController {
     @RequestMapping(value = "/realizarPago", method = RequestMethod.POST)
     public ResponseEntity<Preference> realizatePay(@Valid @RequestBody List<ItemPayDto> itemsDto) throws Exception {
         List<Items> items = new ArrayList<>();
-        for(ItemPayDto it: itemsDto){
-            Items item= new Items();
+        for (ItemPayDto it : itemsDto) {
+            Items item = new Items();
             item.setMenuItem(it.menuItem());
-        item.setAmountServings(it.amountServings());
-        item.setRestServings(it.restServings());
-        items.add(item);
+            item.setAmountServings(it.amountServings());
+            item.setRestServings(it.restServings());
+            items.add(item);
         }
 
         Preference preference = paymentService.createPayment(items);
         return ResponseEntity.ok(preference);
+    }
+
+    @RequestMapping(value = "/obtenerprecio/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Double> realizatePay(@PathVariable String id) throws Exception {
+        double price = paymentService.calculateprice(id);
+        return ResponseEntity.ok(price);
     }
 
 }
