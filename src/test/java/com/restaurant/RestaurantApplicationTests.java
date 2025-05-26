@@ -172,7 +172,7 @@ class RestaurantApplicationTests {
 	@TestRail(id = "C13")
 	public void updateStateCart() {
 		ShoppingCart cart = sService.searchShoppingCartId("681b61aa1e710924d1408dd6");
-		UpdateStateCartDto updates = new UpdateStateCartDto("681b61aa1e710924d1408dd6", StateCart.INACTIVE);
+		UpdateStateCartDto updates = new UpdateStateCartDto("681b61aa1e710924d1408dd6", StateCart.PENDING);
 		sService.updateCart(updates);
 
 		assertNotEquals(cart, sService.searchShoppingCartId("681b61aa1e710924d1408dd6"), "Se modifico correctamente");
