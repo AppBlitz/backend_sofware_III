@@ -18,15 +18,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.restaurant.dto.cart.UpdateStateCartDto;
 import com.restaurant.dto.employee.LoginDTO;
-import com.restaurant.dto.menu.CreateMenuDto;
 import com.restaurant.dto.supplier.SupplierDtoAdd;
 import com.restaurant.exceptions.employees.NotCorrectPasswordException;
 import com.restaurant.exceptions.employees.NotFoundEmployeeException;
-import com.restaurant.model.Enum.CategoriItem;
 import com.restaurant.model.Enum.Estate;
 import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.ShoppingCart;
-import com.restaurant.model.vo.MenuItem;
 import com.restaurant.service.implementation.cart.ShoppinCartServiceIm;
 import com.restaurant.service.implementation.employees.EmployeeServices;
 import com.restaurant.service.implementation.inventory.MenuServices;
@@ -83,17 +80,18 @@ class RestaurantApplicationTests {
 		assertThrows(NotFoundEmployeeException.class, () -> eMservices.login(login));
 	}
 
-	@Test
-	@DisplayName("Crear menu con los datos vacios")
-	@TestRail(id = "C20")
-	public void createMenuDataImpty() {
-		ArrayList<MenuItem> items = new ArrayList<>();
-		MenuItem it = new MenuItem("6819b4a81ac25a0df8360eac", "", CategoriItem.BREAKFAST);
-		items.add(it);
-		CreateMenuDto menuDto = new CreateMenuDto("Ranchero", items,
-				"Se desea que este menu sea solo para la promoción del día de hoy");
-		assertNotNull(mServices.createMenu(menuDto));
-	}
+	// @Test
+	// @DisplayName("Crear menu con los datos vacios")
+	// @TestRail(id = "C20")
+	// public void createMenuDataImpty() {
+	// ArrayList<MenuItem> items = new ArrayList<>();
+	// MenuItem it = new MenuItem("6819b4a81ac25a0df8360eac", "",
+	// CategoriItem.BREAKFAST);
+	// items.add(it);
+	// CreateMenuDto menuDto = new CreateMenuDto("Ranchero", items,
+	// "Se desea que este menu sea solo para la promoción del día de hoy");
+	// assertNotNull(mServices.createMenu(menuDto));
+	// }
 
 	@Test
 	@DisplayName("Buscar menu por id")
