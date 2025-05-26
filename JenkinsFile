@@ -4,27 +4,32 @@ pipeline {
     triggers {
         githubPush()
     }
+
     stages {
         stage('Checkout código') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AppBlitz/backend_sofware_III.git']])
             }
         }
+
         stage('Compilar aplicación') {
             steps {
                 sh "${CNS}"
             }
         }
+
         stage('Ejecutar pruebas') {
             steps {
                 sh './gradlew test'
             }
         }
+
         stage('install testRail') {
             steps {
                 sh 'pip install trcli'
             }
         }
+
         stage('Subir resultados a TestRail') {
             steps {
                 sh '''
@@ -38,6 +43,24 @@ pipeline {
                   --title "JUnit5 Automated Test Run" \
                   -f "${DIRECTORY}"
                 '''
+            }
+        }
+
+        // --- Aquí agregamos el stage para deploy a Render ---
+        stage('Deploy to Render') {
+            steps {
+                script {
+                    def response = sh(
+                        script: """
+                        curl -X POST https://api.render.com/deploy/srv-${RENDER_SERVICE_ID} \\
+                        -H "Authorization: Bearer ${RENDER_API_KEY}" \\
+                        -H "Content-Type: application/json" \\
+                        -d '{}'
+                        """,
+                        returnStdout: true
+                    )
+                    echo "Deploy response: ${response}"
+                }
             }
         }
     }
