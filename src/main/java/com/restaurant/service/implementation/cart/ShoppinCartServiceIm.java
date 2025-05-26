@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.UpdateShopping;
+import com.restaurant.dto.cart.UpdateStateCartDto;
 import com.restaurant.exceptions.cart.SearchCartException;
 import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.Product;
@@ -86,5 +87,12 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
   @Override
   public List<ShoppingCart> searchCategory(SearchCartCategory category) {
     return shoppingCartRespository.findByStateCart(category.stateCart());
+  }
+
+  @Override
+  public void updateCart(UpdateStateCartDto update) {
+    ShoppingCart cartUpdate = searchShoppingCartId(update.id());
+    cartUpdate.setStateCart(update.stateCart());
+    shoppingCartRespository.save(cartUpdate);
   }
 }
