@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.UpdateShopping;
+import com.restaurant.dto.cart.UpdateStateCartDto;
 import com.restaurant.exceptions.cart.SearchCartException;
 import com.restaurant.model.Enum.cart.StateCart;
 import com.restaurant.model.document.Product;
@@ -38,10 +39,10 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
   private ProductService pServices;
 
   @Override
-  public ShoppingCart createShoppingCart(List<Items> it,String idwaiteremployee) {
+  public ShoppingCart createShoppingCart(List<Items> it, String idwaiteremployee) {
     ShoppingCart cart = ShoppingCart.builder()
-            .idwaiteremployee(idwaiteremployee)
-            .items(it)
+        .idwaiteremployee(idwaiteremployee)
+        .items(it)
         .dateCreation(LocalDate.now())
         .stateCart(StateCart.PENDING)
         .build();
@@ -91,9 +92,14 @@ public class ShoppinCartServiceIm implements ShoppingCartServiceInterface {
     return shoppingCartRespository.findByStateCart(category.stateCart());
   }
 
-
-
   public List<ShoppingCart> searchAll() {
     return shoppingCartRespository.findAll();
+  }
+
+  @Override
+  public void updateCart(UpdateStateCartDto update) {
+    ShoppingCart cartUpdate = searchShoppingCartId(update.id());
+    cartUpdate.setStateCart(update.stateCart());
+    shoppingCartRespository.save(cartUpdate);
   }
 }

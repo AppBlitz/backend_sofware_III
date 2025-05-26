@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.restaurant.dto.cart.SearchCartCategory;
 import com.restaurant.dto.cart.UpdateShopping;
+import com.restaurant.dto.cart.UpdateStateCartDto;
 import com.restaurant.model.document.Product;
 import com.restaurant.model.document.Recipe;
 import com.restaurant.model.document.ShoppingCart;
@@ -29,4 +30,6 @@ public interface ShoppingCartServiceInterface {
   public List<ShoppingCart> getDateCreation(@NonNull LocalDate dateCreation);
 
   public List<ShoppingCart> searchCategory(SearchCartCategory category);
+
+  public void updateCart(UpdateStateCartDto update);
 }
