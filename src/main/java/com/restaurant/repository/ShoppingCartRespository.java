@@ -24,6 +24,6 @@ public interface ShoppingCartRespository extends MongoRepository<ShoppingCart, S
   @Query(" { 'dateCreation' :?0 }")
   List<ShoppingCart> findByDateCreation(LocalDate dataCreation);
 
-  @Query("{ 'stateCart' } : ?0")
+  @Query("{ 'stateCart'  : ?0}")
   List<ShoppingCart> findByStateCart(StateCart stateCart);
 }
