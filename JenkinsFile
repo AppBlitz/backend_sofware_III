@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -6,12 +5,11 @@ pipeline {
         githubPush()
     }
     stages {
-        stage('Compilar aplicación') {
+        stage('Checkout código') {
             steps {
-                sh "checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AppBlitz/backend_sofware_III.git']])"
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AppBlitz/backend_sofware_III.git']])
             }
         }
-    stages {
         stage('Compilar aplicación') {
             steps {
                 sh "${CNS}"
@@ -42,6 +40,6 @@ pipeline {
                 '''
             }
         }
-      }
     }
 }
+
